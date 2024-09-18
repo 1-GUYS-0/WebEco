@@ -96,31 +96,3 @@ FormData({
     input: '.wrap_input',
     SelectForm: FormData.SelectForm(),//Có thể bỏ vì chỉ là yếu tố phát triển chức năng lúc ban đầu
 })
-
-// $.ajaxSetup({
-//     headers: {
-//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//     }
-// });
-// // Navigator web
-// $(document).ready(function() {
-//     $('.text_menu').on('click', function(e) {
-//         e.preventDefault();
-//         console.log('assấ');
-//         const target = $(this).data('target');
-//         console.log(target);
-//         const url = $(this).data('route');
-//         console.log(url);
-
-//         $.ajax({
-//             url: url,
-//             type: 'GET',
-//             success: function(response) {
-//                 $(target).html(response);
-//             },
-//             error: function() {
-//                 alert('Có lỗi xảy ra!');
-//             }
-//         });
-//     });
-// });
