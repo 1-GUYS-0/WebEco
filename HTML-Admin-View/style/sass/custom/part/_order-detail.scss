@@ -1,0 +1,19 @@
+@import "../../global/x_share/share_link";
+.container-infors{
+    align-self: stretch;
+    background-color: white;
+    padding : var(--root-token-size-150, 1.5rem);
+    border-radius: 10px;
+    border: 2px solid black;
+}
+.container-products{
+    display:flex;
+    align-self: stretch;
+}
+.total-price{
+    padding: var(--root-token-size-50);
+    align-self: self-end;
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid black;
+}

@@ -1,0 +1,96 @@
+@import "../../global/x_share/share_link";
+.form_add-product .div {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    height: var(--root-token-size-10, 0.125rem);
+    background-color: black;
+}
+.container_add-productS {
+    @include --flex-row;
+    gap: 0.9375rem;
+    align-self: stretch;
+    // min-height: 56.125rem;
+}
+.container_add-product{
+    @include --flex-column;
+    padding: var(--root-token-size-50, 0.5rem);
+    gap: var(--root-token-size-50, 0.5rem);
+    align-self: stretch;
+}
+.form_add-product{
+    @include --flex-column;
+    align-self: stretch;
+    gap: var(--root-token-size-50, 0.5rem);
+}
+.wrap_input{
+    @include --flex-row;
+    gap: 0.625rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-self: stretch;
+    flex:none;
+    flex-shrink: 0;
+}
+.form_add-product .input{
+    display: flex;
+    flex-direction: column;
+    // width: 31.25rem ;
+    align-self: stretch;
+    gap:0.5rem;
+}
+.mess_lable{
+    color: #b3b3b3;
+    text-align: left;
+    font-family: var(--small-text-font-family, "Inter-Medium", sans-serif);
+    font-size: var(--small-text-font-size, 1rem);
+    line-height: var(--small-text-line-height, 150%);
+    font-weight: var(--small-text-font-weight, 500);
+    position: relative;
+    display: flex;
+    flex-direction:row ;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+}
+.form_add-product .button {
+    background: #000000;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    padding: 0.875rem 1.5rem 0.875rem 1.5rem;
+    width: 12rem;
+    overflow: hidden;
+}
+.list-image{
+    @include --flex-row;
+    gap: 0.625rem;
+}
+.image-block {
+    display: flex;
+    flex-direction: row;
+    gap: 0.625rem;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 6.25rem;
+    height: 6.25rem;
+    position: relative;
+}
+.confirm{
+    display: flex;
+    align-self: stretch;
+}
+.confirm .button{
+    display: flex;
+    background: #000000;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    padding: 0.875rem 1.5rem 0.875rem 1.5rem;
+    flex: 1;
+    overflow: hidden;
+    justify-content: center;
+}

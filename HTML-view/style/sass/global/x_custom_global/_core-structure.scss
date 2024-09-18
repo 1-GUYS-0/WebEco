@@ -1,0 +1,20 @@
+@import "./display";
+@import "../../utility/x_utility";
+
+
+@mixin --wrap {
+    @include --flex-column();
+}
+@mixin --padding-global {
+    @include -padding-global();
+}
+@mixin --padding-small{
+    @include -padding-small();
+}
+@mixin --padding-section-small {
+    @include -padding-section-small();
+}
+
+@mixin --container-large {
+    @include -container-large();
+}

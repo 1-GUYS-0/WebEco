@@ -1,0 +1,109 @@
+@import "./display";
+
+@mixin --heading-hero {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-hero-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-hero-font-size, 3rem);
+    line-height: var(--text-h-hero-line-height, 3.5rem);
+    font-weight: var(--text-h-hero-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --heading-xl {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-xl-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-xl-font-size, 3rem);
+    line-height: var(--text-h-xl-line-height, 3rem);
+    font-weight: var(--text-h-xl-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --heading-lg {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-lg-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-lg-font-size, 2rem);
+    line-height: var(--text-h-lg-line-height, 2.5rem);
+    font-weight: var(--text-h-lg-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --heading-md {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-md-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-md-font-size, 1.75rem);
+    line-height: var(--text-h-md-line-height, 2.25rem);
+    font-weight: var(--text-h-md-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --heading-sm {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-sm-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-sm-font-size, 1.5rem);
+    line-height: var(--text-h-sm-line-height, 2rem);
+    font-weight: var(--text-h-sm-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --heading-xs {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-sm-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-sm-font-size, 1.5rem);
+    line-height: var(--text-h-sm-line-height, 2rem);
+    font-weight: var(--text-h-sm-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --heading-xxs {
+    color: var(--text-heading, #000000);
+    font-family: var(--text-h-xxs-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-xxs-font-size, 1rem);
+    line-height: var(--text-h-xxs-line-height, 1.5rem);
+    font-weight: var(--text-h-xxs-font-weight, 600);
+    @include --flex-text-contain;
+}
+
+@mixin --body-lg {
+    color: var(--root-token-color-purple-darker, #362c62);
+    font-family: var(--text-bd-lg-font-family, "Inter-Regular", sans-serif);
+    font-size: var(--text-bd-lg-font-size, 1.25rem);
+    line-height: var(--text-bd-lg-line-height, 1.5rem);
+    font-weight: var(--text-bd-lg-font-weight, 400);
+    @include --flex-text-contain;
+}
+
+@mixin --body-md {
+    color: var(--root-token-color-purple-darker, #362c62);
+    font-family: var(--text-bd-md-font-family, "Inter-Regular", sans-serif);
+    font-size: var(--text-bd-md-font-size, 1rem);
+    line-height: var(--text-bd-md-line-height, 1.5rem);
+    font-weight: var(--text-bd-md-font-weight, 400);
+    @include --flex-text-contain;
+}
+
+@mixin --body-md-bold {
+    color: var(--root-token-color-purple-darker, #362c62);
+    font-family: var(--text-bd-mdbold-font-family, "Inter-Bold", sans-serif);
+    font-size: var(--text-bd-mdbold-font-size, 1rem);
+    line-height: var(--text-bd-mdbold-line-height, 1.5rem);
+    font-weight: var(--text-bd-mdbold-font-weight, 700);
+    @include --flex-text-contain;
+}
+
+@mixin --body-md-link {
+    color: var(--root-token-color-purple-darker, #362c62);
+    font-family: var(--text-bd-mdlink-font-family, "Inter-Regular", sans-serif);
+    font-size: var(--text-bd-mdlink-font-size, 1rem);
+    line-height: var(--text-bd-mdlink-line-height, 1.5rem);
+    font-weight: var(--text-bd-mdlink-font-weight, 400);
+    @include --flex-text-contain;
+}
+
+@mixin --body-sm {
+    color: var(--root-token-color-purple-darker, #362c62);
+    font-family: var(--text-bd-sm-font-family, "Inter-Regular", sans-serif);
+    font-size: var(--text-bd-sm-font-size, 0.875rem);
+    line-height: var(--text-bd-sm-line-height, 1.25rem);
+    font-weight: var(--text-bd-sm-font-weight, 400);
+    @include --flex-text-contain;
+}

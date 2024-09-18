@@ -1,0 +1,175 @@
+@import "./x_share/share_link.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    background: none;
+    font-family: var(--text-h-hero-font-family, "Inter-SemiBold", sans-serif);
+    box-sizing: border-box;
+}
+
+body{
+    background: var(--theme-primary, #ede9ff);
+}
+table {
+    align-self: stretch;
+    flex:1;
+    background-color: white;
+    border-radius: var(--root-token-size-50);
+    padding: var(--root-token-size-50);
+    border-style: solid;
+    border-radius: 0.625rem;
+    border-color: black;
+}
+table thead tr th{
+    border-style: solid;
+    border-radius: 0.625rem;
+    border-color: black;
+}
+table tbody tr td{
+    text-align: center;
+}
+th, td {
+    padding: 8px 12px;
+    white-space: nowrap; /* Không ngắt dòng trong các ô */
+}
+
+.div {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    height: var(--root-token-size-10, 0.125rem);
+    background-color: white;
+}
+
+.wrapper {
+    @include --wrap;
+}
+
+.white {
+    background-color: white;
+}
+.black{
+    background-color: black;
+}
+
+.padding-global {
+    @include --padding-global;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+.padding-section-small {
+    @include --padding-section-small;
+    align-self: stretch;
+    flex-shrink: 0;
+    gap: 1.125rem;
+}
+
+.container-large {
+    @include --container-large;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+.show {
+    left: 0 !important;
+    position: relative !important;
+    transition: left 0.3s ease;
+}
+.input{
+    display: flex;
+    flex:1;
+}
+.button{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    position: relative;
+}
+
+//icon-from-gg
+.close-icon{
+    position: absolute;
+    right:0;
+    top:0;
+}
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}
+//dashboard
+.row{
+    display: flex;
+    flex-wrap:wrap;
+    align-self: stretch;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.column{
+    margin-top: 1.5rem;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.card-chart{
+    background-color: white;
+    padding:1rem;
+    border-radius:1rem;
+}
+//add-products
+.title_feature {
+    background: #ffffff;
+    border-radius: var(--root-token-size-100percent, 1rem);
+    padding: var(--root-token-size-50, 0.5rem);
+    @include --flex-row;
+    flex: none !important;
+}
+
+.body-bold {
+    @include --body-md-bold;
+}
+
+.input_title {
+    @include --body-md-bold;
+}
+
+.input_lable {
+    background: var(--background-default-default, #ffffff);
+    border-radius: var(--radius-200, 0.5rem);
+    border-style: solid;
+    border-color: var(--border-default-default, #d9d9d9);
+    border-width: 0.0625rem;
+    padding: var(--space-300, 0.75rem) var(--space-400, 1rem) var(--space-300, 0.75rem) var(--space-400, 1rem);
+    flex-shrink: 0;
+    height: var(--root-token-size-400, 4rem);
+    align-self: stretch;
+}
+
+.light-text {
+    color: white !important;
+}
+
+.cards-image {
+    border-radius: 0.5rem;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    object-fit: cover;
+}
+//responsive(note:end-ode)
+@media (min-width: 992px) {
+    .column992 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+}

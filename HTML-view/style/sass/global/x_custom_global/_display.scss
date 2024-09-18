@@ -1,0 +1,40 @@
+@mixin --flex-text-contain{
+    position: relative;
+    align-self: stretch;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+}
+@mixin --flex-column{
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    position: relative;
+    overflow: hidden;
+    flex:1;
+}
+@mixin --flex-row{
+    display: flex;
+    flex-direction: row;
+    gap: 0rem;
+
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    position: relative;
+    overflow: hidden;
+    flex:1;
+}
+// @mixin --display_none{
+//     display: none !important;
+// }
+@mixin --hide {
+    left: -500px;
+    position: absolute;
+}

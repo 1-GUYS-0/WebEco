@@ -1,0 +1,47 @@
+@import "../../global/x_share/share_link";
+.cust-recomm {
+    @include --flex-column;
+    align-items: center;
+    align-self: stretch;
+}
+.cust-recomm_wrapper {
+    @include --flex-column;
+    gap: 2rem;
+}
+.title-section {
+    @include --heading-lg;
+}
+.cust-recomm_contain {
+    @include --flex-row;
+    gap: 2.1875rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-self: stretch;
+    //flex-shrink: 0;  vấn đề khiến cho element ko tự thu lại khi kích thức pảent thay đổi
+}
+.cust-recomm_cards {
+    @include --flex-column;
+    gap: 1.5rem;
+    flex-shrink: 0;
+    width: 25.25rem;
+    height: 22.875rem;
+    flex:none;
+}
+.cards_contain {
+    @include --flex-column;
+    gap: 0.25rem;
+    justify-content: center;
+    align-self: stretch;
+    flex:none;
+}
+.cards_name-prod {
+    @include --heading-sm;
+}
+
+.cards_desc-prod {
+    @include --body-md;
+}
+
+.cards_price-prod {
+    @include --body-md;
+}

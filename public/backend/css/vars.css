@@ -1,0 +1,101 @@
+/* Figma Styles of your File */
+:root {
+    /* Colors */
+    --theme-primary: #ede9ff;
+    --theme-secondary: #b38600;
+    --theme-information: #8270db;
+    --theme-success: #5e4eaf;
+    --theme-warning: #fff7d7;
+    --theme-error: #071f41;
+    --theme-black: #272627;
+    --theme-white: #0a0808;
+    --text-heading: #000000;
+    --text-body: #362c62;
+    --text-action: #8270db;
+    --text-actionhover: #5e4eaf;
+    --text-warning: #5f480c;
+    --text-on-action: #ffffff;
+    --text-on-disable: #362c62;
+    --border-primary: #f2f0fe;
+
+    /* Fonts */
+    --text-h-hero-font-family: Inter-SemiBold, sans-serif;
+    --text-h-hero-font-size: 48px;
+    --text-h-hero-line-height: 56px;
+    --text-h-hero-font-weight: 600;
+    --text-h-hero-font-style: normal;
+    --text-h-xl-font-family: Inter-SemiBold, sans-serif;
+    --text-h-xl-font-size: 48px;
+    --text-h-xl-line-height: 48px;
+    --text-h-xl-font-weight: 600;
+    --text-h-xl-font-style: normal;
+    --text-h-lg-font-family: Inter-SemiBold, sans-serif;
+    --text-h-lg-font-size: 32px;
+    --text-h-lg-line-height: 40px;
+    --text-h-lg-font-weight: 600;
+    --text-h-lg-font-style: normal;
+    --text-h-md-font-family: Inter-SemiBold, sans-serif;
+    --text-h-md-font-size: 28px;
+    --text-h-md-line-height: 36px;
+    --text-h-md-font-weight: 600;
+    --text-h-md-font-style: normal;
+    --text-h-sm-font-family: Inter-SemiBold, sans-serif;
+    --text-h-sm-font-size: 24px;
+    --text-h-sm-line-height: 32px;
+    --text-h-sm-font-weight: 600;
+    --text-h-sm-font-style: normal;
+    --text-h-sx-font-family: Inter-SemiBold, sans-serif;
+    --text-h-sx-font-size: 20px;
+    --text-h-sx-line-height: 24px;
+    --text-h-sx-font-weight: 600;
+    --text-h-sx-font-style: normal;
+    --text-h-xxs-font-family: Inter-SemiBold, sans-serif;
+    --text-h-xxs-font-size: 16px;
+    --text-h-xxs-line-height: 24px;
+    --text-h-xxs-font-weight: 600;
+    --text-h-xxs-font-style: normal;
+    --text-bd-lg-font-family: Inter-Regular, sans-serif;
+    --text-bd-lg-font-size: 20px;
+    --text-bd-lg-line-height: 24px;
+    --text-bd-lg-font-weight: 400;
+    --text-bd-lg-font-style: normal;
+    --text-bd-md-font-family: Inter-Regular, sans-serif;
+    --text-bd-md-font-size: 16px;
+    --text-bd-md-line-height: 24px;
+    --text-bd-md-font-weight: 400;
+    --text-bd-md-font-style: normal;
+    --text-bd-sm-font-family: Inter-Regular, sans-serif;
+    --text-bd-sm-font-size: 14px;
+    --text-bd-sm-line-height: 20px;
+    --text-bd-sm-font-weight: 400;
+    --text-bd-sm-font-style: normal;
+    --text-bd-mdlink-font-family: Inter-Regular, sans-serif;
+    --text-bd-mdlink-font-size: 16px;
+    --text-bd-mdlink-line-height: 24px;
+    --text-bd-mdlink-font-weight: 400;
+    --text-bd-mdlink-font-style: normal;
+    --text-bd-mdbold-font-family: Inter-Bold, sans-serif;
+    --text-bd-mdbold-font-size: 16px;
+    --text-bd-mdbold-line-height: 24px;
+    --text-bd-mdbold-font-weight: 700;
+    --text-bd-mdbold-font-style: normal;
+
+    /* Size */
+    --root-token-size-100percent: 1rem;
+    --root-token-size-200: 2rem;
+    --root-token-size-300: 3rem;
+    --root-token-size-400: 4rem;
+    --root-token-size-500: 5rem;
+    --root-token-size-600: 6rem;
+    --root-token-size-25: 0.25rem;
+    --root-token-size-75: 0.75rem;
+    --root-token-size-80: 0.875rem;
+    --root-token-size-125: 1.25rem;
+    --root-token-size-150: 1.5rem;
+    --root-token-size-250: 2.5rem;
+    --root-token-size-175: 1.75rem;
+    --root-token-size-50: 0.5rem;
+    --root-token-size-10: 0.125rem;
+
+    /* Effects */
+}

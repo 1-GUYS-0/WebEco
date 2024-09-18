@@ -1,0 +1,144 @@
+@import "./x_share/share_link.scss";
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: none;
+    text-decoration: none;
+    background: none;
+    -webkit-font-smoothing: antialiased;
+    font-family: var(--text-h-hero-font-family, "Inter-SemiBold", sans-serif);
+}
+
+menu,
+ol,
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    align-self: stretch;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    gap: var(--root-token-size-150);
+    flex: 1;
+}
+
+input,
+select {
+    background: var(--theme-white);
+    border-radius: var(--root-token-size-50);
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 0.0625rem;
+    padding: var(--root-token-size-50) var(--root-token-size-100percent) var(--root-token-size-50) var(--root-token-size-100percent);
+    // display: flex;
+    // flex-direction: row;
+    // gap: 0rem;
+    // align-items: flex-start;
+    // justify-content: flex-start;
+    align-self: stretch;
+    // flex-shrink: 0;
+    // min-width: 15rem;
+    // position: relative;
+    // overflow: hidden;
+}
+
+dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    /* Điều chỉnh độ rộng cột nếu cần */
+    gap: 5px;
+    /* Khoảng cách giữa các hàng */
+    flex-grow: 1;
+}
+
+dt {
+    grid-column: 1 / 2;
+    /*  Đặt dt ở cột đầu tiên */
+}
+
+dd {
+    grid-column: 2 / 3;
+    text-align: end;
+    /* Đặt dd ở cột thứ hai */
+}
+
+.div {
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    height: var(--root-token-size-10, 0.125rem);
+    background-color: black;
+}
+
+.light-text {
+    color: white !important;
+}
+
+.wrapper {
+    @include --wrap;
+}
+
+.padding-global.discolumn {
+    @include --flex-column;
+    @include --padding-global;
+    align-self: stretch;
+    // flex-shrink: 0;
+}
+
+.padding-section-small {
+    @include --padding-section-small;
+    align-self: stretch;
+    // flex-shrink: 0;
+    gap: 1.125rem;
+}
+
+.container-large.discolumn {
+    @include --flex-column;
+    @include --container-large;
+    align-self: stretch;
+    // flex-shrink: 0;
+}
+
+.pandding-section-medium {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 0rem 0rem 0rem;
+}
+
+.show {
+    left: 0 !important;
+    position: relative !important;
+    transition: left 0.3s ease;
+}
+
+.button {
+    background: #000000;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    padding: 0.875rem 1.5rem 0.875rem 1.5rem;
+    align-self: stretch;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}

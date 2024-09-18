@@ -1,0 +1,31 @@
+@import "../../global/x_share/share_link";
+.nav-bar {
+    @include --flex-column;
+    align-self: stretch;
+}
+.nav-bar_wrapper{
+    @include --flex-row;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+}
+.nav-bar_logo {
+    flex-shrink: 0;
+    width: 4.125rem;
+    height: 4.125rem;
+    position: relative;
+}
+.nav-bar_menu {
+    @include --flex-row;
+    gap: var(--spacing-m, 3rem);
+    align-items: center;
+    flex:none;
+
+}
+.nav-bar_link {
+    @include --flex-row;
+    gap: 0.625rem;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+}

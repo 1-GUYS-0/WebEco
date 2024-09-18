@@ -1,0 +1,110 @@
+@import "../../global/x_share/share_link";
+.payment{
+    @include --flex-column;
+    align-self: stretch;
+}
+.pay-card_wrapper{
+    @include --flex-row;
+    gap: var(--root-token-size-300);
+}
+.pay-card_infor-cust, .pay-card_total-price{
+    @include --flex-column;
+    gap: var(--root-token-size-125);
+    flex: 1;
+}
+.infor_cust, .infor_method-ex, .infor_mess{
+    padding: 0.5rem 0rem 0.5rem 0rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    align-self: stretch;
+}
+.infor_mess{
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    min-height: 6.25rem;
+    padding: 0.5rem;
+}
+.cust_contain{
+    display: flex;
+    flex-direction: row;
+    gap: 0.625rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    align-self: stretch;
+    position: relative;
+}
+.cust_input{
+    @include --flex-column;
+    min-width: 21.875rem;
+}
+.mess_lable{
+    @include --body-lg;
+    position: relative;
+    max-width: 56.125rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.product-selected{
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self:stretch
+}
+.product-list{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+.product-items{
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+}
+.product-image_selected{
+    display: flex;
+    border-radius: 0.5rem;
+    width: 9rem;
+    height: 6rem;;
+}
+.quantity-controls{
+    border-style: solid;
+    border-color: var(--black, #121212);
+    border-width: 0.2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 9.125rem;
+    height: 2.75rem;
+    position: relative;
+}
+.product-details{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex: 1;
+    position: relative;
+}
+.total-price, .total-price_voucher, .price-breakdown, .price-breakdown_details, .total-price_cost, .cost_contain{
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    position: relative;
+}
+.price-breakdown_details, .cost_contain{
+    align-items: stretch;
+}

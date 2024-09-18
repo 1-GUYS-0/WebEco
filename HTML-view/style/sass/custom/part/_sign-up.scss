@@ -1,0 +1,60 @@
+@import "../../global/x_share/share_link";
+.sign-up {
+    @include --flex-column;
+    align-self: stretch;
+}
+.sign-up_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    flex-shrink: 0;
+    max-width: 37.5rem;
+    position: relative;
+}
+.sign-up_form{
+    background: var(--theme-white);
+    border-radius: var(--root-token-size-50);
+    border-style: solid;
+    border-color: #d9d9d9;
+    border-width: 0.1875rem;
+    padding: var(--root-token-size-150);
+    display: flex;
+    flex-direction: column;
+    gap: var(--root-token-size-150);
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    min-width: 20rem;
+    position: relative;
+}
+.form_input{
+    display: flex;
+    flex-direction: column;
+    gap: var(--root-token-size-50);
+    align-items: flex-start;
+    justify-content: flex-start;
+    position: relative;
+}
+.input-lable{
+    @include --body-lg;
+    align-self: stretch;
+    text-align: left;
+    font-weight: var(--text-h-lg-font-weight, 600);
+}
+.input-desc, .input-error{
+    @include --body-md;
+}
+.sign-up_forgot{
+    display: flex;
+    flex-direction: row;
+    gap: 0rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}

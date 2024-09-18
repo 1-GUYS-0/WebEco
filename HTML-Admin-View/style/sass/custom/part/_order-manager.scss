@@ -1,0 +1,19 @@
+@import "../../global/x_share/share_link";
+.container-table{
+    width: 100%; /* Chiều cao tối đa của container */
+    overflow-x: auto;  /* Cuộn ngang */
+}
+.container-table::-webkit-scrollbar {
+    width: 100px;
+    height: 10px;
+    background-color: #F5F5F5;
+}
+.container-table::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+    border-radius: 10px
+}
+
+.container-table::-webkit-scrollbar-thumb {
+    background-color: #545454;
+    border-radius: 10px
+}

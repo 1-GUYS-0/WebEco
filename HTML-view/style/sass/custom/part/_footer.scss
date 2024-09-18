@@ -1,0 +1,29 @@
+@import "../../global/x_share/share_link";
+.footer{
+    @include --flex-column;
+    align-self: stretch;
+}
+.footer_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+}
+.footer_content{
+    display: flex;
+    flex-direction: row;
+    align-self: stretch;
+    justify-content: space-between;
+}
+.footer_nav, .footer_social{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.nav-list, .social-list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.social-list{
+    flex-direction: row;
+}

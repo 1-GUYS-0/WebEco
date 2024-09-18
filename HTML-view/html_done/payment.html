@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./testcss.css">
+    <title>Payment</title>
+</head>
+
+<body>
+    <div class="pay-card">
+        <div class="padding-global">
+            <div class="container-large">
+                <div class="pandding-section-medium">
+                    <div class="pay-card__wrapper">
+                        <div class="pay-card__infor-cust">
+                            <div class="infor__cust">
+                                <div class="text">Thông tin liên hệ của bạn</div>
+                                <div class="cust-mail">@gmail.com</div>
+                                <div class="text2">Địa chỉ giao hàng</div>
+                                <div class="cust__contain">
+                                    <div class="cust__name">
+                                        <form for="myName" class="input">
+                                            <input type="text" id="myName" class="input__lable" placeholder="Họ và Tên">
+                                        </form>
+                                    </div>
+                                    <div class="cust__city">
+                                        <div class="city__lable">Chọn Tỉnh/Thành phố</div>
+                                        <img class="icon" src="./src/icon0.svg" />
+                                    </div>
+                                    <div class="cust__ward">
+                                        <div class="ward__lable">Chọn Phường/Xã</div>
+                                        <img class="icon" src="./src/icon1.svg" />
+                                    </div>
+                                    <div class="cust__number">
+                                        <form for="myNumber" class="input">
+                                            <input type="text" id="myNumber" class="input__lable"
+                                                placeholder="Nhập số điện thoại">
+                                        </form>
+                                    </div>
+                                    <div class="cust__district">
+                                        <div class="district__lable">Chọn Quận/Huyện</div>
+                                        <img class="icon" src="./src/icon2.svg" />
+                                    </div>
+                                    <div class="cust__number">
+                                        <form for="myAdress" class="input">
+                                            <input type="text" id="myAdress" class="input__lable"
+                                                placeholder="Nhập số nhà, tên đường">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="div"></div>
+                            <div class="infor__method-ex">
+                                <div class="method__ex">
+                                    <div class="ex__lable">Chọn phương thức vận chuyển</div>
+                                    <img class="icon" src="./src/icon3.svg" />
+                                </div>
+                                <div class="method__pament">
+                                    <div class="payment__lable">Chọn phương thức thanh toán</div>
+                                    <img class="icon" src="./src/icon4.svg" />
+                                </div>
+                            </div>
+                            <div class="div"></div>
+                            <form class="infor__mess">
+                                <textarea class="mess__lable"
+                                    placeholder="Bạn có lời nhắn gì thêm cho shop..... "></textarea>
+                            </form>
+                        </div>
+                        <div class="pay-card__total-price">
+                            <div class="total-price__prod-select">
+                                <div class="text3">Chi tiết đơn hàng</div>
+                                <div class="prod-select-cards">
+                                    <img class="cards__image" src="./src/cards-image0.png" />
+                                    <div class="prod-select-cards__contain">
+                                        <div class="prod-select-cards__infor">
+                                            <div class="infor__name">Product</div>
+                                            <div class="infor__input">
+                                                <button type="button" class="button--minus">
+                                                    <img src="./src/button-minus0.svg" />
+                                                </button>
+                                                <div class="number-order">1</div>
+                                                <button type="button" class="button--plus">
+                                                    <img src="./src/button-plus0.svg" />
+                                                </button>
+                                            </div>
+                                            <div class="infor__price">
+                                                <div class="_10-99">$10.99</div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="icon--delete">
+                                            <img src="./src/icon-delete0.svg" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="total-price__vouch">
+                                <div class="text3">Mã Khuyến mãi hoặc quà tặng</div>
+                                <form class="input2">
+                                    <input type="text" id="myVoucher" class="input__lable" placeholder="Nhập voucher">
+                                    <button type="button" class="button--vouch">
+                                        <p class="button__text">Áp dụng</p>
+                                    </button>
+                                </form>
+                                <div class="div"></div>
+                                <div class="total-price__price-breakdw">
+                                    <div class="price-breakdw__text">
+                                        <div class="text4">Tạm tính</div>
+                                        <div class="text4">Giảm giá</div>
+                                        <div class="text4">Phí vận chuyển</div>
+                                    </div>
+                                    <div class="price-breakdw__coast">
+                                        <div class="subtotal">1500</div>
+                                        <div class="discount">5000</div>
+                                        <div class="shipping">30000</div>
+                                    </div>
+                                </div>
+                                <div class="div"></div>
+                                <div class="text5">
+                                    * Khi nhấn nút Đặt hàng nghĩa là bạn đã đọc và đồng ý với các
+                                    điều khoản, chính sách bán hàng và bảo mật của chúng tôi tại
+                                    Website
+                                </div>
+                            </div>
+                            <div class="total-price__cost">
+                                <div class="cost__contain">
+                                    <div class="cost__text">
+                                        <div class="text4">Tạm tính</div>
+                                    </div>
+                                    <div class="cost__coast">
+                                        <div class="cost">150000</div>
+                                    </div>
+                                </div>
+                                <button type="button" class="button--order">
+                                    <p class="button__text">Đặt hàng</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

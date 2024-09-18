@@ -1,0 +1,20 @@
+@import "../../global/x_share/share_link";
+.rela-prod {
+    @include --flex-column;
+    align-self: stretch;
+    flex: none;
+}
+
+.rela-prod_wrapper {
+    @include --flex-column;
+    align-items: center;
+    align-self: stretch;
+    flex: none;
+}
+.rela-prod_list {
+    @include --flex-row;
+    gap: 2.1875rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-self: stretch;
+}

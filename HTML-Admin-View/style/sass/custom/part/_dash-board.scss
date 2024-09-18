@@ -1,0 +1,182 @@
+@import "../../global/x_share/share_link";
+
+.text_menu{
+    @include --body-md;
+    justify-content:center;
+}
+.module-menu{
+    @include --padding-small;
+    @include --flex-column;
+
+
+    flex-direction: row;
+    gap: var(--root-token-size-50, 0.5rem);
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    height: 3.0625rem;
+}
+.active{
+    background: #000000;
+    border-radius: 1rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    color: #ffffff;// Tác động đến text
+}
+.menu {
+    @include --flex-column;
+    gap: var(--root-token-size-200, 2rem);
+    align-self: stretch;
+    flex-shrink: 0;
+}
+
+.module-menu::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0px;
+    height: 2px;
+    background-color: black;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.module-menu:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+// .image-1 {
+//     width: 100%;
+//     height: 100%;
+//     position:relative;
+//     object-fit: cover;
+// }
+.store{
+    @include --flex-column;
+    gap: 0.625rem;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+.logo {
+    flex-shrink: 0;
+    width: 4.125rem;
+    height: 4.125rem;
+}
+.name_braind {
+    @include --heading-md;
+}
+.admin-user {
+    @include --flex-column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+.container_menu {
+    @include --flex-column;
+    @include --hide;
+    background: #ffffff;
+    border-radius: 0rem var(--root-token-size-100percent, 1rem) var(--root-token-size-100percent, 1rem) 0rem;
+    padding: 0rem var(--root-token-size-100percent, 1rem) 0rem var(--root-token-size-100percent, 1rem);
+    gap: var(--root-token-size-25, 0.25rem);
+    max-width: 13rem;
+}
+
+.container_dashboard {
+    @include --flex-column;
+    flex-direction: row;
+    gap: var(--root-token-size-100percent, 1rem);
+    align-items: flex-start;
+    justify-content: flex-start;
+    // flex-shrink: 0;
+    align-self:stretch;
+}
+
+.container_analyst{
+    @include --flex-column;
+    flex-direction: row;
+    gap: var(--root-token-size-50, 0.5rem);
+}
+.staticstic{
+    @include --flex-column;
+    gap:var(--root-token-size-200, 2rem);
+    align-items: stretch;
+}
+
+.analyst{
+    @include --flex-column;
+    flex-direction: row;
+    gap:var(--root-token-size-100percent,1rem);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+.new-analysts{
+    @include --flex-column;
+    gap: 0.625rem;
+    height: 11rem;
+}
+.new-things{
+    @include --flex-column;
+    background: #ffffff;
+    border-radius: var(--root-token-size-200,2rem);
+    padding: 0rem var(--root-token-size-50,0.5rem) 0rem var(--root-token-size-50,0.5rem);
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+}
+.text_analyst{
+    @include --body-md-bold;
+    flex:none;
+}
+.number{
+    @include --heading-lg;
+    flex:none;
+}
+.money-analysts{
+    @include --flex-column;
+    gap: var(--root-token-size-50);
+    height: 11rem;
+}
+.money-things{
+    @extend .new-things;
+}
+.available-product{
+    @include --flex-column;
+    background: #ffffff;
+    border-radius: var(--root-token-size-200, 2rem);
+    padding: var(--root-token-size-50,0.5rem);
+    gap: var(--root-token-size-100percent, 1rem);
+    align-items: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    min-height: 21.875rem;
+}
+.table{
+    @include --flex-column;
+    border-radius: var(--root-token-size-125,1.25rem);
+    padding: var(--root-token-size-125,1.25rem);
+    gap: var(--root-token-size-50,0.5rem);
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+
+}
+.graphic{
+    @include --flex-column;
+    gap: var(--root-token-size-125,1.25rem);
+    justify-content: center;
+}
+.table-cell-block{
+    @include --flex-column;
+    flex-direction: row;
+    justify-content: center;
+}

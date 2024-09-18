@@ -1,0 +1,34 @@
+@import "../../global/x_share/share_link";
+.trending-prods {
+    @include --flex-column;
+    align-items: center;
+    align-self: stretch;
+}
+
+.trending-prods_wrapper {
+    @include --flex-column;
+    gap: 2rem;
+    align-self: stretch;
+}
+
+.trending-prods_title {
+    @include --heading-lg;
+}
+
+.trending-prods-contain {
+    @include --flex-row;
+    gap: 2rem;
+    align-items:stretch;
+    align-self: stretch;
+    max-height: 45rem;
+}
+
+.trending-prods_cards {
+    @include --flex-column;
+    gap: 1.5rem;
+    align-self: stretch;
+}
+.trending-prods_cards-gr {
+    @include --flex-column;
+    gap: 2rem;
+}

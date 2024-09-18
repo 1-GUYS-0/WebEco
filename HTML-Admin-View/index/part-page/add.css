@@ -1,0 +1,184 @@
+.container-large,
+.container-large * {
+    box-sizing: border-box;
+}
+
+.container-large {
+    border-radius: 3.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--root-token-size-100percent, 1rem);
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+}
+
+.title {
+    background: #ffffff;
+    border-radius: var(--root-token-size-100percent, 1rem);
+    padding: var(--root-token-size-50, 0.5rem);
+    display: flex;
+    flex-direction: row;
+    gap: 0.625rem;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.danh-s-ch-s-n-ph-m {
+    color: #000000;
+    text-align: center;
+    font-family: var(--text-h-sx-font-family, "Inter-SemiBold", sans-serif);
+    font-size: var(--text-h-sx-font-size, 1.25rem);
+    line-height: var(--text-h-sx-line-height, 1.5rem);
+    font-weight: var(--text-h-sx-font-weight, 600);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-box {
+    background: #f8f9fb;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.625rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.search-bar {
+    border-radius: 0.625rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    padding:  1.25rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex: 1;
+    position: relative;
+}
+
+.vector {
+    flex-shrink: 0;
+    width: 1.146875rem;
+    height: 1.146875rem;
+    position: relative;
+    overflow: visible;
+}
+
+.search-for-invoice {
+    color: #bebfc3;
+    text-align: left;
+    font-family: "Inter-Medium", sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    width: 20.124375rem;
+    height: 1.1875rem;
+}
+
+.c-button {
+    background: #000000;
+    border-radius: 0.5rem;
+    border-style: solid;
+    border-color: #000000;
+    border-width: 0.0625rem;
+    padding: 0.875rem 1.5rem 0.875rem 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.button {
+    color: #ffffff;
+    text-align: left;
+    font-family: var(--small-text-font-family, "Inter-Medium", sans-serif);
+    font-size: var(--small-text-font-size, 1rem);
+    line-height: var(--small-text-line-height, 150%);
+    font-weight: var(--small-text-font-weight, 500);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.table {
+    background: #ffffff;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    align-items: flex-start;
+    justify-content: center;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.table-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.table-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.table-header {
+    color: #000000;
+    text-align: left;
+    font-family: "Inter-Medium", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    position: relative;
+}
+
+.table-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.table-cell {
+    color: #000000;
+    text-align: left;
+    font-family: "Inter-Medium", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    position: relative;
+}
