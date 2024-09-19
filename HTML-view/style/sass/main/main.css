@@ -73,6 +73,18 @@ dd {
   background-color: black;
 }
 
+.bg1-area {
+  background-color: #e06f6f;
+}
+
+.bg2-area {
+  background-color: #6fd1e0;
+}
+
+.bg3-area {
+  background-color: #6fe07e;
+}
+
 .light-text {
   color: white !important;
 }
@@ -861,4 +873,29 @@ dd {
 
 .social-list {
   flex-direction: row;
+}
+
+.detail-product {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+  align-items: center;
+  align-self: stretch;
+}
+
+.breadcrumbs {
+  padding: 0.5rem 0rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.1rem;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: stretch;
+  flex-shrink: 0;
+  position: relative;
 }/*# sourceMappingURL=main.css.map */

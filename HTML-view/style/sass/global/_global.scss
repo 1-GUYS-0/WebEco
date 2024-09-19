@@ -81,7 +81,15 @@ dd {
     height: var(--root-token-size-10, 0.125rem);
     background-color: black;
 }
-
+.bg1-area {
+    background-color: #e06f6f;
+}
+.bg2-area {
+    background-color: #6fd1e0;
+}
+.bg3-area {
+    background-color: #6fe07e;
+}
 .light-text {
     color: white !important;
 }

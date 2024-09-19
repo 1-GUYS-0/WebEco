@@ -1,0 +1,17 @@
+@import "../../global/x_share/share_link";
+.detail-product {
+    @include --flex-column;
+    align-items: center;
+    align-self: stretch;
+}
+.breadcrumbs{
+    padding: 0.5rem 0rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.1rem;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: stretch;
+    flex-shrink: 0;
+    position: relative;
+}
