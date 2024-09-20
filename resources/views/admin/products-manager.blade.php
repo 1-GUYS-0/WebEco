@@ -23,8 +23,8 @@
                                     </form> 
                                 </div>
                                 <div class="new-catergory">
-                                    <button type="button" onclick="alert('Xin chào!')" class="button">
-                                        <div class="light-text"> Add new catergory</div>
+                                    <button type="button" class="button">
+                                    <a class="light-text" href="{{ route('caters.view_add-product') }}"> Add new catergory</a>
                                     </button>
                                 </div>
                             </div> <!-- thanh search-->

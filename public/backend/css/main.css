@@ -9,6 +9,13 @@
   box-sizing: border-box;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: var(--root-token-size-150);
+  flex: 1;
+}
 body {
   background: var(--theme-primary, #ede9ff);
 }
