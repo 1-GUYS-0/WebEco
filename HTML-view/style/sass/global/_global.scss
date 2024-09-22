@@ -144,9 +144,17 @@ dd {
     border-color: #000000;
     border-width: 0.0625rem;
     padding: 0.875rem 1.5rem 0.875rem 1.5rem;
+    display: flex;
     align-self: stretch;
     justify-content: center;
     flex-shrink: 0;
     position: relative;
     overflow: hidden;
+}
+.card-image{
+    border: 0.0625rem solid #1d1a1a; /* Đặt viền màu đen */
+    border-radius: 1rem; 
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
 }

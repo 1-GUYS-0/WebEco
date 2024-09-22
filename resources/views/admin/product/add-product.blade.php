@@ -16,7 +16,7 @@
                             <form class="form_add-product">
                                 <div class="wrap_input">
                                     <div class="input" for="nameProduct">
-                                        <div class="input_title">fsdsdfds Tên sản phẩm</div>
+                                        <div class="input_title">Tên sản phẩm</div>
                                         <input type="text" id="nameProduct" class="input_lable" placeholder="Nhập tên sản phẩm">
                                     </div>
                                     <div class="input" for="priceProduct">
