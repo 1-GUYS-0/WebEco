@@ -19,8 +19,8 @@ Route::post('/caters/add-category', [CategoryController::class, 'store'])->name(
 // Định nghĩa route cho trang quảng lý sản phẩm
 Route:: get('/products', [PageController::class, 'products']);
 
-Route::get('/product/add-product', [ProductController::class, 'create'])->name('caters.view_add-product');
-Route::post('/product/add-product', [ProductController::class, 'store'])->name('caters.add-product');
+Route::get('/product/add-product', [ProductController::class, 'create'])->name('products.view_add-product');
+Route::post('/product/add-product', [ProductController::class, 'store'])->name('products.add-product');
 
 //Định nghĩa routr cho trang quản lý slide
 Route:: get('/slides', [PageController::class, 'slides']);

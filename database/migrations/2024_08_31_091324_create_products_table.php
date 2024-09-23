@@ -12,14 +12,30 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->id(); // ID
+            $table->string('name'); // Name
+            $table->decimal('price', 8, 2); // Price
+            $table->text('description'); // Description
+            $table->string('smell'); // Smell
+            $table->string('texture'); // Texture
+            $table->text('htu'); // HTU (How To Use)
+            $table->text('ingredient'); // Ingredient
+            $table->string('main_ingredient'); // MainIngredient
+            $table->string('skin'); // Skin
+            $table->integer('stock'); // Stock
+            $table->unsignedBigInteger('categories_id'); // CategoriesId
+            $table->decimal('total_rating', 3, 2); // TotalRating
+            $table->integer('total_purchase_quantity'); // TotalPurchaseQuantity
+            $table->timestamps(); // CreatedAt and EditedAt (Laravel's default timestamps)
+
+            // Set foreign key
+            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade'); // khóa ngoại liên kết với bảng categories
         });
     }
+    
 
-    /**
-     * Reverse the migrations.
-     */
+
+
     public function down(): void
     {
         Schema::dropIfExists('products');

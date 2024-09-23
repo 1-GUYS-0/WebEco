@@ -11,7 +11,7 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.Catergory.add-category', ['categoriesIBL' => $categories]); // Trả về view form thêm danh mục
+        return view('admin.Catergory.add-category', ['categoriesIBL' => $categories]); // Trả về view form thêm danh mục and truyền biến categoriesIBL chứa danh sách danh mục
     }
     // Lấy data từ form
     public function store(Request $request)

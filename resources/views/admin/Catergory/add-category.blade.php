@@ -13,7 +13,6 @@
                 </div>
                 <div class="input">
                     <div class="input_title">Tên danh mục cha thuộc về</div>
-                    <!-- <input type="text" id="parent_category" name="parent_category" class="input_lable" placeholder="Nhập tên danh mục cha"> -->
                     <select id="parent_category" name="parent_category" class="input_lable">
                         <option value="">No Parent</option> <!-- Để trống -->
                         @foreach($categoriesIBL as $category)
@@ -31,7 +30,7 @@
     </div>
 </div>
 <script>
-    var addCategoryUrl = "{{ route('caters.add-category') }}";
+    const addCategoryUrl = "{{ route('caters.add-category') }}";
 </script>
 <script src="{{asset('backend/js/catergories/add-catergory-ajax.js')}}" defer></script>
 
