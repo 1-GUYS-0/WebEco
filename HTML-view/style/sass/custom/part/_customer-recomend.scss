@@ -12,12 +12,12 @@
     @include --heading-lg;
 }
 .cust-recomm_contain {
-    @include --flex-row;
+    display: flex;
+    flex-direction: row;
     gap: 2.1875rem;
     justify-content: center;
     flex-wrap: wrap;
     align-self: stretch;
-    //flex-shrink: 0;  vấn đề khiến cho element ko tự thu lại khi kích thức pảent thay đổi
 }
 .cust-recomm_cards {
     @include --flex-column;

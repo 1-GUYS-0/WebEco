@@ -12,9 +12,16 @@
     flex: none;
 }
 .rela-prod_list {
-    @include --flex-row;
+    display: flex;
+    flex-direction: row;
     gap: 2.1875rem;
     justify-content: center;
-    flex-wrap: wrap;
     align-self: stretch;
+    flex:1;
+}
+.rela-prod_item{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
 }

@@ -16,7 +16,6 @@ $(document).ready(function () {
         const ingreMainProduct = $('#ingreMainProduct').val();
         const skinProduct = $('#skinProduct').val();
         const cateProduct = $('#cateProduct').val();
-        const parentCateProduct = $('#parentCateProduct').val();
         const detailProduct = $('#detailProduct').val();
         const noteProduct = $('#noteProduct').val();
         const specificDetailProduct = $('#specificDetailProduct').val();
@@ -29,7 +28,6 @@ $(document).ready(function () {
             ingre_main_product: ingreMainProduct,
             skin_product: skinProduct,
             cate_product: cateProduct,
-            parent_cate_product: parentCateProduct,
             detail_product: detailProduct,
             note_product: noteProduct,
             specific_detail_product: specificDetailProduct

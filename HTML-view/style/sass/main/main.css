@@ -19,11 +19,8 @@ ul {
 }
 
 img {
-  align-self: stretch;
-  -o-object-fit: cover;
-     object-fit: cover;
+  border-radius: 15px;
   overflow: hidden;
-  border-radius: 0.5rem;
 }
 
 form {
@@ -171,13 +168,33 @@ dd {
 }
 
 .card-image {
-  border: 0.0625rem solid #1d1a1a; /* Đặt viền màu đen */
+  border: 0.0625rem solid #1d1a1a;
+  /* Đặt viền màu đen */
   border-radius: 1rem;
   display: flex;
   flex-grow: 1;
   justify-content: center;
+  align-self: stretch;
 }
 
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .class-name {
+    /* Styles for small devices */
+  }
+}
+/* Medium devices (tablets, 600px to 768px) */
+@media only screen and (min-width: 600px) and (max-width: 992px) {
+  .class-name {
+    /* Styles for medium devices */
+  }
+}
+/* Large devices (large desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .class-name {
+    /* Styles for extra large devices */
+  }
+}
 .nav-bar {
   display: flex;
   flex-direction: column;
@@ -373,12 +390,6 @@ dd {
 .cust-recomm_contain {
   display: flex;
   flex-direction: row;
-  gap: 0rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  overflow: hidden;
-  flex: 1;
   gap: 2.1875rem;
   justify-content: center;
   flex-wrap: wrap;
@@ -505,40 +516,23 @@ dd {
 .trending-prods-contain {
   display: flex;
   flex-direction: row;
-  gap: 0rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  overflow: hidden;
-  flex: 1;
+  flex-wrap: wrap;
   gap: 2rem;
-  align-items: stretch;
   align-self: stretch;
-  max-height: 45rem;
 }
 
 .trending-prods_cards {
   display: flex;
   flex-direction: column;
-  gap: 0rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  overflow: hidden;
-  flex: 1;
   gap: 1.5rem;
   align-self: stretch;
+  flex-grow: 1;
 }
 
 .trending-prods_cards-gr {
   display: flex;
   flex-direction: column;
-  gap: 0rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  overflow: hidden;
-  flex: 1;
+  flex-grow: 1;
   gap: 2rem;
 }
 
@@ -572,16 +566,16 @@ dd {
 .rela-prod_list {
   display: flex;
   flex-direction: row;
-  gap: 0rem;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  overflow: hidden;
-  flex: 1;
   gap: 2.1875rem;
   justify-content: center;
-  flex-wrap: wrap;
   align-self: stretch;
+  flex: 1;
+}
+
+.rela-prod_item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .sign-up {

@@ -41,16 +41,6 @@
                 </select>
                 <!-- <input type = "text" id = "caterProduct" class = "input_lable" placeholder = "Chọn danh mục sản phẩm"> -->
             </div>
-            <div class = "input" for = "parentCateProduct">
-                <div class = "input_title">Danh mục cha</div>
-                <select type = "text" id = "parenCateProduct" class = "input_lable">
-                        <option value="">No Parent</option> <!-- Để trống -->
-                        @foreach($categoriesIBL as $category)
-                        <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
-                        @endforeach
-                </select>
-                <!-- <input type = "text" id = "parenCaterProduct" class = "input_lable" placeholder = "Chọn danh mục cha của sản phẩm"> -->
-            </div>
         </div>
         <div class = "div"></div>
         <div class = "input" for = "detailProduct">

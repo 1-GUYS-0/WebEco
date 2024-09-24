@@ -16,19 +16,23 @@
 }
 
 .trending-prods-contain {
-    @include --flex-row;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     gap: 2rem;
-    align-items:stretch;
     align-self: stretch;
-    max-height: 45rem;
 }
 
 .trending-prods_cards {
-    @include --flex-column;
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
     align-self: stretch;
+    flex-grow: 1;
 }
 .trending-prods_cards-gr {
-    @include --flex-column;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     gap: 2rem;
 }
