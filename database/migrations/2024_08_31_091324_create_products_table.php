@@ -24,8 +24,9 @@ return new class extends Migration
             $table->string('skin'); // Skin
             $table->integer('stock'); // Stock
             $table->unsignedBigInteger('categories_id'); // CategoriesId
-            $table->decimal('total_rating', 3, 2); // TotalRating
-            $table->integer('total_purchase_quantity'); // TotalPurchaseQuantity
+            $table->decimal('total_rating', 3, 2)->nullable(); // TotalRating
+            $table->integer('total_purchase_quantity')->nullable(); // TotalPurchaseQuantity
+            $table->string('note'); // Note
             $table->timestamps(); // CreatedAt and EditedAt (Laravel's default timestamps)
 
             // Set foreign key

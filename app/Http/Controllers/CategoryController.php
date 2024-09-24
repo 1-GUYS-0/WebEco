@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    // Hiển thị danh sách danh mục sản phẩm
+    public function show()
+    {
+        $categories = Category::all();
+        return view('admin.catergories-manager', ['categoriesIBL' => $categories]); // Trả về view danh sách danh mục and truyền biến categoriesIBL chứa danh sách danh mục
+    }
     // Hiển thị form thêm danh mục sản phẩm
     public function create()
     {
@@ -27,5 +33,18 @@ class CategoryController extends Controller
         $category->save();
 
         return response()->json(['success' => true]);
+    }
+    //
+    public function destroy($id)
+    {
+        $category = Category::find($id);
+
+        if (!$category) {
+            return response()->json(['error' => 'Category not found.'], 404);
+        }
+
+        $category->delete();
+
+        return response()->json(['success' => 'Category deleted successfully.']);
     }
 }

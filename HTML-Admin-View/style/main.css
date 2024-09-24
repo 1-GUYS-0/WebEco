@@ -198,6 +198,10 @@ th, td {
   color: white !important;
 }
 
+.dark-text {
+  color: black !important;
+}
+
 .cards-image {
   border-radius: 0.5rem;
   align-self: stretch;

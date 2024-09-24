@@ -11,7 +11,7 @@
             <a class="text_menu"  href="/dashboard" >analyst-dashboard</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/caters" >category-managerment</a>
+            <a class="text_menu" href="/categories" >category-managerment</a>
         </button>
         <button class="module-menu">
             <a class="text_menu" href="/products">product-managerment</a>

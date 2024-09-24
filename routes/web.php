@@ -2,18 +2,23 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductImagesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-
+use App\Models\ProductImage;
 
 // Định nghĩa route cho trang chủ admin
 Route::get('/dashboard', [PageController::class, 'dashboard']);
 
 // Định nghĩa route cho trang quản lý danh mục sản phẩm
-Route::get('/caters', [PageController::class, 'catergories']);
-
-Route::get('/caters/add-category', [CategoryController::class, 'create'])->name('caters.view_add-category');
-Route::post('/caters/add-category', [CategoryController::class, 'store'])->name('caters.add-category');
+    // route trang danh mục
+Route::get('/categories', [CategoryController::class, 'show'])->name('categories.view_categories');
+    // route trang thêm danh mục
+Route::get('/categories/add-category', [CategoryController::class, 'create'])->name('categories.view_add-category');
+Route::post('/categories/add-category', [CategoryController::class, 'store'])->name('categories.add-category');
+    // route sửa và xóa danh mục
+Route::get('/categories/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
+Route::delete('/categories/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
 
 
 // Định nghĩa route cho trang quảng lý sản phẩm

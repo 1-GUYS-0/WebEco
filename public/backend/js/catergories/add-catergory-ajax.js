@@ -26,7 +26,7 @@ $(document).ready(function () {
             success: function (response) {
                 alert('Dữ liệu đã được gửi thành công!');
                 console.log(response);
-                $('#categoryForm').load(location.href + ' #categoryForm');
+                location.reload(); // Reload lại toàn bộ trang sau khi xóa thành công
             },
             error: function (xhr, status, error) {
                 alert('Có lỗi xảy ra trong quá trình gửi dữ liệu.');

@@ -70,29 +70,29 @@ Menu({
 });
 
 
-//Thực hiện việc lấy thông tin các giá trị input từ form
-function FormData(selector) {
-    const inputwrap = document.querySelectorAll(selector.input);
+// //Thực hiện việc lấy thông tin các giá trị input từ form
+// function FormData(selector) {
+//     const inputwrap = document.querySelectorAll(selector.input);
     
-    if (inputwrap){
-        const Forms = FormData.SelectForm();
-        if (Forms){
-            Forms.onsubmit = function (event) { //Xác định khi nút được submit mới tiến hàng lấy data, đồng thời đã get được 'form'
-                event.preventDefault(); // ngăn không cho form được gữi đi
-                const inputs = Forms.querySelectorAll("input");
-                inputs.forEach(function (input) {
-                    console.log(input.id, '=', input.value)
-                })
-            }
-        }
-    }
-}
-// Lấy các thẻ form chứa input
-FormData.SelectForm = function () {
-    const getform = document.querySelector("form");
-    return getform
-}
-FormData({
-    input: '.wrap_input',
-    SelectForm: FormData.SelectForm(),//Có thể bỏ vì chỉ là yếu tố phát triển chức năng lúc ban đầu
-})
+//     if (inputwrap){
+//         const Forms = FormData.SelectForm();
+//         if (Forms){
+//             Forms.onsubmit = function (event) { //Xác định khi nút được submit mới tiến hàng lấy data, đồng thời đã get được 'form'
+//                 event.preventDefault(); // ngăn không cho form được gữi đi
+//                 const inputs = Forms.querySelectorAll("input");
+//                 inputs.forEach(function (input) {
+//                     console.log(input.id, '=', input.value)
+//                 })
+//             }
+//         }
+//     }
+// }
+// // Lấy các thẻ form chứa input
+// FormData.SelectForm = function () {
+//     const getform = document.querySelector("form");
+//     return getform
+// }
+// FormData({
+//     input: '.wrap_input',
+//     SelectForm: FormData.SelectForm(),//Có thể bỏ vì chỉ là yếu tố phát triển chức năng lúc ban đầu
+// })

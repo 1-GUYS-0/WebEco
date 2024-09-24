@@ -30,7 +30,7 @@
     </div>
 </div>
 <script>
-    const addCategoryUrl = "{{ route('caters.add-category') }}";
+    const addCategoryUrl = "{{ route('categories.add-category') }}";
 </script>
 <script src="{{asset('backend/js/catergories/add-catergory-ajax.js')}}" defer></script>
 

@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Models;
-use App\Models\ProductImages;
+use App\Models\ProductImage;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Product extends Model
 {
     use HasFactory;
 
@@ -22,13 +23,17 @@ class Products extends Model
         'skin',
         'stock',
         'categories_id',
-        'total_rating',
-        'total_purchase_quantity',
+        'note',
     ];
 
     // Xác định quan hệ với bảng product_images
     public function images()
     {
-        return $this->hasMany(ProductImages::class, 'product_id');
+        return $this->hasMany(ProductImage::class, 'product_id');
+    }
+    //Xác định quan hệ với bảng categories
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'categories_id');
     }
 }

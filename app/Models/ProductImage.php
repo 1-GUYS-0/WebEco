@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductImages extends Model
+class ProductImage extends Model
 {
     use HasFactory;
     // Các trường có thể được gán hàng loạt
@@ -17,6 +17,6 @@ class ProductImages extends Model
     // Xác định quan hệ với bảng products
     public function products()
     {
-        return $this->belongsTo(Products::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }
