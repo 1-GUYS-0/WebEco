@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function show()
+    {
+        $products = Product::with(['category', 'images'])->get(); // Tải trước thông tin category và images
+        return view('admin.products-manager', ['productsIBL' => $products]);
+    }
     public function create()
     {
         $categories = Category::all();
@@ -54,7 +59,8 @@ class ProductController extends Controller
 
         // Lưu hình ảnh sản phẩm
         if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
+            foreach ($request->file('images') as $image) 
+            {
                 $path = $image->store('product_images', 'public');  // lưu hình ảnh vào thư mục storage/app/public/product_images
                 ProductImage::create // tạo mới bản ghi trong bảng product_images
                 ([

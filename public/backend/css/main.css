@@ -751,6 +751,24 @@ th, td {
   padding: 0.875rem 1.5rem 0.875rem 1.5rem;
 }
 
+.size_review_images {
+  width: 7rem; /* Đặt chiều rộng của container */
+  height: 8rem; /* Đặt chiều cao của container */
+  border-radius: 1rem;
+  border: 0.2rem solid black; /* Bo tròn các góc của container */
+  overflow: hidden; /* Ẩn phần thừa của hình ảnh vượt ra ngoài container */
+  display: flex; /* Sử dụng Flexbox để căn chỉnh hình ảnh */
+  justify-content: center; /* Căn giữa hình ảnh theo chiều ngang */
+  align-items: center; /* Căn giữa hình ảnh theo chiều dọc */
+}
+
+.size_review_images img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  overflow: hidden;
+  border: 1rem;
+}
+
 .container-table {
   width: 100%; /* Chiều cao tối đa của container */
   overflow-x: auto; /* Cuộn ngang */

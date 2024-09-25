@@ -22,10 +22,13 @@ Route::delete('/categories/delete-category/{id}', [CategoryController::class, 'd
 
 
 // Định nghĩa route cho trang quảng lý sản phẩm
-Route:: get('/products', [PageController::class, 'products']);
-
+Route:: get('/products', [ProductController::class, 'show'])->name('products.view_products');
+    // route thêm sản phẩm  
 Route::get('/product/add-product', [ProductController::class, 'create'])->name('products.view_add-product');
 Route::post('/product/add-product', [ProductController::class, 'store'])->name('products.add-product');
+    // route sửa và xóa sản phẩm
+Route::get('/product/edit-product/{id}', [ProductController::class, 'edit'])->name('products.view_edit-product');
+Route::delete('/product/delete-product/{id}', [ProductController::class, 'destroy'])->name('products.delete-product');
 
 //Định nghĩa routr cho trang quản lý slide
 Route:: get('/slides', [PageController::class, 'slides']);

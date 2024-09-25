@@ -35,3 +35,19 @@
     border-width: 0.0625rem;
     padding: 0.875rem 1.5rem 0.875rem 1.5rem;
 }
+.size_review_images{
+    width: 7rem;            /* Đặt chiều rộng của container */
+    height: 8rem;           /* Đặt chiều cao của container */
+    border-radius: 1rem; 
+    border: 0.2rem solid black;    /* Bo tròn các góc của container */
+    overflow: hidden;        /* Ẩn phần thừa của hình ảnh vượt ra ngoài container */
+    display: flex;           /* Sử dụng Flexbox để căn chỉnh hình ảnh */
+    justify-content: center; /* Căn giữa hình ảnh theo chiều ngang */
+    align-items: center;     /* Căn giữa hình ảnh theo chiều dọc */
+}
+.size_review_images img {
+    object-fit: cover;     // Đảm bảo hình ảnh bao phủ toàn bộ vùng chứa mà không bị biến dạng
+    overflow: hidden;    // Ẩn phần hình ảnh vượt ra khỏi vùng chứa
+    border: 1rem;
+
+}
