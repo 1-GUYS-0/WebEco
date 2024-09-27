@@ -42,4 +42,11 @@ Route:: get('/users', [PageController::class, 'users']);
 // ĐỊnh nghĩa route cho trang quản lý admin
 Route:: get('/admins', [PageController::class, 'admins']);
 
+//=====Customer routes=====\
+Route:: get('/sign-up', [PageController::class, 'signUp']);
+Route:: get('/sign-in', [PageController::class, 'signIn']);
 
+Route:: get('/home', [PageController::class, 'home']);
+
+Route:: get('/payment', [PageController::class, 'payment']);
+Route:: get('/product', [PageController::class, 'product']);

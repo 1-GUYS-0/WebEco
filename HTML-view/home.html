@@ -10,12 +10,13 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="./js/index.js" defer></script>
     <title>HOME</title>
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="nav-bar">
+        <nav class="nav-bar">
             <div class="padding-global discolumn">
                 <div class="container-large discolumn">
                     <div class="padding-section-small discolumn">
@@ -40,28 +41,30 @@
                                     <div class="light-text">Sign up</div>
                                 </button>
                             </div>
+                            <span class="material-symbols-outlined">menu</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="hero">
+        </nav>
+        <div class="nav-bar">
             <div class="padding-global discolumn">
                 <div class="container-large discolumn">
-                    <div class="padding-section-small">
-                        <div class="hero_wrapper">
-                            <img class="header-image" src="./src/header-image0.png" />
-                            <div class="hero_header">
-                                <div class="header_title">
-                                    <h1 class="shop-title light-text">Shop title</h1>
-                                    <h5 class="title-desc light-text">
-                                        Subheading with description of your shopping site
-                                    </h5>
+                    <div class="padding-section-small discolumn">
+                        <div class="slide-container">
+                            <div class="slides">
+                                <div class="slide">
+                                    <img src="./src/cards-image1.png" alt="Slide 1">
                                 </div>
-                                <button type="button" class="button">
-                                    <div class="light-text">Login</div>
-                                </button>
+                                <div class="slide">
+                                    <img src="./src/cards-image3.png" alt="Slide 2">
+                                </div>
+                                <div class="slide">
+                                    <img src="./src/cards-image1.png" alt="Slide 3">
+                                </div>
                             </div>
+                            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1)">&#10095;</button>
                         </div>
                     </div>
                 </div>
@@ -306,161 +309,6 @@
                 </div>
             </div>
         </div>
-        <div class="payment">
-            <div class="padding-global discolumn">
-                <div class="container-large discolumn">
-                    <div class="pandding-section-medium">
-                        <div class="pay-card_wrapper">
-                            <div class="pay-card_infor-cust d-none ">
-                                <div class="infor_cust ">
-                                    <h3>Thông tin liên hệ của bạn</h3>
-                                    <div class="text">@gmail.com</div>
-                                    <div class="text">Địa chỉ giao hàng</div>
-                                    <div class="cust_contain">
-                                        <div class="cust_input">
-                                            <form for="myName" class="input">
-                                                <input type="text" id="myName" class="input__lable"
-                                                    placeholder="Họ và Tên">
-                                            </form>
-                                        </div>
-                                        <div class="cust_input">
-                                            <select aria-label="Chọn tỉnh thành">
-                                                <option value="" disabled selected hidden>Chọn 1 tỉnh thành</option>
-                                                <option value="2">TH.HCM</option>
-                                                <option value="3">Đà Nẵng</option>
-                                                <option value="3">Hà Nội</option>
-                                            </select>
-                                        </div>
-                                        <div class="cust_input">
-                                            <select aria-label="Chọn tỉnh Phường/Xã">
-                                                <option value="" disabled selected hidden>Chọn 1 Phườnh/Xã</option>
-                                                <option value="phuocmy">phước mỹ</option>
-                                                <option value="aa">aa</option>
-                                                <option value="bb">bb</option>
-                                            </select>
-                                        </div>
-                                        <div class="cust_input">
-                                            <form for="myNumber" class="input">
-                                                <input type="text" id="myNumber" class="input__lable"
-                                                    placeholder="Nhập số điện thoại">
-                                            </form>
-                                        </div>
-                                        <div class="cust_input">
-                                            <select aria-label="Chọn tỉnh Quận/Huyện">
-                                                <option value="" disabled selected hidden>Chọn 1 Quận/Huyện</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select>
-                                        </div>
-                                        <div class="cust_input">
-                                            <form for="myAdress" class="input">
-                                                <input type="text" id="myAdress" class="input__lable"
-                                                    placeholder="Nhập số nhà, tên đường">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div><!--address of custormer-->
-                                <div class="div"></div>
-                                <div class="infor_method-ex  bg-secondary "">
-                                    <div class=" cust_input">
-                                    <select aria-label="Chọn phương thức vận chuyển">
-                                        <option value="" disabled selected hidden>Chọn 1 phương thức vận chuyển</option>
-                                        <option value="tannha">Tận Nhà</option>
-                                    </select>
-                                </div>
-                                <div class="cust_input">
-                                    <select aria-label="Chọn Phương Thức Thanh Toán">
-                                        <option value="" disabled selected hidden>Chọn 1 Phương Thức Thanh Toán</option>
-                                        <option value="tienmat">Tiền mặt</option>
-                                    </select>
-                                </div>
-                            </div><!--method express and payment-->
-                            <div class="div"></div>
-                            <div class="infor_mess">
-                                <form>
-                                    <textarea class="mess_lable"
-                                        placeholder="Bạn có lời nhắn gì thêm cho shop..... "></textarea>
-                                </form>
-                            </div>
-                        </div> <!--information of order-->
-                        <div class="pay-card_total-price bg-primary  ">
-                            <section class="product-selected">
-                                <h3>Chi tiết đơn hàng</h3>
-                                <ol class="product-list">
-                                    <li class="product-items">
-                                        <img src="./src/cards-image0.png" alt="Product Image"
-                                            class="product-image_selected" />
-                                        <!--inmage of product selected-->
-                                        <div class="product-details">
-                                            <a class="cards_name-prod">Product</a>
-                                            <div class="quantity-controls">
-                                                <button type="button">
-                                                    <span class="material-symbols-outlined">remove</span>
-                                                </button>
-                                                <div class="number-order">1</div>
-                                                <button type="button">
-                                                    <span class="material-symbols-outlined">add</span>
-                                                </button>
-                                            </div>
-                                            <div>
-                                                <span class="price">$10.99</span>
-                                            </div>
-                                        </div>
-                                        <button type="button">
-                                            <span class="material-symbols-outlined">cancel</span>
-                                        </button>
-                                    </li> <!--product selected-->
-                                </ol>
-                            </section>
-                            <div class="div"></div>
-                            <section class="total-price">
-                                <div class="total-price_voucher">
-                                    <h3>Mã Khuyến Mãi</h3>
-                                    <form>
-                                        <input type="text" id="myVoucher" placeholder="Enter voucher" size="5">
-                                        <button type="button" onclick="alert('Xin chào!')" class="button">
-                                            <div class="light-text">Áp dụng</div>
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="div"></div>
-                                <div class="price-breakdown">
-                                    <div class="price-breakdown_details">
-                                        <dl>
-                                            <dt>Tạm tính:</dt>
-                                            <dd class="price-breakdown__subtotal">1500</dd>
-                                            <dt>Giảm giá:</dt>
-                                            <dd class="price-breakdown__discount">5000</dd>
-                                            <dt>Phí vận chuyển:</dt>
-                                            <dd class="price-breakdown__shipping">30000</dd>
-                                        </dl>
-                                    </div>
-                                    <div class="div"></div>
-                                    <div class="total-price_cost">
-                                        <div class="cost_contain">
-                                            <dl>
-                                                <dt>Tổng cộng:</dt>
-                                                <dd class="total-price__amount">150000</dd>
-                                            </dl>
-                                        </div>
-                                        <button type="button" onclick="alert('Xin chào!')" class="button">
-                                            <div class="light-text">Đặt hàng</div>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="div"></div>
-                                <p class="terms-and-conditions">
-                                    * Khi nhấn nút Đặt hàng nghĩa là bạn đã đọc và đồng ý với các điều khoản,
-                                    chính sách bán hàng và bảo mật của chúng tôi tại Website
-                                </p>
-                            </section>
-                        </div><!-- calculator price and choosed products-->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="footer">
             <div class="padding-global discolumn">
                 <div class="container-large discolumn">
@@ -474,27 +322,31 @@
                                         </div>
                                         <nav class="footer_nav">
                                             <ul class="nav-list">
-                                                <li class="nav-item"><h4>name_topic</h4></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">name_topic</a></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">name_topic</a></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">name_topic</a></li>
+                                                <li>
+                                                    <h4>name_topic</h4>
+                                                </li>
+                                                <li><a href="#" class="nav-link">name_topic</a></li>
+                                                <li><a href="#" class="nav-link">name_topic</a></li>
+                                                <li><a href="#" class="nav-link">name_topic</a></li>
                                             </ul>
                                             <ul class="nav-list">
-                                                <li class="nav-item"><h4>name_topic</h4></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">name_topic</a></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">name_topic</a></li>
-                                                <li class="nav-item"><a href="#" class="nav-link">name_topic</a></li>
+                                                <li>
+                                                    <h4>name_topic</h4>
+                                                </li>
+                                                <li><a href="#" class="nav-link">name_topic</a></li>
+                                                <li><a href="#" class="nav-link">name_topic</a></li>
+                                                <li><a href="#" class="nav-link">name_topic</a></li>
                                             </ul>
                                         </nav>
                                         <div class="footer_social">
                                             <ul class="social-list">
-                                                <li class="social-item"><a href="#"><img src="./src/icon-links0.svg"
+                                                <li><a href="#"><img src="./src/icon-links0.svg"
                                                             alt="Social Icon 1"></a></li>
-                                                <li class="social-item"><a href="#"><img src="./src/icon-links1.svg"
+                                                <li><a href="#"><img src="./src/icon-links1.svg"
                                                             alt="Social Icon 2"></a></li>
-                                                <li class="social-item"><a href="#"><img src="./src/icon-links2.svg"
+                                                <li><a href="#"><img src="./src/icon-links2.svg"
                                                             alt="Social Icon 3"></a></li>
-                                                <li class="social-item"><a href="#"><img src="./src/icon-links3.svg"
+                                                <li><a href="#"><img src="./src/icon-links3.svg"
                                                             alt="Social Icon 4"></a></li>
                                             </ul>
                                         </div>
@@ -562,8 +414,7 @@
                                             </div>
                                             <img class="stars" src="./src/star.png" />
                                         </div>
-                                        <div
-                                            class="review-text">
+                                        <div class="review-text">
                                             I might be the only one to say this but the camera is a little
                                             funky. Hoping it will change with a software update:
                                             otherwise, love this phone! Came in great condition
@@ -584,8 +435,7 @@
                                             </div>
                                             <img class="stars" src="./src/star.png" />
                                         </div>
-                                        <div
-                                            class="review-text">
+                                        <div class="review-text">
                                             I might be the only one to say this but the camera is a little
                                             funky. Hoping it will change with a software update:
                                             otherwise, love this phone! Came in great condition
@@ -608,8 +458,164 @@
                 </div>
             </div>
         </div>
+        <div class="payment">
+            <div class="padding-global discolumn">
+                <div class="container-large discolumn">
+                    <div class="pandding-section-medium">
+                        <div class="pay-card_wrapper">
+                            <div class="pay-card_infor-cust">
+                                <div class="infor_cust ">
+                                    <h3>Thông tin liên hệ của bạn</h3>
+                                    <div class="text">@gmail.com</div>
+                                    <div class="text">Địa chỉ giao hàng</div>
+                                    <div class="cust_contain">
+                                        <div class="cust_input">
+                                            <form for="myName" class="input">
+                                                <input type="text" id="myName" class="input__lable"
+                                                    placeholder="Họ và Tên">
+                                            </form>
+                                        </div>
+                                        <div class="cust_input">
+                                            <select aria-label="Chọn tỉnh thành">
+                                                <option value="" disabled selected hidden>Chọn 1 tỉnh thành</option>
+                                                <option value="2">TH.HCM</option>
+                                                <option value="3">Đà Nẵng</option>
+                                                <option value="3">Hà Nội</option>
+                                            </select>
+                                        </div>
+                                        <div class="cust_input">
+                                            <select aria-label="Chọn tỉnh Phường/Xã">
+                                                <option value="" disabled selected hidden>Chọn 1 Phườnh/Xã</option>
+                                                <option value="phuocmy">phước mỹ</option>
+                                                <option value="aa">aa</option>
+                                                <option value="bb">bb</option>
+                                            </select>
+                                        </div>
+                                        <div class="cust_input">
+                                            <form for="myNumber" class="input">
+                                                <input type="text" id="myNumber" class="input__lable"
+                                                    placeholder="Nhập số điện thoại">
+                                            </form>
+                                        </div>
+                                        <div class="cust_input">
+                                            <select aria-label="Chọn tỉnh Quận/Huyện">
+                                                <option value="" disabled selected hidden>Chọn 1 Quận/Huyện</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                        <div class="cust_input">
+                                            <form for="myAdress" class="input">
+                                                <input type="text" id="myAdress" class="input__lable"
+                                                    placeholder="Nhập số nhà, tên đường">
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div><!--address of custormer-->
+                                <div class="div"></div>
+                                <div class="infor_method-ex  bg-secondary ">
+                                    <div class=" cust_input">
+                                        <select aria-label="Chọn phương thức vận chuyển">
+                                            <option value="" disabled selected hidden>Chọn 1 phương thức vận chuyển
+                                            </option>
+                                            <option value="tannha">Tận Nhà</option>
+                                        </select>
+                                    </div>
+                                    <div class="cust_input">
+                                        <select aria-label="Chọn Phương Thức Thanh Toán">
+                                            <option value="" disabled selected hidden>Chọn 1 Phương Thức Thanh Toán
+                                            </option>
+                                            <option value="tienmat">Tiền mặt</option>
+                                        </select>
+                                    </div>
+                                </div><!--method express and payment-->
+                                <div class="div"></div>
+                                <div class="infor_mess">
+                                    <form>
+                                        <textarea class="mess_lable"
+                                            placeholder="Bạn có lời nhắn gì thêm cho shop..... "></textarea>
+                                    </form>
+                                </div>
+                            </div> <!--information of order-->
+                            <div class="pay-card_total-price bg-primary  ">
+                                <section class="product-selected">
+                                    <h3>Chi tiết đơn hàng</h3>
+                                    <ol class="product-list">
+                                        <li class="product-items">
+                                            <img src="./src/cards-image0.png" alt="Product Image"
+                                                class="product-image_selected" />
+                                            <!--inmage of product selected-->
+                                            <div class="product-details">
+                                                <a class="cards_name-prod">Product</a>
+                                                <div class="quantity-controls">
+                                                    <button type="button">
+                                                        <span class="material-symbols-outlined">remove</span>
+                                                    </button>
+                                                    <div class="number-order">1</div>
+                                                    <button type="button">
+                                                        <span class="material-symbols-outlined">add</span>
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <span class="price">$10.99</span>
+                                                </div>
+                                            </div>
+                                            <button type="button">
+                                                <span class="material-symbols-outlined">cancel</span>
+                                            </button>
+                                        </li> <!--product selected-->
+                                    </ol>
+                                </section>
+                                <div class="div"></div>
+                                <section class="total-price">
+                                    <div class="total-price_voucher">
+                                        <h3>Mã Khuyến Mãi</h3>
+                                        <form>
+                                            <input type="text" id="myVoucher" placeholder="Enter voucher" size="5">
+                                            <button type="button" onclick="alert('Xin chào!')" class="button">
+                                                <div class="light-text">Áp dụng</div>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="div"></div>
+                                    <div class="price-breakdown">
+                                        <div class="price-breakdown_details">
+                                            <dl>
+                                                <dt>Tạm tính:</dt>
+                                                <dd class="price-breakdown__subtotal">1500</dd>
+                                                <dt>Giảm giá:</dt>
+                                                <dd class="price-breakdown__discount">5000</dd>
+                                                <dt>Phí vận chuyển:</dt>
+                                                <dd class="price-breakdown__shipping">30000</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="div"></div>
+                                        <div class="total-price_cost">
+                                            <div class="cost_contain">
+                                                <dl>
+                                                    <dt>Tổng cộng:</dt>
+                                                    <dd class="total-price__amount">150000</dd>
+                                                </dl>
+                                            </div>
+                                            <button type="button" onclick="alert('Xin chào!')" class="button">
+                                                <div class="light-text">Đặt hàng</div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="div"></div>
+                                    <p class="terms-and-conditions">
+                                        * Khi nhấn nút Đặt hàng nghĩa là bạn đã đọc và đồng ý với các điều khoản,
+                                        chính sách bán hàng và bảo mật của chúng tôi tại Website
+                                    </p>
+                                </section>
+                            </div><!-- calculator price and choosed products-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
 </body>
 
 </html>

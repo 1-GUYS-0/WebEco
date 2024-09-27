@@ -34,4 +34,25 @@ class PageController extends Controller
     {
         return view ('admin.admins-manager');
     }
+
+    public function signUp()
+    {
+        return view('customer.auth.sign-up');
+    }
+    public function signIn()
+    {
+        return view('customer.auth.sign-in');
+    }
+    public function home()
+    {
+        return view('customer.pages.index');
+    }
+    public function payment()
+    {
+        return view('customer.pages.payment');
+    }
+    public function product()
+    {
+        return view('customer.pages.products-detail');
+    }
 }

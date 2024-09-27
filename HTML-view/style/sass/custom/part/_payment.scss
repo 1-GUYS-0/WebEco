@@ -1,4 +1,5 @@
 @import "../../global/x_share/share_link";
+// ====================   PAYMENT   ====================
 .payment{
     @include --flex-column;
     align-self: stretch;
@@ -27,20 +28,10 @@
     min-height: 6.25rem;
     padding: 0.5rem;
 }
-.cust_contain{
-    display: flex;
-    flex-direction: row;
-    gap: 0.625rem;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-content: center;
-    align-self: stretch;
-    position: relative;
-}
+
 .cust_input{
     @include --flex-column;
-    min-width: 21.875rem;
+    // min-width: 21.875rem;
 }
 .mess_lable{
     @include --body-lg;

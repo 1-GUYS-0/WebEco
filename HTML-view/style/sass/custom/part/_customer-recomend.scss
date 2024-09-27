@@ -1,4 +1,5 @@
 @import "../../global/x_share/share_link";
+// ====================   CUSTOMER-RECOMEND   ====================
 .cust-recomm {
     @include --flex-column;
     align-items: center;
@@ -19,23 +20,13 @@
     flex-wrap: wrap;
     align-self: stretch;
 }
-.cust-recomm_cards {
-    @include --flex-column;
-    gap: 1.5rem;
-    flex-shrink: 0;
-    width: 25.25rem;
-    height: 22.875rem;
-    flex:none;
-}
+
 .cards_contain {
     @include --flex-column;
     gap: 0.25rem;
     justify-content: center;
     align-self: stretch;
     flex:none;
-}
-.cards_name-prod {
-    @include --heading-sm;
 }
 
 .cards_desc-prod {

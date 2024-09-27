@@ -1,8 +1,5 @@
 @import "../../global/x_share/share_link";
-.footer{
-    @include --flex-column;
-    align-self: stretch;
-}
+// ====================   FOOTER   ====================
 .footer_wrapper{
     display: flex;
     flex-direction: column;

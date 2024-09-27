@@ -1,4 +1,5 @@
 @import "../../global/x_share/share_link";
+// ====================   TRENDING-PRODUCT   ====================
 .trending-prods {
     @include --flex-column;
     align-items: center;
@@ -10,29 +11,10 @@
     gap: 2rem;
     align-self: stretch;
 }
-
-.trending-prods_title {
-    @include --heading-lg;
-}
-
-.trending-prods-contain {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 2rem;
-    align-self: stretch;
-}
-
 .trending-prods_cards {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     align-self: stretch;
     flex-grow: 1;
-}
-.trending-prods_cards-gr {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 2rem;
 }
