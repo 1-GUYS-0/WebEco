@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\Customer\ProductController as CustomerProductController;
+use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
+use App\Http\Controllers\Customer\PaymentController as CustomerPaymentController;
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductImagesController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Models\ProductImage;
 
 // Định nghĩa route cho trang chủ admin
 Route::get('/dashboard', [PageController::class, 'dashboard']);
@@ -46,12 +47,13 @@ Route:: get('/sign-up', [PageController::class, 'signUp']);
 Route:: get('/sign-in', [PageController::class, 'signIn']);
 
 Route:: get('/home', [PageController::class, 'home']);
-Route:: get('/home', [CustomerProductController::class, 'index']);
-Route::get('/product/load-more', [CustomerProductController::class, 'loadMore'])->name('customer.products.loadMore');
+Route:: get('/home', [CustomerHomeController::class, 'index']);
+Route::get('/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
 
-Route:: get('/payment', [PageController::class, 'payment']);
+Route:: get('/payment', [CustomerPaymentController::class, 'index']);
 Route:: get('/product', [PageController::class, 'product']);
 
-//test
-Route:: get('/test', [CustomerProductController::class, 'index']);
-Route::get('/test/load-more', [CustomerProductController::class, 'loadMore'])->name('customer.products.loadMore');
+
+// //test
+// Route:: get('/test', [CustomerProductController::class, 'index']);
+// Route::get('/test/load-more', [CustomerProductController::class, 'loadMore'])->name('customer.products.loadMore');

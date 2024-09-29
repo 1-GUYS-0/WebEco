@@ -4,18 +4,24 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class ProductController extends Controller
+class HomeController extends Controller
 {
     public function index()
     {
         // Lấy 3 sản phẩm đầu tiên
-        $products = Product::with('images')->paginate(3);
+        $Products = Product::with('images')->paginate(3);
+        // Lấy banner hiển thị
+        $Banners = 
+        Banner::where('start_date', '<=', now())
+        ->where('end_date', '>=', now())
+        ->get();
 
         // Truyền dữ liệu đến view
-        return view('customer.pages.index', compact('products'));
+        return view('customer.pages.index',compact('Banners', 'Products'));
     }
 
     public function loadMore(Request $request)

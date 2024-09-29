@@ -1,27 +1,25 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateBannersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('banners', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('images_path'); // Mảng chứa đường dẫn 1 ảnh của banner
+            $table->date('start_date'); // Ngày bắt đầu hiển thị banner
+            $table->date('end_date'); // Ngày kết thúc hiển thị banner
+            $table->string('link_to')->nullable(); // Đường dẫn khi click vào banner
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('banners');
     }
-};
+}

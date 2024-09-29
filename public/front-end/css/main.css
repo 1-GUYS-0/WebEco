@@ -870,7 +870,8 @@ select {
   border-color: #d9d9d9;
   border-width: 0.0625rem;
   padding: var(--root-token-size-50) var(--root-token-size-100percent) var(--root-token-size-50) var(--root-token-size-100percent);
-  align-self: stretch;
+  flex-grow: 1;
+  width: 100%;
 }
 
 dl {
@@ -1090,5 +1091,12 @@ dd {
     display: none;
   }
 }
-
+.number-order{
+  max-width: 3rem;
+  border: none;
+}
+label{
+  display: flex;
+  align-self: stretch;
+}
 /*# sourceMappingURL=main.css.map */
