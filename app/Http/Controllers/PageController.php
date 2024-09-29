@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
+    public function test()
+    {
+        return view('customer.pages.test');
+    }
     public function dashboard()
     {
         return view('admin.dashboard');

@@ -158,27 +158,36 @@ dd {
 }
 
 .card-image {
-    border: 0.0625rem solid #1d1a1a;
     /* Đặt viền màu đen */
+    border: 0.0625rem solid #1d1a1a;
     border-radius: 1rem;
     display: flex;
     flex-grow: 1;
     justify-content: center;
     align-self: stretch;
+    max-width: 20rem;
+    max-height: 20rem;
+    align-self: center;
     // overflow: hidden;
 }
 
 /* Small devices (phones, 600px and down) */
 @media only screen and (max-width: 650px) {
+    .material-symbols-outlined.close-btn.hide {
+        display: none;
+    }
 
-    // ==nav-bar==
+    .material-symbols-outlined.close-btn.active {
+        display: inherit;
+    }
+
     .nav-bar_menu.active {
-        top: 50%;
+        top: 26%;
     }
 
     .nav-bar_menu {
-        width: 17rem;
-        height: 30rem;
+        width: 25rem;
+        height: 20rem;
         background-color: #ffffff;
         border-radius: 1rem;
         border: 0.3rem solid rgb(0, 0, 0);
@@ -194,7 +203,6 @@ dd {
         transition: top 0.5s ease-in-out;
     }
 
-    // ==related-product==
     .rela-prod_list {
         overflow-x: auto;
         justify-content: flex-start;
@@ -206,12 +214,10 @@ dd {
         width: 200px;
     }
 
-    // ==detail-product==
     .product-detail {
         flex-direction: column;
     }
 
-    //==payment==
     .pay-card_wrapper {
         flex-direction: column;
     }
@@ -229,7 +235,7 @@ dd {
 @media only screen and (min-width: 650px) and (max-width: 992px) {
 
     /* Chọn phần tử <span> có class "material-symbols-outlined" và chứa nội dung là "menu" */
-    .nav-bar_wrapper .material-symbols-outlined:nth-child(3) {
+    .nav-bar_wrapper .material-symbols-outlined:nth-child(4) {
         display: none;
     }
 }
@@ -238,7 +244,7 @@ dd {
 @media only screen and (min-width: 992px) {
 
     /* Chọn phần tử <span> có class "material-symbols-outlined" và chứa nội dung là "menu" */
-    .nav-bar_wrapper .material-symbols-outlined:nth-child(3) {
+    .nav-bar_wrapper .material-symbols-outlined:nth-child(4) {
         display: none;
     }
 }

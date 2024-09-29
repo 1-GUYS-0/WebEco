@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 .nav-bar {
   display: flex;
   flex-direction: column;
@@ -96,7 +97,7 @@
   position: relative;
   overflow: hidden;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .hero_header {
@@ -194,7 +195,7 @@
 .cust-recomm_contain {
   display: flex;
   flex-direction: row;
-  gap: 2.1875rem;
+  /* gap: 2.1875rem; */
   justify-content: center;
   flex-wrap: wrap;
   align-self: stretch;
@@ -389,7 +390,8 @@
   font-weight: var(--text-h-lg-font-weight, 600);
 }
 
-.input-desc, .input-error {
+.input-desc,
+.input-error {
   color: var(--root-token-color-purple-darker, #362c62);
   font-family: var(--text-bd-md-font-family, "Inter-Regular", sans-serif);
   font-size: var(--text-bd-md-font-size, 1rem);
@@ -439,7 +441,8 @@
   gap: var(--root-token-size-300);
 }
 
-.pay-card_infor-cust, .pay-card_total-price {
+.pay-card_infor-cust,
+.pay-card_total-price {
   display: flex;
   flex-direction: column;
   gap: 0rem;
@@ -452,7 +455,9 @@
   flex: 1;
 }
 
-.infor_cust, .infor_method-ex, .infor_mess {
+.infor_cust,
+.infor_method-ex,
+.infor_mess {
   padding: 0.5rem 0rem 0.5rem 0rem;
   display: flex;
   flex-direction: column;
@@ -552,7 +557,12 @@
   position: relative;
 }
 
-.total-price, .total-price_voucher, .price-breakdown, .price-breakdown_details, .total-price_cost, .cost_contain {
+.total-price,
+.total-price_voucher,
+.price-breakdown,
+.price-breakdown_details,
+.total-price_cost,
+.cost_contain {
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
@@ -562,7 +572,8 @@
   position: relative;
 }
 
-.price-breakdown_details, .cost_contain {
+.price-breakdown_details,
+.cost_contain {
   align-items: stretch;
 }
 
@@ -579,13 +590,15 @@
   justify-content: space-between;
 }
 
-.footer_nav, .footer_social {
+.footer_nav,
+.footer_social {
   display: flex;
   flex-direction: row;
   gap: 1rem;
 }
 
-.nav-list, .social-list {
+.nav-list,
+.social-list {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -685,7 +698,7 @@
   height: 3rem;
   border-radius: 50%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   max-width: none;
 }
 
@@ -743,7 +756,8 @@
   box-sizing: border-box;
 }
 
-.prev, .next {
+.prev,
+.next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -776,7 +790,7 @@
   background-color: #fff;
   overflow-x: hidden;
   transition: 0.5s;
-  border: 0.2rem solid #000;
+  border: 0rem solid #000;
   border-radius: 2rem;
   z-index: 4;
 }
@@ -985,23 +999,35 @@ dd {
 }
 
 .card-image {
-  border: 0.0625rem solid #1d1a1a;
   /* Đặt viền màu đen */
+  border: 0.0625rem solid #1d1a1a;
   border-radius: 1rem;
   display: flex;
   flex-grow: 1;
   justify-content: center;
   align-self: stretch;
+  max-width: 20rem;
+  max-height: 20rem;
+  align-self: center;
 }
 
 /* Small devices (phones, 600px and down) */
 @media only screen and (max-width: 650px) {
-  .nav-bar_menu.active {
-    top: 50%;
+  .material-symbols-outlined.close-btn.hide {
+    display: none;
   }
+
+  .material-symbols-outlined.close-btn.active {
+    display: inherit;
+  }
+
+  .nav-bar_menu.active {
+    top: 26%;
+  }
+
   .nav-bar_menu {
-    width: 17rem;
-    height: 30rem;
+    width: 25rem;
+    height: 20rem;
     background-color: #ffffff;
     border-radius: 1rem;
     border: 0.3rem solid rgb(0, 0, 0);
@@ -1016,39 +1042,53 @@ dd {
     z-index: 1;
     transition: top 0.5s ease-in-out;
   }
+
   .rela-prod_list {
     overflow-x: auto;
     justify-content: flex-start;
     gap: 1rem;
   }
+
   .rela-prod_item {
     flex: 0 0 auto;
     width: 200px;
   }
+
   .product-detail {
     flex-direction: column;
   }
+
   .pay-card_wrapper {
     flex-direction: column;
   }
+
   .pay-card_infor-cust {
     align-self: stretch;
   }
+
   .breadcrumbs h6 {
     font-size: 0.5rem;
   }
 }
+
 /* Medium devices (tablets, 600px to 768px) */
 @media only screen and (min-width: 650px) and (max-width: 992px) {
+
   /* Chọn phần tử <span> có class "material-symbols-outlined" và chứa nội dung là "menu" */
-  .nav-bar_wrapper .material-symbols-outlined:nth-child(3) {
+  .nav-bar_wrapper .material-symbols-outlined:nth-child(4),
+  .nav-bar_wrapper .material-symbols-outlined:nth-child(5){
     display: none;
   }
 }
+
 /* Large devices (large desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+
   /* Chọn phần tử <span> có class "material-symbols-outlined" và chứa nội dung là "menu" */
-  .nav-bar_wrapper .material-symbols-outlined:nth-child(3) {
+  .nav-bar_wrapper .material-symbols-outlined:nth-child(4), 
+  .nav-bar_wrapper .material-symbols-outlined:nth-child(5){
     display: none;
   }
-}/*# sourceMappingURL=main.css.map */
+}
+
+/*# sourceMappingURL=main.css.map */

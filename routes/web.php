@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductImagesController;
@@ -11,15 +12,13 @@ use App\Models\ProductImage;
 Route::get('/dashboard', [PageController::class, 'dashboard']);
 
 // Định nghĩa route cho trang quản lý danh mục sản phẩm
-    // route trang danh mục
-Route::get('/categories', [CategoryController::class, 'show'])->name('categories.view_categories');
-    // route trang thêm danh mục
-Route::get('/categories/add-category', [CategoryController::class, 'create'])->name('categories.view_add-category');
-Route::post('/categories/add-category', [CategoryController::class, 'store'])->name('categories.add-category');
-    // route sửa và xóa danh mục
-Route::get('/categories/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
-Route::delete('/categories/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
-
+Route::prefix('categories')->group(function () {
+    Route::get('/', [CategoryController::class, 'show'])->name('categories.view_categories');
+    Route::get('/add-category', [CategoryController::class, 'create'])->name('categories.view_add-category');
+    Route::post('/add-category', [CategoryController::class, 'store'])->name('categories.add-category');
+    Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
+    Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
+});
 
 // Định nghĩa route cho trang quảng lý sản phẩm
 Route:: get('/products', [ProductController::class, 'show'])->name('products.view_products');
@@ -47,6 +46,12 @@ Route:: get('/sign-up', [PageController::class, 'signUp']);
 Route:: get('/sign-in', [PageController::class, 'signIn']);
 
 Route:: get('/home', [PageController::class, 'home']);
+Route:: get('/home', [CustomerProductController::class, 'index']);
+Route::get('/product/load-more', [CustomerProductController::class, 'loadMore'])->name('customer.products.loadMore');
 
 Route:: get('/payment', [PageController::class, 'payment']);
 Route:: get('/product', [PageController::class, 'product']);
+
+//test
+Route:: get('/test', [CustomerProductController::class, 'index']);
+Route::get('/test/load-more', [CustomerProductController::class, 'loadMore'])->name('customer.products.loadMore');

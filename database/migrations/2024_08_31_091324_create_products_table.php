@@ -23,14 +23,11 @@ return new class extends Migration
             $table->string('main_ingredient'); // MainIngredient
             $table->string('skin'); // Skin
             $table->integer('stock'); // Stock
-            $table->unsignedBigInteger('categories_id'); // CategoriesId
+            $table->foreignId('categories_id')->constrained()->onDelete('cascade'); // Foreign key constraint
             $table->decimal('total_rating', 3, 2)->nullable(); // TotalRating
             $table->integer('total_purchase_quantity')->nullable(); // TotalPurchaseQuantity
             $table->string('note'); // Note
             $table->timestamps(); // CreatedAt and EditedAt (Laravel's default timestamps)
-
-            // Set foreign key
-            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('cascade'); // khóa ngoại liên kết với bảng categories
         });
     }
     

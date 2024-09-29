@@ -19,9 +19,10 @@
             <div class="light-text">Sign up</div>
         </button>
         <div class="cart-icon" onclick="toggleCart()">
-            <span class="material-symbols-outlined">local_mall</span>
+            <span class="material-symbols-outlined close-btn ">local_mall</span>
         </div><!-- Icon giỏ hàng -->
-        <div id="cart-sidebar" class="cart-sidebar">
+    </div>
+    <div id="cart-sidebar" class="cart-sidebar">
             <div class="cart-header">
                 <h3>Giỏ hàng của bạn</h3>
                 <span class="material-symbols-outlined close-btn " onclick="toggleCart()">cancel</span>
@@ -57,7 +58,7 @@
                 </button>
             </div>
         </div><!-- Sidebar giỏ hàng -->
-    </div>
-    <span id="menu-icon" class="material-symbols-outlined">menu</span>
+    <span id="menu_icon" class="material-symbols-outlined close-btn ">menu</span>
+    <span id = "hide-menu_icon" class="material-symbols-outlined close-btn hide ">cancel</span> <!-- Icon đóng giỏ hàng -->
 </nav> <!-- nav-bar_wrapper -->
 <div id="overlay" class="overlay" onclick="toggleCart()"></div>
