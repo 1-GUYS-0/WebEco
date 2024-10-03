@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function test()
+    public function index()
     {
-        return view('customer.pages.test');
+        return view('welcome');
     }
     public function dashboard()
     {

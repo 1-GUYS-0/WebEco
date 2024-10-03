@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
 use App\Http\Controllers\Customer\PaymentController as CustomerPaymentController;
-
+use App\Http\Controllers\Customer\ProductController as CustomerProductController;
+use App\Http\Controllers\Customer\CartController as CustomerCartController;
+use App\Http\Controllers\Customer\CustomerController as CustomerCustomerController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Customer\LoginController;
 use App\Http\Controllers\ProductController;
 
 use Illuminate\Support\Facades\Route;
@@ -43,17 +46,23 @@ Route:: get('/users', [PageController::class, 'users']);
 Route:: get('/admins', [PageController::class, 'admins']);
 
 //=====Customer routes=====\
-Route:: get('/sign-up', [PageController::class, 'signUp']);
-Route:: get('/sign-in', [PageController::class, 'signIn']);
+Route:: get('/log-in', [LoginController::class, 'showSignUpForm'])->name('customer.pages.log-in');
+Route:: post('/log-in', [LoginController::class, 'login'])->name('customer.login');
 
-Route:: get('/home', [PageController::class, 'home']);
-Route:: get('/home', [CustomerHomeController::class, 'index']);
-Route::get('/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
+Route:: get('/log-out', [LoginController::class, 'showLogout'])->name('customer.pages.log-out')->middleware('CheckLogin');
+Route:: post('/log-out', [LoginController::class, 'logout'])->name('customer.logout');
+Route:: get('/sign-in', [PageController::class, 'signIn']);
+Route:: post('/password-request', [LoginController::class, 'resetPassword'])->name('password.request');
+
+Route:: get('/home', [CustomerHomeController::class, 'index'])->name('customer.home');
+Route:: get('/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
 
 Route:: get('/payment', [CustomerPaymentController::class, 'index']);
-Route:: get('/product', [PageController::class, 'product']);
+Route:: get('/product/{id}', [CustomerProductController::class, 'show'])->name('product.show');
 
+Route::get('/cart', [ CustomerCartController::class, 'show'])->name('cart.show');
+Route::post('/cart/add', [ CustomerCartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update/{id}', [ CustomerCartController::class, 'updateCart'])->name('cart.remove');
 
-// //test
-// Route:: get('/test', [CustomerProductController::class, 'index']);
-// Route::get('/test/load-more', [CustomerProductController::class, 'loadMore'])->name('customer.products.loadMore');
+Route::get('/customer/profile/{id}', [CustomerCustomerController::class, 'profile'])->name('customer.profile');
+

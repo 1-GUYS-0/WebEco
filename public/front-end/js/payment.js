@@ -1,41 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Lấy tất cả các nút remove, add và các input number-order
-    const removeButtons = document.querySelectorAll('.quantity-controls button:first-child');
-    const addButtons = document.querySelectorAll('.quantity-controls button:last-child');
-    const numberOrderInputs = document.querySelectorAll('.quantity-controls .number-order');
 
-    if (removeButtons && addButtons && numberOrderInputs) {
-        // Thêm sự kiện click cho các nút remove
-        removeButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const numberOrderElement = this.nextElementSibling; // Lấy ra số lượng hiện tại thông qua element kế tiếp của nút remove
-                let currentValue = parseInt(numberOrderElement.value);
-                if (currentValue > 1) {
-                    numberOrderElement.value = currentValue - 1;
-                }
-            });
-        });
-
-        // Thêm sự kiện click cho các nút add
-        addButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                const numberOrderElement = this.previousElementSibling; // Lấy ra số lượng hiện tại thông qua element trước của nút add
-                let currentValue = parseInt(numberOrderElement.value);
-                numberOrderElement.value = currentValue + 1;
-            });
-        });
-
-        // Thêm sự kiện input cho các ô nhập số lượng
-        numberOrderInputs.forEach(input => {
-            input.addEventListener('input', function () {
-                let currentValue = parseInt(this.value);
-                if (isNaN(currentValue) || currentValue < 1) {
-                    this.value = 1; // Đặt giá trị tối thiểu là 1 nếu giá trị nhập vào không hợp lệ
-                }
-            });
-        });
-    }
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     const provinceSelect = document.getElementById('province');
@@ -124,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
             // Thêm dữ liệu tạm thời vào đối tượng data
-            data.customer_id = 'temporary_customer_id'; // Thêm ID khách hàng tạm thời
+            data.customer_id = '1'; // Thêm ID khách hàng tạm thời
 
             // Gửi dữ liệu đến server bằng AJAX
             $.ajax({

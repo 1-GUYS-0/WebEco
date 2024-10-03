@@ -1,9 +1,8 @@
 <?php
-namespace App\Models\Customer; // Khai báo tên namespace cho model này
+namespace App\Models; // Khai báo tên namespace cho model này
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Product;
 
 class CartItem extends Model
 {

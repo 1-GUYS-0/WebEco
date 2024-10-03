@@ -11,8 +11,9 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->enum('payment_method', ['cash', 'credit_card', 'paypal']);
-            $table->decimal('amount', 10, 2);
+            $table->decimal('amount', 10, 2); // đây là số tiền khách hàng thanh toán
             $table->timestamp('payment_date')->useCurrent();
+            $table->timestamps();
         });
     }
 

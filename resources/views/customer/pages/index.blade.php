@@ -1,6 +1,6 @@
 @extends('customer.layout-app.layout')
 @section('content')
-<div class="slide-container">
+<div id ="slide-banner" class="slide-container">
     <div class="slides">
         @foreach ($Banners as $banner)
             <div class="slide">
@@ -29,7 +29,7 @@
                     @endif
                 </div>
                 <div class="cards_contain ">
-                    <a class="cards_name-prod">{{ $product->name }}</a>
+                    <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
                     <div class="cards_desc-prod">
                         {{ $product->description }}
                     </div>
@@ -42,7 +42,7 @@
         <button id="load-more" data-page="2" class="button light-text">Thêm Sản Phẩm</button>
     @endif
 </div>
-<div class="trending-prods_wrapper">
+<!-- <div class="trending-prods_wrapper">
     <h3 class="title-section">Heading</h3>
     <div class="cust-recomm_contain">
         <div class="trending-prods_cards ">
@@ -94,8 +94,8 @@
             </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</div> -->
+<script src="{{ asset('front-end/js/index.js') }}"></script>
 <script>
     const loadmore_product = '{{ route("customer.products.loadMore") }}';
 </script>

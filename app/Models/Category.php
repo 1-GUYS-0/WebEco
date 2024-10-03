@@ -22,4 +22,9 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_category');
     }
+    // Định nghĩa quan hệ với bảng products
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'categories_id');
+    }
 }

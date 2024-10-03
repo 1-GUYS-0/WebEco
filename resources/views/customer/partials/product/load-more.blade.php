@@ -11,7 +11,7 @@
             @endif
         </div>
         <div class="cards_contain">
-            <a class="cards_name-prod">{{ $product->name }}</a>
+        <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
             <div class="cards_desc-prod">
                 {{ $product->description }}
             </div>

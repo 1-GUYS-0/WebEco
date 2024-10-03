@@ -9,81 +9,107 @@
     <span class="material-symbols-outlined">arrow_forward_ios</span>
     <h6 class="apple">Apple</h6>
     <span class="material-symbols-outlined">arrow_forward_ios</span>
-    <h6 class="i-phone-14-pro-max">iPhone 14 Pro Max</h6>
+    <h6 class="i-phone-14-pro-max">{{ $product->name }}</h6>
 </div> <!--breadcrumbs-->
-<div class="product-detail ">
-    <div class="card-image">
-        <img class="product-detail_image " src="{{asset('front-end/asset/src/cards-image0.png')}}" />
+<div class="product-detail padding-top">
+    <div id="slide-product" class="product-image-slider">
+        <div class="slides">
+            @foreach ($product->images as $image)
+            <div class="card-image_slide">
+                <img class="product-detail_image" src="{{ asset('storage/' . $image->image_path) }}" />
+            </div>
+            @endforeach
+        </div>
+        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+        <button class="next" onclick="changeSlide(1)">&#10095;</button>
     </div>
     <div class="product-detail_infor ">
         <div class="detail_infor">
-            <h2 class="product-detail_name">Product name</h2>
-            <p class="dproduct-detail_brand">Subheading</p>
-            <div class="product-detail_price">$10.99</div>
-            <p class="product-detail_description">
-                Body text for describing why this product is simply a must-buy
-            </p>
+            <h2 class="product-detail_name">{{ $product->name }}</h2>
+            <p class="dproduct-detail_brand">{{ $product->brand }}</p>
+            <div class="product-detail_rating">
+                <h4>Đánh giá của sản phẩm: </h4>
+                @for ($i = 0; $i < $product->total_rating; $i++)
+                    <img src="{{asset('system/star.png')}}" alt="star">
+                    @endfor
+            </div>
+            <div class="product-detail_price">
+                <h4>Giá: </h4>
+                {{ $product->price }}
+            </div>
+            <p class="product-detail_description">{{ $product->description }}</p>
         </div>
-        <button type="button" onclick="alert('Xin chào!')" class="button">
+        <button type="button" onclick="addToCart('{{ $product->id }}')" class="button">
             <div class="light-text">Thêm vào giỏ hàng</div>
         </button>
     </div>
 </div> <!--product detail-->
-<div class="rela-prod_wrapper">
+<div class="rela-prod_wrapper padding-top">
     <h3 class="title-section">Related products</h3>
-    <div class="rela-prod_list">
+    <div class="rela-prod_list padding-top">
+        @foreach($relatedProducts as $relatedProduct)
         <div class="rela-prod_item ">
             <div class="card-image">
-                <img class="product-detail_image " src="{{asset('front-end/asset/src/cards-image0.png')}}" />
+                <img class="product-detail_image" src="{{ asset('storage/' . $relatedProduct->images->first()->image_path) }}" alt="{{ $relatedProduct->name }}" />
             </div>
             <div class="cards_contain ">
-                <a class="cards_name-prod">Featured product</a>
+                <h3>
+                    <a class="cards_name-prod close-bt" href="{{ route('product.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a>
+                </h3>
                 <div class="cards_desc-prod">
-                    Description of featured product
+                    {{ $relatedProduct->description }}
                 </div>
-                <div class="cards_price-prod">$10.99</div>
+                <div class="cards_price-prod">{{ $relatedProduct->price }}</div>
             </div>
         </div>
-        <div class="rela-prod_item ">
-            <div class="card-image">
-                <img class="product-detail_image " src="{{asset('front-end/asset/src/cards-image0.png')}}" />
-            </div>
-            <div class="cards_contain ">
-                <a class="cards_name-prod">Featured product</a>
-                <div class="cards_desc-prod">
-                    Description of featured product
-                </div>
-                <div class="cards_price-prod">$10.99</div>
-            </div>
-        </div>
-        <div class="rela-prod_item ">
-            <div class="card-image">
-                <img class="product-detail_image " src="{{asset('front-end/asset/src/cards-image0.png')}}" />
-            </div>
-            <div class="cards_contain ">
-                <a class="cards_name-prod">Featured product</a>
-                <div class="cards_desc-prod">
-                    Description of featured product
-                </div>
-                <div class="cards_price-prod">$10.99</div>
-            </div>
-        </div>
-        <div class="rela-prod_item ">
-            <div class="card-image">
-                <img class="product-detail_image " src="{{asset('front-end/asset/src/cards-image0.png')}}" />
-            </div>
-            <div class="cards_contain ">
-                <a class="cards_name-prod">Featured product</a>
-                <div class="cards_desc-prod">
-                    Description of featured product
-                </div>
-                <div class="cards_price-prod">$10.99</div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div><!--related products-->
-<div class="reviews ">
-    <div class="top">
+<div class="rating-card">
+    <div class="rating-summary">
+        <h1>3.5/5</h1>
+        <p>1000 reviews</p>
+    </div>
+    <div class="rating-details">
+        <div class="rating-row">
+            <div class="star-label">5 <img src="{{asset('system/star.png')}}" alt="star"></div>
+            <div class="rating-bar">
+                <div class="fill" style="width: 40%;"></div>
+            </div>
+            <div class="rating-count">400</div>
+        </div>
+        <div class="rating-row">
+            <div class="star-label">4 <img src="{{asset('system/star.png')}}" alt="star"></div>
+            <div class="rating-bar">
+                <div class="fill" style="width: 30%;"></div>
+            </div>
+            <div class="rating-count">300</div>
+        </div>
+        <div class="rating-row">
+            <div class="star-label">3 <img src="{{asset('system/star.png')}}" alt="star"></div>
+            <div class="rating-bar">
+                <div class="fill" style="width: 20%;"></div>
+            </div>
+            <div class="rating-count">200</div>
+        </div>
+        <div class="rating-row">
+            <div class="star-label">2 <img src="{{asset('system/star.png')}}" alt="star"></div>
+            <div class="rating-bar">
+                <div class="fill" style="width: 5%;"></div>
+            </div>
+            <div class="rating-count">50</div>
+        </div>
+        <div class="rating-row">
+            <div class="star-label">1 <img src="{{asset('system/star.png')}}" alt="star"></div>
+            <div class="rating-bar">
+                <div class="fill" style="width: 5%;"></div>
+            </div>
+            <div class="rating-count">50</div>
+        </div>
+    </div>
+</div><!-- Biểu đồ đánh giá -->
+<div class="reviews padding-top">
+    <!-- <div class="top">
         <h4>Reviews</h4>
         <input type="text" id="myComment" placeholder="Enter your comment" class="input-set">
         <div class="flex-end">
@@ -91,53 +117,45 @@
                 <div class="light-text">Thêm bình luận</div>
             </button>
         </div>
-    </div>
+    </div> -->
     <div class="review-list ">
+        <h3 class="title-section">Reviews của sản phẩm {{ $product->name }} </h3>
+        @if ($product->comments->isNotEmpty())
+        @foreach($product->comments as $comment)
         <div class="review">
             <div>
-                <img class="user-pic" src="{{asset('front-end/asset/src/cards-image0.png')}}" />
-            </div>
-            <div class="content">
+                <img class="user-pic" src="{{ asset('storage/' . $comment->customer->avarar_path) }}" alt="{{ $comment->customer->name }}"" />
+                    </div>
+                    <div class=" comment_content">
                 <div class="review-meta">
                     <div class="user-info">
-                        <h5 class="user-name">Darcy King</h5>
-                        <h6 class="review-date">24 January,2023</h6>
+                        <h5 class="user-name">{{ $comment->customer->name }}</h5>
+                        <h6 class="review-date">{{ $comment->created_at->format('d F, Y') }}</h6>
                     </div>
-                    <img class="stars" src="./src/star.png" />
+                    <div class="stars">
+                        @for ($i = 0; $i < $comment->rating; $i++)
+                            <img src="{{asset('system/star.png')}}" alt="star">
+                            @endfor
+                    </div>
                 </div>
                 <div class="review-text">
-                    I might be the only one to say this but the camera is a little
-                    funky. Hoping it will change with a software update:
-                    otherwise, love this phone! Came in great condition
+                    {{ $comment->content }}
                 </div>
+                @if($comment->images)
                 <div class="review_images">
+                    @foreach(json_decode($comment->images) as $image)
+                    <div class="size_review_images">
+                        <img class="size_review_images" src="{{ asset('storage/' . $image) }}" alt="Comment Image">
+                    </div>
+                    @endforeach
                 </div>
+                @endif
             </div>
         </div>
-        <div class="review">
-            <div>
-                <img class="user-pic" src="{{asset('front-end/asset/src/cards-image0.png')}}" />
-            </div>
-            <div class="content">
-                <div class="review-meta">
-                    <div class="user-info">
-                        <h5 class="user-name">Darcy King</h5>
-                        <h6 class="review-date">24 January,2023</h6>
-                    </div>
-                    <img class="stars" src="./src/star.png" />
-                </div>
-                <div class="review-text">
-                    I might be the only one to say this but the camera is a little
-                    funky. Hoping it will change with a software update:
-                    otherwise, love this phone! Came in great condition
-                </div>
-                <div class="review_images">
-                    <div class=" size_review_images ">
-                        <img class="size_review_images" src="{{asset('front-end/asset/src/cards-image0.png')}}" />
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
+        @else
+        <p>Sản phẩm này hiện chưa có bất kì đánh giá nào !</p>
+        @endif
     </div>
     <div class="button_view-more">
         <button type="button" onclick="alert('Xin chào!')" class="button">
@@ -145,5 +163,16 @@
         </button>
     </div>
 </div><!--reviews-->
-
+<!--script-->
+<script id="ratings-data" type="application/json">
+    {!! json_encode($ratings) !!}
+</script>
+<script id="average-rating-data" type="application/json">
+    {!! json_encode($averageRating) !!}
+</script>
+<script id="total-ratings-data" type="application/json">
+    {!! json_encode($totalRatings) !!}
+</script>
+<script src="{{ asset('front-end/js/product-detail.js') }}"></script>
+<script src="{{ asset('front-end/js/ratingreviews.js') }}"></script>
 @endsection

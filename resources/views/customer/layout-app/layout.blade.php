@@ -3,17 +3,17 @@
     @include('customer.partials.header')
 
     <body>
+        @include('customer.partials.nav-bar')
         <div class="wrapper">
             <div class="padding-global discolumn">
                 <div class="container-large discolumn">
                     <div class="padding-section-small discolumn">
-                        @include('customer.partials.nav-bar')
                         @yield('content')
                     </div>
                 </div>
             </div>
         </div>
+        @include('customer.partials.footer')
     </body>
-    @include('customer.partials.footer')
 
 </html>

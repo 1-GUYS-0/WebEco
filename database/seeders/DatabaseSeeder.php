@@ -1,8 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +15,10 @@ class DatabaseSeeder extends Seeder
             CategoriesSeeder::class, 
             ProductsSeeder::class,
             ProductImagesSeeder::class,
+            CustomerSeeder::class,
+            BannersSeeder::class,
+            CommentSeeder::class,
+            OrderSeeder::class,
         ]);
     }
 }

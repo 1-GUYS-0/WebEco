@@ -1,24 +1,34 @@
 @extends('customer.layout-app.layout')
 @section('content')
-<div class="sign-up_wrapper">
-    <div class="sign-up_form">
-        <form>
-            <div class="form_input">
-                <label for="myEmail" class="input-lable">Email</label>
-                <label class="input-desc">Description</label>
-                <input type="text" id="myEmail" placeholder="Nhập email đăng ký" size="5">
-                <label class="input-error ">Error</label>
-            </div>
-            <div class="form_input">
-                <label for="myPassw" class="input-lable">Password</label>
-                <label class="input-desc">Description</label>
-                <input type="text" id="myPassw" placeholder="Nhập mật khẩu đăng ký" size="5">
-                <label class="input-error">Error</label>
-            </div>
-        </form> <!-- form write information to sign up-->
-        <button type="button" onclick="alert('Xin chào!')" class="button">
-            <div class="light-text">Sign up</div>
-        </button> <!--button sign up-->
+<div class ="sign-up_container">
+    <div class="sign-up_wrapper">
+        <div class="sign-up_form">
+            <form method="POST" action="{{ route('customer.login') }}">
+                @csrf
+                <div class="form_input">
+                    <label for="myEmail" class="input-lable">Email</label>
+                    <label class="input-desc">Description</label>
+                    <input type="email" id="myEmail" name="email" placeholder="Enter your email" size="5" required>
+                    @error('email')
+                    <label class="input-error">{{ $message }}</label>
+                    @enderror
+                </div>
+                <div class="form_input">
+                    <label for="myPassw" class="input-lable">Password</label>
+                    <label class="input-desc">Description</label>
+                    <input type="password" id="myPassw" name="password" placeholder="Enter your password" size="5" required>
+                    @error('password')
+                    <label class="input-error">{{ $message }}</label>
+                    @enderror
+                </div>
+                <button type="submit" class="button">
+                    <div class="light-text">Sign up</div>
+                </button>
+            </form> <!-- form write information to sign up-->
+            <div class="sign-up_forgot">
+                <a href="{{ route('password.request') }}">Forgot password?</a>
+            </div> <!--link forgot password-->
+        </div>
     </div>
 </div>
 @endsection

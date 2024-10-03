@@ -1,38 +1,45 @@
 <footer class="footer_wrapper">
-    <div class="container-large discolumn">
-        <div class="footer_content">
-            <div class="footer_brand">
-                <a href="#" class="brand-link">Site_name</a>
-            </div>
-            <nav class="footer_nav">
-                <ul class="nav-list">
-                    <li>
-                        <h4>name_topic</h4>
-                    </li>
-                    <li><a href="#" class="nav-link">name_topic</a></li>
-                    <li><a href="#" class="nav-link">name_topic</a></li>
-                    <li><a href="#" class="nav-link">name_topic</a></li>
-                </ul>
-                <ul class="nav-list">
-                    <li>
-                        <h4>name_topic</h4>
-                    </li>
-                    <li><a href="#" class="nav-link">name_topic</a></li>
-                    <li><a href="#" class="nav-link">name_topic</a></li>
-                    <li><a href="#" class="nav-link">name_topic</a></li>
-                </ul>
-            </nav>
-            <div class="footer_social">
-                <ul class="social-list">
-                    <li><a href="#"><img src="./src/icon-links0.svg"
-                                alt="Social Icon 1"></a></li>
-                    <li><a href="#"><img src="./src/icon-links1.svg"
-                                alt="Social Icon 2"></a></li>
-                    <li><a href="#"><img src="./src/icon-links2.svg"
-                                alt="Social Icon 3"></a></li>
-                    <li><a href="#"><img src="./src/icon-links3.svg"
-                                alt="Social Icon 4"></a></li>
-                </ul>
+    <div class="padding-global discolumn">
+        <div class="container-large discolumn">
+            <div class="footer_content">
+                <div class="footer_brand">
+                    <div class="nav-bar_logo">
+                        <a href="{{route('customer.home')}}">
+                            <img src="{{asset('system/logo.png')}}" />
+                        </a>
+                    </div>
+                    <p>Green Nature Cosmetics</p>
+                </div>
+                <nav class="footer_nav">
+                    <ul class="nav-list">
+                        <li>
+                            <h4>Catergories</h4>
+                        </li>
+                        <li><a href="#" class="nav-link">da mặt</a></li>
+                        <li><a href="#" class="nav-link">body</a></li>
+                        <li><a href="#" class="nav-link">môi</a></li>
+                    </ul>
+                    <ul class="nav-list">
+                        <li>
+                            <h4>name_topic</h4>
+                        </li>
+                        <li><a href="#" class="nav-link">name_topic</a></li>
+                        <li><a href="#" class="nav-link">name_topic</a></li>
+                        <li><a href="#" class="nav-link">name_topic</a></li>
+                    </ul>
+                </nav>
+                <div class="footer_social">
+                    <ul class="social-list">
+                        <li><a href="#"><img src="{{asset('system/facebook.png')}}"
+                                    alt="facebook"></a></li>
+                        <li><a href="#"><img src="{{asset('system/instagram.png')}}"
+                                    alt="instagram"></a></li>
+                        <li><a href="#"><img src="{{asset('system/tiktok.png')}}"
+                                    alt="tiktok"></a></li>
+                        <li><a href="#"><img src="{{asset('system/linkedin.png')}}"
+                                    alt="linkedin"></a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
