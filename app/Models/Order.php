@@ -8,7 +8,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'address_id', 'subtotal', 'discount', 'shipping', 'total', 'status'];
+    protected $fillable = ['customer_id', 'name', 'address', 'phone', 'shipping_method', 'message', 'subtotal', 'discount', 'shipping', 'total_price', 'status'];
 
     public function customer()
     {
@@ -20,10 +20,10 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function address() // 1 order có 1 địa chỉ
-    {
-        return $this->belongsTo(Address::class);
-    }
+    // public function address() // 1 order có 1 địa chỉ
+    // {
+    //     return $this->belongsTo(Address::class);
+    // }
 
     public function payment() // 1 order có 1 payment
     {

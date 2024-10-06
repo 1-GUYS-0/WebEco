@@ -5,13 +5,22 @@
         @csrf <!-- Laravel CSRF token for security -->
         <div class="pay-card_infor-cust">
             <div class="infor_cust">
-                <h3>Thông tin liên hệ của bạn</h3>
-                <div class="text">@gmail.com</div>
+                <h3>Thông tin liên hệ của khách hàng: {{$customerInfo['name']}}</h3>
+                <div class="text">Email khách hàng: {{$customerInfo['email']}}</div>
+                <div class="text">Địa chỉ giao hàng đã lưu</div>
+                <div class="cust_input">
+                    <select  name="addressofcustomer" aria-label="Chọn 1 dịa chỉ giao hàng" required>
+                        <option value="" disabled selected hidden>Chọn 1 địa chỉ của bạn</option>
+                        <option value="hcm">TH.HCM</option>
+                        <option value="danang">Đà Nẵng</option>
+                        <option value="hanoi">Hà Nội</option>
+                    </select>
+                </div>
                 <div class="text">Địa chỉ giao hàng</div>
                 <div class="cust_contain">
                     <div class="cust_input">
                         <label for="myName" class="input">
-                            <input type="text" id="myName" name="name" class="input__lable" placeholder="Họ và Tên" required>
+                            <input type="text" id="myName" name="name" class="input__lable" value="{{$customerInfo['name']}}" required>
                         </label>
                     </div>
                     <div class="cust_input">
@@ -47,15 +56,19 @@
             <div class="div"></div>
             <div class="infor_method-ex bg-secondary">
                 <div class="cust_input">
-                    <select name="shipping_method" aria-label="Chọn phương thức vận chuyển" required>
+                    <select id="shipping-method" name="shipping_method" aria-label="Chọn phương thức vận chuyển" required>
                         <option value="" disabled selected hidden>Chọn 1 phương thức vận chuyển</option>
-                        <option value="tannha">Tận Nhà</option>
+                        <option value="ahamove">Ahamove</option>
+                        <option value="ghn">Giao hàng nhanh</option>
+                        <option value="ghtk">Giao hàng tiết kiệm</option>
+                        <option value="grap">GrapExpress</option>
                     </select>
                 </div>
                 <div class="cust_input">
                     <select name="payment_method" aria-label="Chọn Phương Thức Thanh Toán" required>
                         <option value="" disabled selected hidden>Chọn 1 Phương Thức Thanh Toán</option>
-                        <option value="tienmat">Tiền mặt</option>
+                        <option value="cash">Tiền mặt</option>
+                        <option value="vnpay">VNPay</option>
                     </select>
                 </div>
             </div><!-- method express and payment -->
@@ -70,52 +83,26 @@
             <section class="product-selected">
                 <h3>Chi tiết đơn hàng</h3>
                 <ol class="product-list">
-                    <li class="product-items">
-                        <img src="./src/cards-image0.png" alt="Product Image" class="product-image_selected" />
-                        <!-- image of product selected -->
+                    @foreach ($products as $product)
+                    <li class="product-items" value="{{$product['id']}}">
+                        <img src="{{ asset($product['image_path']) }}" alt="Product Image" class="product-image_selected" />
                         <div class="product-details">
-                            <a class="cards_name-prod">Product</a>
+                            <input type="hidden" name="product_id[]" value="{{ $product['id'] }}">
+                            <a class="cards_name-prod">{{ $product['name'] }}</a>
                             <div class="quantity-controls">
-                                <button type="button" class="quantity-decrease">
-                                    <span class="material-symbols-outlined">remove</span>
-                                </button>
-                                <input type="number" class="number-order" name="quantity[]" value="1" min="1">
-                                <button type="button" class="quantity-increase">
-                                    <span class="material-symbols-outlined">add</span>
-                                </button>
-                            </div> <!-- quantity of product selected -->
+                                <a> Số lượng:</a>
+                                <input type="number" class="number-order" name="quantity[]" value="{{ $product['quantity'] }}" min="1">
+                            </div>
                             <div>
-                                <span class="price">$10.99</span>
-                                <input type="hidden" name="price[]" value="10.99">
+                            <span class="price">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</span>
+                                <input type="hidden" name="price[]" value="{{ $product['price'] * $product['quantity'] }}">
                             </div>
                         </div>
-                        <button type="button" class="remove-product">
-                            <span class="material-symbols-outlined">cancel</span>
-                        </button>
-                    </li> <!-- product selected -->
-                    <li class="product-items">
-                        <img src="./src/cards-image0.png" alt="Product Image" class="product-image_selected" />
-                        <!-- image of product selected -->
-                        <div class="product-details">
-                            <a class="cards_name-prod">Product</a>
-                            <div class="quantity-controls">
-                                <button type="button" class="quantity-decrease">
-                                    <span class="material-symbols-outlined">remove</span>
-                                </button>
-                                <input type="number" class="number-order" name="quantity[]" value="2" min="1">
-                                <button type="button" class="quantity-increase">
-                                    <span class="material-symbols-outlined">add</span>
-                                </button>
-                            </div> <!-- quantity of product selected -->
-                            <div>
-                                <span class="price">$10.99</span>
-                                <input type="hidden" name="price[]" value="20.99">
-                            </div>
-                        </div>
-                        <button type="button" class="remove-product">
+                        <button type="button" class="remove-product" onclick="removeProductFromSelect(`{{$product['id']}}`)">
                             <span class="material-symbols-outlined">cancel</span>
                         </button>
                     </li>
+                    @endforeach
                 </ol>
             </section>
             <div class="div"></div>
@@ -123,9 +110,9 @@
                 <div class="total-price_voucher">
                     <h3>Mã Khuyến Mãi</h3>
                     <label for="myVoucher">
-                        <input type="text" id="myVoucher" name="voucher" placeholder="Enter voucher" size="5">
+                        <input type="text"  id="voucher-code" name="voucher" placeholder="Nhập mã voucher">
                     </label>
-                    <button type="button" onclick="applyVoucher()" class="button">
+                    <button type="button" id="apply-voucher" class="button">
                         <div class="light-text">Áp dụng</div>
                     </button>
                 </div>
@@ -133,12 +120,12 @@
                 <div class="price-breakdown">
                     <div class="price-breakdown_details">
                         <dl>
-                            <dt>Tạm tính:</dt>
-                            <dd class="price-breakdown__subtotal">1500</dd>
+                            <dt >Tạm tính:</dt>
+                            <dd id= "estimated_price" value="{{ $product['price'] * $product['quantity'] }}">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</dd>
                             <dt>Giảm giá:</dt>
-                            <dd class="price-breakdown__discount">5000</dd>
+                            <dd id="discount-amount" value="0">0</dd>
                             <dt>Phí vận chuyển:</dt>
-                            <dd class="price-breakdown__shipping">30000</dd>
+                            <dd id="shipping-fee" value="0">0</dd>
                         </dl>
                     </div>
                     <div class="div"></div>
@@ -146,15 +133,11 @@
                         <div class="cost_contain">
                             <dl>
                                 <dt>Tổng cộng:</dt>
-                                <dd class="total-price__amount">150000</dd>
+                                <dd id="total-price" name="total_price" value="0">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</dd>
                             </dl>
                         </div>
-                        <input type="hidden" name="subtotal" value="1500">
-                        <input type="hidden" name="discount" value="5000">
-                        <input type="hidden" name="shipping" value="30000">
-                        <input type="hidden" name="total" value="150000">
-                        <button type="submit" class="button">
-                            <div class="light-text">Đặt hàng</div>
+                        <button type="button" id="immediate-payment-button" class="button">
+                            <div class="light-text">Thanh toán ngay!</div>
                         </button>
                     </div>
                 </div>

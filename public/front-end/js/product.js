@@ -23,7 +23,7 @@ $(document).ready(function() {
         });
     }
 
-    // Định nghĩa function checkDataResponse
+    // Đây là function kiểm tra dữ liệu trả về từ API
     function checkDataResponse(data, page) {
         if (data.trim()) {
             $('#product-list').append(data); // Chèn dữ liệu vào danh sách sản phẩm

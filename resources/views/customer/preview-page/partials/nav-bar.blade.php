@@ -1,6 +1,6 @@
 <nav class="nav-bar_wrapper">
     <div class="nav-bar_logo">
-        <a href="{{route('customer.home')}}">
+        <a href="{{route('preview.index')}}">
             <img src="{{asset('system/logo.png')}}" />
         </a>
     </div>
@@ -14,11 +14,14 @@
         <div class="nav-bar_link close-btn">
             <a>Về chúng tôi</a>
         </div>
-        <div class="cart-icon" onclick="toggleCart()">
-            <span class="material-symbols-outlined close-btn ">local_mall</span>
-        </div><!-- Icon giỏ hàng -->
+        <button type="button" class="button">
+            <a class="light-text" href=" {{route('customer.pages.log-in')}} ">Đăng Nhập</a>
+        </button>
+        <button type="button" class="button">
+            <a class="light-text" href="{{route('customer.pages.sign-up')}}">Đăng ký</a>
+        </button>
         <div class="cart-icon">
-            <span class="material-symbols-outlined close-btn ">face</span>
+            <a href="{{route('customer.pages.log-in')}}"><span class="material-symbols-outlined close-btn" >face</span></a>
         </div>
     </div>
     <div id="cart-sidebar" class="cart-sidebar">
@@ -31,7 +34,7 @@
                 <!-- Các sản phẩm trong giỏ hàng sẽ được thêm vào đây bằng JavaScript -->
             </ol>
             <p id="empty-cart-message" style="display: none;">Giỏ hàng trống. Hãy thêm sản phẩm để thanh toán</p>
-            <button type="button"  onclick="proceedToPayment()" class="button">
+            <button type="button" onclick="alert('Xin chào!')" class="button">
                 <div class="light-text">Thánh toán ngay!</div>
             </button>
         </div>

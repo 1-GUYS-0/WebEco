@@ -1,13 +1,11 @@
-@extends('customer.layout-app.layout')
+@extends('customer.preview-page.layout-app.layout')
 @section('content')
 <div class="breadcrumbs ">
-    <h6 class="home">Home</h6>
+    <h6 class="home"><a href="{{route('preview.index')}}">Home</a></h6>
     <span class="material-symbols-outlined">arrow_forward_ios</span>
-    <h6 class="catalog">Catalog</h6>
+    <h6 class="catalog">Danh mục</h6>
     <span class="material-symbols-outlined">arrow_forward_ios</span>
-    <h6 class="smartphones">Smartphones</h6>
-    <span class="material-symbols-outlined">arrow_forward_ios</span>
-    <h6 class="apple">Apple</h6>
+    <h6 class="smartphones">{{$product->category->name}}</h6>
     <span class="material-symbols-outlined">arrow_forward_ios</span>
     <h6 class="i-phone-14-pro-max">{{ $product->name }}</h6>
 </div> <!--breadcrumbs-->
@@ -54,7 +52,7 @@
             </div>
             <div class="cards_contain ">
                 <h3>
-                    <a class="cards_name-prod close-bt" href="{{ route('product.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a>
+                    <a class="cards_name-prod close-bt" href="{{ route('preview.product.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a>
                 </h3>
                 <div class="cards_desc-prod">
                     {{ $relatedProduct->description }}

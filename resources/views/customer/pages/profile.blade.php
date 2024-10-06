@@ -4,21 +4,33 @@
     <div class="profile-header">
         <div class="avatar">
             <div class="card-image">
-                <img class="product-detail_image" src="{{ asset('system/cards-image0.png') }}" alt="" />
+                <img class="product-detail_image" src="{{ asset($customer->avarar_path) }}" alt="" />
             </div>
-            <input type="file" id="avatarInput" accept="image/*">
-            <label for="avatarInput">Update Avatar</label>
+            <!-- Popup để thay đổi hình ảnh -->
+            <div id="avatarPopup" class="popup">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup('avatarPopup')">&times;</span>
+                    <h2>Thay đổi hình ảnh đại diện</h2>
+                    <input type="file" id="avatar" accept="image/*" onchange="previewAvatar(event)">
+                    <div>
+                        <img id="avatarPreview" src="{{ asset($customer->avarar_path) }}" alt="" />
+                    </div>
+                    <button onclick="document.getElementById('avatar').click()">Chọn hình ảnh</button>
+                    <button onclick="updateProfile('avatar')">Lưu thay đổi</button>
+                </div>
+            </div>
+            <button onclick="showPopup('avatarPopup')">Thay đổi</button>
         </div>
         <div class="info">
-            <div>Name: John Doe <span onclick="editInfo('name')">Thay đổi</span></div>
-            <div>Phone: 123-456-7890 <span onclick="editInfo('phone')">Thay đổi</span></div>
-            <div>Address: 123 Main St, City, Country <span onclick="editInfo('address')">Thay đổi</span></div>
+            <div>Tên: <span id="name">{{ $customer->name }}</span> <button onclick="updateProfile('name')">Thay đổi</button></div>
+            <div>Số điện thoại: <span id="phone">{{ $defaultAddress->phone }}</span> <button onclick="updateProfile('phone')">Thay đổi</button></div>
+            <div>Địa chỉ mặc định: <span>{{ $defaultAddress->province }}, {{ $defaultAddress->district }}, {{ $defaultAddress->ward }}, {{ $defaultAddress->address }} .</span> <button onclick="showPopup('addressPopup')">Thay đổi</button></div>
         </div>
     </div>
     <div class="profile-content">
         <div class="tabs">
             <div class="tab active" onclick="showTab('order')">Your Orders</div>
-            <div class="tab" onclick="showTab('cart')">Your Cart</div>
+            <div class="tab" onclick="showTab('order_finish')">Your Cart</div>
         </div>
         <div class="tab-content">
             <div class="order active">
@@ -41,8 +53,8 @@
                 @endforeach
                 <!-- Add more orders as needed -->
             </div>
-            <div class="cart">
-                <div class="cart-item">
+            <div class="order_finish">
+                <div class="order_finish-item">
                     <p>Product Name</p>
                     <p>Quantity: 2</p>
                     <button>Remove from Cart</button>
@@ -52,5 +64,27 @@
         </div>
     </div>
 </div>
+<!-- Popup for changing default address -->
+<div id="addressPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('addressPopup')">&times;</span>
+        <h2>Chọn địa chỉ giao hàng mặc định</h2>
+        <div class="address-options">
+            <select title="select new address" id="address">
+                <!-- Options will be populated dynamically -->
+                @foreach ($anotherAddresses as $anotherAddress)
+                <option value="{{ $anotherAddress->id }}">
+                    {{ $anotherAddress->province }}, {{ $anotherAddress->district }}, {{ $anotherAddress->ward }}, {{ $anotherAddress->address }} .
+                </option>
+                @endforeach
+            </select>
+        </div>
+        <button onclick="updateProfile('address')">Xác nhận thay đổi</button>
+        <button onclick="window.location.href='/add-new-address'">Nhập địa chỉ mới</button>
+    </div>
+</div>
+<script>
+    const update_profile = '{{ route("customer.profile.update") }}';
+</script>
 <script src="{{ asset('front-end/js/profile.js') }}"></script>
 @endsection

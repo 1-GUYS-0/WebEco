@@ -17,25 +17,3 @@ function changeSlide(direction) {
     }
 }
 
-function addToCart(productId) {
-    console.log('Add to cart:', productId);
-    $.ajax({
-        url: '/cart/add',
-        method: 'POST',
-        data: {
-            product_id: productId,
-            quantity: 1 // Số lượng mặc định là 1
-        },
-        success: function(response) {
-            if (response.success) {
-                alert(response.message);
-            } else {
-                alert('Failed to add product to cart');
-            }
-        },
-        error: function(error) {
-            console.error('Error adding product to cart:', error);
-            alert('An error occurred. Please try again.');
-        }
-    });
-}

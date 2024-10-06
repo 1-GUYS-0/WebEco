@@ -11,7 +11,7 @@ class BannersSeeder extends Seeder
         DB::table('banners')->insert([
             [
                 'title' => 'Summer Sale',
-                'images_path' => 'banner_images/slide1.jpg',
+                'images_path' => 'storage/banner_images/slide1.jpg',
                 'start_date' => '2024-06-01',
                 'end_date' => '2024-12-30',
                 'link_to' => 'https://example.com/summer-sale',
@@ -20,7 +20,7 @@ class BannersSeeder extends Seeder
             ],
             [
                 'title' => 'Naturel Beauty',
-                'images_path' => 'banner_images/slide2.jpg',
+                'images_path' => 'storage/banner_images/slide2.jpg',
                 'start_date' => '2023-12-01',
                 'end_date' => '2024-12-31',
                 'link_to' => 'https://example.com/winter-sale',
@@ -29,7 +29,7 @@ class BannersSeeder extends Seeder
             ],
             [
                 'title' => 'Winter Sale',
-                'images_path' => 'banner_images/slide2.jpg',
+                'images_path' => 'storage/banner_images/slide2.jpg',
                 'start_date' => '2024-12-01',
                 'end_date' => '2024-12-31',
                 'link_to' => 'https://example.com/winter-sale',

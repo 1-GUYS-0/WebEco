@@ -8,7 +8,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['order_id', 'payment_method', 'amount'];
+    protected $fillable = ['order_id', 'payment_method', 'amount', 'transaction_id'];
 
     public function order() // 1 payment thuộc về 1 order
     {

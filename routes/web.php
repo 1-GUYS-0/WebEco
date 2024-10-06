@@ -1,12 +1,14 @@
 <?php
-
+use App\Http\Controllers\Customer\PreviewPageController as CustomerPreviewPageController;
 use App\Http\Controllers\Customer\HomeController as CustomerHomeController;
 use App\Http\Controllers\Customer\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\CartController as CustomerCartController;
 use App\Http\Controllers\Customer\CustomerController as CustomerCustomerController;
+use App\Http\Controllers\Customer\VoucherController as CustomerVoucherController;
+use App\Http\Controllers\Customer\VNPayController as CustomerVNPayController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Customer\LoginController;
+use App\Http\Controllers\Customer\LogSignController;
 use App\Http\Controllers\ProductController;
 
 use Illuminate\Support\Facades\Route;
@@ -46,23 +48,40 @@ Route:: get('/users', [PageController::class, 'users']);
 Route:: get('/admins', [PageController::class, 'admins']);
 
 //=====Customer routes=====\
-Route:: get('/log-in', [LoginController::class, 'showSignUpForm'])->name('customer.pages.log-in');
-Route:: post('/log-in', [LoginController::class, 'login'])->name('customer.login');
+Route:: get('/log-in', [LogSignController::class, 'showLoginForm'])->name('customer.pages.log-in');
+Route:: post('/log-in', [LogSignController::class, 'login'])->name('customer.login');
+Route:: get('/sign-up', [LogSignController::class, 'showSignupForm'])->name('customer.pages.sign-up');
+Route:: post('/sign-up', [LogSignController::class, 'signup'])->name('customer.signup');
 
-Route:: get('/log-out', [LoginController::class, 'showLogout'])->name('customer.pages.log-out')->middleware('CheckLogin');
-Route:: post('/log-out', [LoginController::class, 'logout'])->name('customer.logout');
-Route:: get('/sign-in', [PageController::class, 'signIn']);
-Route:: post('/password-request', [LoginController::class, 'resetPassword'])->name('password.request');
+Route:: get('/log-out', [LogSignController::class, 'showLogout'])->name('customer.pages.log-out')->middleware('CheckLogin');
+Route:: post('/log-out', [LogSignController::class, 'logout'])->name('customer.logout');
 
-Route:: get('/home', [CustomerHomeController::class, 'index'])->name('customer.home');
-Route:: get('/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
+Route:: post('/password-request', [LogSignController::class, 'resetPassword'])->name('password.request');
 
-Route:: get('/payment', [CustomerPaymentController::class, 'index']);
-Route:: get('/product/{id}', [CustomerProductController::class, 'show'])->name('product.show');
+Route:: get('/home', [CustomerHomeController::class, 'index'])->name('customer.home')->middleware('CheckLogin');
+Route:: get('/home/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
 
-Route::get('/cart', [ CustomerCartController::class, 'show'])->name('cart.show');
-Route::post('/cart/add', [ CustomerCartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/update/{id}', [ CustomerCartController::class, 'updateCart'])->name('cart.remove');
+Route:: get('home/customer/payment', [CustomerPaymentController::class, 'showPaymentPage'])->middleware('CheckLogin');
+Route:: post('home/customer/payment', [CustomerPaymentController::class, 'processPayment'])->name('payment')->middleware('CheckLogin');
+Route:: get('home/customer/product/{id}', [CustomerProductController::class, 'show'])->name('product.show');
+Route:: post('home/customer/payment/apply-voucher', [CustomerVoucherController::class, 'applyVoucher'])->name('voucher.apply');
+Route:: post('home/customer/payment/submitorder', [CustomerPaymentController::class, 'submitOrder'])->name('submit.order');
+Route::post('home/customer/VNPAYpayment', [CustomerVNPayController::class, 'createPayment'])->name('vnpay.payment');
+Route::get('home/customer/VNPAYpayment/return', [CustomerVNPayController::class, 'paymentReturn'])->name('vnpay.payment.return');
 
-Route::get('/customer/profile/{id}', [CustomerCustomerController::class, 'profile'])->name('customer.profile');
 
+Route::get('/order-success', [CustomerPaymentController::class, 'orderSuccess'])->name('order.success');
+Route::get('/order-failure', [CustomerPaymentController::class, 'orderFailure'])->name('order.failure');
+
+Route::get('home/cart', [ CustomerCartController::class, 'show'])->name('cart.show');
+Route::post('home/cart/add', [ CustomerCartController::class, 'addToCart'])->name('cart.add');
+Route::post('home/cart/update/{id}', [ CustomerCartController::class, 'updateCart'])->name('cart.update');
+Route::post('home/cart/remove/{id}', [ CustomerCartController::class, 'removeFromCart'])->name('cart.remove');
+
+Route::get('home/customer/profile/{id}', [CustomerCustomerController::class, 'profile'])->name('customer.profile')->middleware('CheckLogin');
+Route::get('home/customer/profile/editIfor/{id}', [CustomerCustomerController::class, 'edit'])->name('customer.profile.edit');
+Route::post('home/customer/profile/update', [CustomerCustomerController::class, 'updateProfile'])->name('customer.profile.update');
+
+// Prevỉew page
+Route::get('/preview/index', [CustomerPreviewPageController::class, 'index'])->name('preview.index');
+Route:: get('preview/product/{id}', [CustomerPreviewPageController::class, 'show'])->name('preview.product.show');

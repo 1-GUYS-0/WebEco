@@ -21,21 +21,21 @@ class CustomerSeeder extends Seeder
             'name' => 'Việt Hoàng',
             'email' => 'viethoang@gmail.com',
             'password' => Hash::make('123456'), // Mã hóa mật khẩu
-            'avarar_path' => '/avatar_customer/avatar_u1.webp',
+            'avarar_path' => 'storage/avatar_customer/avatar_u1.webp',
         ]);
 
         Customer::create([
             'name' => 'Jack',
             'email' => 'jack@gmail.com',
             'password' => Hash::make('password123'), // Mã hóa mật khẩu
-            'avarar_path' => '/avatar_customer/avatar_u2.webp'
+            'avarar_path' => 'storage/avatar_customer/avatar_u2.webp'
         ]);
 
         Customer::create([
             'name' => 'Alice',
             'email' => 'alice@gmail.com',
             'password' => Hash::make('password123'), // Mã hóa mật khẩu
-            'avarar_path' => '/avatar_customer/avatar_u3.webp'
+            'avarar_path' => 'storage/avatar_customer/avatar_u3.webp'
         ]);
 
         // Bạn có thể thêm nhiều dữ liệu mẫu khác tại đây

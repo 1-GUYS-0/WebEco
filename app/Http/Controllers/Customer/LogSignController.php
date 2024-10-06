@@ -9,15 +9,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
-class LoginController extends Controller
+class LogSignController extends Controller
 {
-    public function showSignUpForm()
+    public function showLoginForm()
     {
-        return view('customer.auth.sign-up');
-    }
-    public function showLogout()
-    {
-        return view('customer.pages.log-out');
+        return view('customer.auth.log-in');
     }
     public function login(Request $request)
     {
@@ -41,7 +37,10 @@ class LoginController extends Controller
             'email' => 'Thông tin đăng nhập không đúng.',
         ]);
     }
-
+    public function showLogout()
+    {
+        return view('customer.pages.log-out');
+    }
     public function logout(Request $request)
     {
         Auth::guard('customer')->logout(); // Đăng xuất guard 'customer'
@@ -50,5 +49,9 @@ class LoginController extends Controller
         $request->session()->regenerateToken(); // Tạo token mới để tránh CSRF
 
         return redirect()->intended(route('customer.pages.log-in')); // Chuyển hướng về trang chủ
+    }
+
+    public function showSignupForm() {
+        return view('customer.auth.sign-up');
     }
 }

@@ -15,7 +15,7 @@ class ProductsSeeder extends Seeder
         $products = [
             [
                 'name' => 'Sản phẩm chăm sóc da',
-                'price' => 100.00,
+                'price' => 100000,
                 'description' => 'Mô tả sản phẩm chăm sóc da',
                 'smell' => 'Hương thơm dịu nhẹ',
                 'texture' => 'Dạng kem',
@@ -33,7 +33,7 @@ class ProductsSeeder extends Seeder
             ],
             [
                 'name' => 'Sản phẩm chăm sóc tóc',
-                'price' => 150.00,
+                'price' => 150000,
                 'description' => 'Mô tả sản phẩm chăm sóc tóc',
                 'smell' => 'Hương thơm tươi mát',
                 'texture' => 'Dạng dầu gội',
@@ -51,7 +51,7 @@ class ProductsSeeder extends Seeder
             ],
             [
                 'name' => 'Sản phẩm tắm và dưỡng thể',
-                'price' => 200.00,
+                'price' => 200000,
                 'description' => 'Mô tả sản phẩm tắm và dưỡng thể',
                 'smell' => 'Hương thơm quyến rũ',
                 'texture' => 'Dạng sữa tắm',
@@ -69,7 +69,7 @@ class ProductsSeeder extends Seeder
             ],
             [
                 'name' => 'Sản phẩm chăm sóc da new',
-                'price' => 100.00,
+                'price' => 100000,
                 'description' => 'Mô tả sản phẩm chăm sóc da',
                 'smell' => 'Hương thơm dịu nhẹ',
                 'texture' => 'Dạng kem',
@@ -87,7 +87,7 @@ class ProductsSeeder extends Seeder
             ],
             [
                 'name' => 'Sản phẩm chăm sóc tóc new',
-                'price' => 150.00,
+                'price' => 150000,
                 'description' => 'Mô tả sản phẩm chăm sóc tóc',
                 'smell' => 'Hương thơm tươi mát',
                 'texture' => 'Dạng dầu gội',
@@ -105,7 +105,7 @@ class ProductsSeeder extends Seeder
             ],
             [
                 'name' => 'Sản phẩm tắm và dưỡng thể new',
-                'price' => 200.00,
+                'price' => 200000,
                 'description' => 'Mô tả sản phẩm tắm và dưỡng thể',
                 'smell' => 'Hương thơm quyến rũ',
                 'texture' => 'Dạng sữa tắm',

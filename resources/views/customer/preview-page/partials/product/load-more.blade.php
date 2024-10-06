@@ -5,7 +5,7 @@
                 @php
                     $firstImage = $product->images->first();
                 @endphp
-                <img src="{{ asset($firstImage->image_path) }}" alt="{{ $product->name }}">
+                <img src="{{ asset('storage/' . $firstImage->image_path) }}" alt="{{ $product->name }}">
             @else
                 <img src="N/A" alt="{{ $product->name }}">
             @endif

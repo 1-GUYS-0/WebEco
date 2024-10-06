@@ -1,4 +1,4 @@
-@extends('customer.layout-app.layout')
+@extends('customer.preview-page.layout-app.layout')
 @section('content')
 <div id ="slide-banner" class="slide-container">
     <div class="slides">
@@ -14,7 +14,7 @@
     <button class="next" onclick="changeSlide(1)">&#10095;</button>
 </div>
 <div class="cust-recomm_wrapper">
-    <h3 class="title-section">Heading</h3>
+    <h3 class="title-section">Dòng sản phẩm mới</h3>
     <div id="product-list" class="cust-recomm_contain">
         @foreach ($Products as $product)
             <div class="trending-prods_cards ">
@@ -29,7 +29,7 @@
                     @endif
                 </div>
                 <div class="cards_contain ">
-                    <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a>
+                    <a class="cards_name-prod" href="{{ route('preview.product.show', $product->id) }}">{{ $product->name }}</a>
                     <div class="cards_desc-prod">
                         {{ $product->description }}
                     </div>
