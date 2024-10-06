@@ -29,18 +29,24 @@
     </div>
     <div class="profile-content">
         <div class="tabs">
-            <div class="tab active" onclick="showTab('order')">Your Orders</div>
-            <div class="tab" onclick="showTab('order_finish')">Your Cart</div>
+            <div class="tab active" onclick="showTab('order')">Đơn hành của bạn</div>
+            <div class="tab" onclick="showTab('order_finish')">Đơn hàng đã giao thành công</div>
         </div>
         <div class="tab-content">
             <div class="order active">
                 @foreach ($orders as $order)
+                @if($order->status == 'pending'|| $order->status == 'completed' || $order->status == 'shipping' )
                 <div class="order-item">
-                    <h1>Order #{{ $order->id }}</h1>
+                    <h3>Mã Order #{{ $order->id }}</h3>
                     <div class="display_item">
-                        <p>Trạng thái đơn hàng: {{ $order->status }}</p>
+                        @if ($order->status == 'pending')
+                        <p class="pending-color">Trạng thái đơn hàng: {{ $order->status }}</p>
+                        @else ($order->status == 'shipping')
+                        <p class="shipping-color">Trạng thái đơn hàng: {{ $order->status }}</p>
+                        @endif
+
                         <p>Phương Thức Thanh toán: {{ $order->payment->payment_method }}</p>
-                        <p>Chi phí đơn hàng: {{ $order->total }}</p>
+                        <p>Chi phí đơn hàng: {{ number_format($order->total_price, 0, ',', '.') }} VND</p>
                     </div>
                     <h2>Danh sách sản phẩm</h2>
                     <ul>
@@ -48,17 +54,46 @@
                         <li>{{ $order_item->product->name }} - Số Lượng: {{ $order_item->quantity }} - Tổng giá: {{ $order_item->price }}</li>
                         @endforeach
                     </ul>
-                    <button onclick="confirmReceived()">Confirm Received</button>
+                    <h4>Ngày đặt hàng: {{ formatVNDate($order->created_at) }}</h4>
+                    <button onclick="confirmReceived()">Xác nhận đã nhận hàng</button>
+                    @if($order->payment->payment_method == 'cash')
+                    <button onclick="confirmReceived('{{ $order->id }}')">Hủy đơn hàng</button>
+                    @else
+                    <button onclick="confirmReceived('{{ $order->id }}')">Hủy đơn hàng và hoàn tiền</button>
+                    @endif
                 </div>
+                @else()
+                <h3>Bạn chưa có đơn hàng nào</h3>
+                @endif
                 @endforeach
-                <!-- Add more orders as needed -->
             </div>
             <div class="order_finish">
+                @foreach ($orders as $order)
+                @if ($order->status == 'completed')
                 <div class="order_finish-item">
-                    <p>Product Name</p>
-                    <p>Quantity: 2</p>
-                    <button>Remove from Cart</button>
+                    <h3>Mã Order #{{ $order->id }}</h3>
+                    <div class="display_item">
+                        <p class="completed-color">Trạng thái đơn hàng: {{ $order->status }}</p>
+                        <p>Phương Thức Thanh toán: {{ $order->payment->payment_method }}</p>
+                        <p>Chi phí đơn hàng: {{ number_format($order->total_price, 0, ',', '.') }} VND</p>
+                    </div>
+                    <h2>Danh sách sản phẩm</h2>
+                    <ul>
+                        @foreach ($order->orderItems as $order_item)
+                        <li>{{ $order_item->product->name }} - Số Lượng: {{ $order_item->quantity }} - Tổng giá: {{ $order_item->price }}</li>
+                        @endforeach
+                    </ul>
+                    <h4>Ngày đặt hàng: {{ formatVNDate($order->created_at) }}</h4>
+                    <button onclick="confirmReceived()">Xác nhận đã nhận hàng</button>
+                    @if($order->payment->payment_method == 'cash')
+                    <button onclick="confirmReceived('{{ $order->id }}')">Hủy đơn hàng</button>
+                    @else
+                    <button onclick="confirmReceived('{{ $order->id }}')">Hủy đơn hàng và hoàn tiền</button>
+                    @endif
                 </div>
+                @else()
+                @endif
+                @endforeach
                 <!-- Add more cart items as needed -->
             </div>
         </div>
@@ -88,3 +123,10 @@
 </script>
 <script src="{{ asset('front-end/js/profile.js') }}"></script>
 @endsection
+<?php
+function formatVNDate($dateString)
+{
+    $date = \Carbon\Carbon::parse($dateString);
+    return $date->format('d/m/Y H:i:s');
+}
+?>

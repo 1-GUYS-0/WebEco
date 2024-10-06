@@ -17,7 +17,7 @@
         <div class="cart-icon" onclick="toggleCart()">
             <span class="material-symbols-outlined close-btn ">local_mall</span>
         </div><!-- Icon giỏ hàng -->
-        <div class="cart-icon">
+        <div class="cart-icon" onclick="myProfile()">
             <span class="material-symbols-outlined close-btn ">face</span>
         </div>
     </div>

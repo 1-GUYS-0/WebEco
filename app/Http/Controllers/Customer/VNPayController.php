@@ -12,6 +12,7 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Product;
 
 
 
@@ -24,7 +25,7 @@ class VNPayController extends Controller
         try {
             // Lấy thông tin khách hàng
             $customer = Auth::guard('customer')->user();
-        
+
             // Lấy dữ liệu từ request
             $name = $request->name;
             $phone = $request->phone;
@@ -37,13 +38,13 @@ class VNPayController extends Controller
             $discountAmount = $request->discount_amount;
             $shippingFee = $request->shipping_fee;
             $subtotal = $request->subtotal;
-        
+
             // Kết nối các trường province, district, ward
             $province = $request->province;
             $district = $request->district;
             $ward = $request->ward;
             $fullAddress = implode(', ', [$province, $district, $ward]);
-        
+
             // Lưu dữ liệu vào session
             session([
                 'order_data' => [
@@ -64,7 +65,7 @@ class VNPayController extends Controller
                     'payment_method' => $paymentMethod,
                 ]
             ]);
-        
+
             DB::commit();
             Log::info('Order data saved in session: ' . json_encode(session('order_data')));
         } catch (\Exception $e) {
@@ -157,35 +158,81 @@ class VNPayController extends Controller
 
         // Tiến hành kiểm tra dữ liệu và xử lý
         try {
-            //Check Orderid    
             //Kiểm tra checksum của dữ liệu
             if ($secureHash == $vnp_SecureHash) // Kiểm tra chuỗi hash nhận được từ VNPAY có trùng với chuỗi hash tạo ra từ dữ liệu nhận được không
             {
-                $order = Order::find($inputData['vnp_OrderID']);
+                if ($inputData['vnp_ResponseCode'] == '00' || $inputData['vnp_TransactionStatus'] == '00') {
+                    // Lưu trữ dữ liệu vào session
+                    $orderData = session('order_data');
 
-                if ($order != NULL) {
-                    if ($order["total_price"] == $vnp_Amount) {
-                        if ($inputData['vnp_ResponseCode'] == '00' || $inputData['vnp_TransactionStatus'] == '00') {
-                            // Lưu trữ dữ liệu vào session
-                            session(['vnpay_response' => $inputData]);
-                            return redirect()->route('order.success');
-                        } else {
-                            session(['vnpay_response' => $inputData]);
-                            return redirect()->route('order.failure');
+                    if ($orderData) {
+                        DB::beginTransaction();
+
+                        try {
+                            // Tạo đơn hàng mới
+                            $order = new Order();
+                            $order->customer_id = $orderData['customer_id'];
+                            $order->name = $orderData['name'];
+                            $order->address = $orderData['address'];
+                            $order->phone = $orderData['phone'];
+                            $order->shipping_method = $orderData['shipping_method'];
+                            $order->message = $orderData['message'];
+                            $order->subtotal = $orderData['subtotal'];
+                            $order->discount = $orderData['discount'];
+                            $order->shipping = $orderData['shipping'];
+                            $order->total_price = $orderData['total_price'];
+                            $order->status = 'pending';
+                            $order->save();
+
+                            // Tạo các mục đơn hàng
+                            foreach ($orderData['product_ids'] as $index => $productId) {
+                                $orderItem = new OrderItem();
+                                $orderItem->order_id = $order->id;
+                                $orderItem->product_id = $productId;
+                                $orderItem->quantity = $orderData['quantities'][$index];
+                                $orderItem->price = $orderData['prices'][$index];
+                                $orderItem->save();
+
+                                // Cập nhật lại trường "stock" trong bảng products
+                                $product = Product::find($productId);
+                                if ($product) {
+                                    $product->stock -= $orderData['quantities'][$index];
+                                    $product->save();
+                                }
+                            }
+
+                            // Tạo thanh toán
+                            $payment = new Payment();
+                            $payment->order_id = $order->id;
+                            $payment->payment_method = $orderData['payment_method'];
+                            $payment->amount = $orderData['total_price'];
+                            $payment->transaction_id = $inputData['vnp_TransactionNo']; // Mã giao dịch trả về từ VNPAY
+                            $payment->save();
+
+                            $cart = Cart::where('customer_id', $orderData['customer_id'])->first();
+                            if ($cart) {
+                                CartItem::where('cart_id', $cart->id)
+                                    ->whereIn('product_id', $orderData['product_ids'])
+                                    ->delete();
+                            }
+
+                            DB::commit();
+                            Log::info('Order created from session data: ' . json_encode($orderItem));
+                        } catch (\Exception $e) {
+                            DB::rollBack();
+                            Log::error($e->getMessage());
+                            return response()->json(['success' => false, 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau']);
                         }
-
-                        $returnData['RspCode'] = '00';
-                        $returnData['Message'] = 'Confirm Success';
-                    } else {
-                        session(['error_message' => 'Số tiền giao dịch không khớp !!!']);
-                        $returnData['RspCode'] = '04';
-                        $returnData['Message'] = 'Số tiền giao dịch không khớp !!!';
                     }
+                    session(['vnpay_response' => $inputData]);
+                    return redirect()->route('order.success');
                 } else {
-                    session(['error_message' => 'Đơn hàng vẫn chưa được tạo']);
-                    $returnData['RspCode'] = '01';
-                    $returnData['Message'] = 'Đơn hàng vẫn chưa được tạo';
+                    session(['vnpay_response' => $inputData]);
+                    return redirect()->route('order.failure');
                 }
+
+                $returnData['RspCode'] = '00';
+                $returnData['Message'] = 'Confirm Success';
             } else {
                 session(['error_message' => 'Mã bí mật không khớp']);
                 $returnData['RspCode'] = '97';

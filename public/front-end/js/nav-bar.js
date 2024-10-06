@@ -1,3 +1,8 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 //menu
 document.addEventListener('DOMContentLoaded', function () {
     const menuIcon = document.getElementById('menu_icon');
@@ -32,6 +37,9 @@ function toggleCart() {
         overlay.style.display = 'none'; // Ẩn overlay
         cartSidebar.style.borderWidth = '0'; // Ẩn viền của sidebar
     }
+}
+function myProfile() {
+    window.location.href = '/home/customer/profile';
 }
 // Thêm sự kiện click cho nút prev và next
 document.addEventListener('DOMContentLoaded', function () {
@@ -72,3 +80,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+

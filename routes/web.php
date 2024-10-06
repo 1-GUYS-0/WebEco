@@ -78,7 +78,7 @@ Route::post('home/cart/add', [ CustomerCartController::class, 'addToCart'])->nam
 Route::post('home/cart/update/{id}', [ CustomerCartController::class, 'updateCart'])->name('cart.update');
 Route::post('home/cart/remove/{id}', [ CustomerCartController::class, 'removeFromCart'])->name('cart.remove');
 
-Route::get('home/customer/profile/{id}', [CustomerCustomerController::class, 'profile'])->name('customer.profile')->middleware('CheckLogin');
+Route::get('home/customer/profile', [CustomerCustomerController::class, 'profile'])->name('customer.profile')->middleware('CheckLogin');
 Route::get('home/customer/profile/editIfor/{id}', [CustomerCustomerController::class, 'edit'])->name('customer.profile.edit');
 Route::post('home/customer/profile/update', [CustomerCustomerController::class, 'updateProfile'])->name('customer.profile.update');
 

@@ -1361,8 +1361,14 @@ label{
   width: 100%;
   justify-content: space-between;
 }
-.display_item p:nth-child(1){
-  border: 0.2rem solid tomato !important;
+.pending-color{
+  border-color: rgb(227, 227, 72) !important;
+}
+.shipping-color{
+  border-color: rgb(84, 146, 221) !important;
+}
+.completed{
+  border-color: rgb(84, 221, 84) !important;
 }
 .display_item p:nth-child(3){
   border: 0.2rem solid #4CAF50 !important;

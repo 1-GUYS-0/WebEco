@@ -304,7 +304,9 @@ th, td {
   align-self: stretch;
   flex-shrink: 0;
 }
-
+.menu_logo img{
+  width: 4rem;
+}
 .logo {
   flex-shrink: 0;
   width: 4.125rem;
