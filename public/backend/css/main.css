@@ -8,7 +8,9 @@
   font-family: var(--text-h-hero-font-family, "Inter-SemiBold", sans-serif);
   box-sizing: border-box;
 }
-
+.wrapper{
+  min-height: 90%;
+}
 body {
   background: var(--theme-primary, #ede9ff);
 }
@@ -97,7 +99,9 @@ th, td {
   display: flex;
   flex: 1;
 }
-
+.close-btn{
+  cursor: pointer !important;
+}
 .button {
   display: flex;
   flex-direction: row;
@@ -106,6 +110,10 @@ th, td {
   justify-content: center;
   align-self: stretch;
   position: relative;
+  border-radius: 1rem;
+  background-color: #000000;
+  padding: 0.2rem;
+  min-width: 3rem;
 }
 
 .close-icon {
@@ -812,3 +820,42 @@ th, td {
   border-radius: 10px;
   border: 2px solid black;
 }/*# sourceMappingURL=main.css.map */
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 1rem;
+}
+.edit-button{
+  background-color: #000000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+.editOrderForm{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.editOrderForm select{
+  padding: 0.5rem;
+  border-radius: 1rem;  
+  border: 0.2rem solid black;
+}

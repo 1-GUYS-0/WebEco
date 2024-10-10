@@ -20,22 +20,25 @@ class CustomerSeeder extends Seeder
         Customer::create([
             'name' => 'Việt Hoàng',
             'email' => 'viethoang@gmail.com',
+            'number_phone' => '0123456789',
             'password' => Hash::make('123456'), // Mã hóa mật khẩu
-            'avarar_path' => 'storage/avatar_customer/avatar_u1.webp',
+            'avatar_path' => 'storage/avatar_customer/avatar_u1.webp',
         ]);
 
         Customer::create([
-            'name' => 'Jack',
-            'email' => 'jack@gmail.com',
+            'name' => 'Guys',
+            'email' => '20166016@st.hcmuaf.edu.vn',
+            'number_phone' => '0123456798',
             'password' => Hash::make('password123'), // Mã hóa mật khẩu
-            'avarar_path' => 'storage/avatar_customer/avatar_u2.webp'
+            'avatar_path' => 'storage/avatar_customer/avatar_u2.webp'
         ]);
 
         Customer::create([
             'name' => 'Alice',
             'email' => 'alice@gmail.com',
+            'number_phone' => '0123456701',
             'password' => Hash::make('password123'), // Mã hóa mật khẩu
-            'avarar_path' => 'storage/avatar_customer/avatar_u3.webp'
+            'avatar_path' => 'storage/avatar_customer/avatar_u3.webp'
         ]);
 
         // Bạn có thể thêm nhiều dữ liệu mẫu khác tại đây

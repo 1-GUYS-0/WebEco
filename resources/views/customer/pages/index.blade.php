@@ -14,7 +14,7 @@
     <button class="next" onclick="changeSlide(1)">&#10095;</button>
 </div>
 <div class="cust-recomm_wrapper">
-    <h3 class="title-section">Heading</h3>
+    <h3 class="title-section">Các sản phẩm có đánh giá cao</h3>
     <div id="product-list" class="cust-recomm_contain">
         @foreach ($Products as $product)
             <div class="trending-prods_cards ">

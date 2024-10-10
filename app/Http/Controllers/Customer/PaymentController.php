@@ -55,21 +55,24 @@ class PaymentController extends Controller
 
         // Lấy thông tin khách hàng
         $customerInfo = Customer::with('addresses')->find($customer->id);
-
-        return view('customer.pages.payment', compact('products', 'customerInfo'));
+        // Lấy thông tin địa chỉ mặc định của khách hàng
+        $defaultAddress = $customer->addresses->firstWhere('is_default', true);
+        return view('customer.pages.payment', compact('products', 'customerInfo', 'defaultAddress'));
+        // return response()->json([$customerInfo]);
     }
 
     public function orderSuccess()
     {
         // Lấy dữ liệu từ session
         $vnpayResponse = session('vnpay_response', []);
-        return view('customer.pages.order-success',compact('vnpayResponse'));
+        return view('customer.pages.order-success', compact('vnpayResponse'));
+        // dump($vnpayResponse);
     }
 
     public function orderFailure()
     {
         $errorMessage = session('error_message', []);
-        return view('customer.pages.order-failure',compact('errorMessage'));
+        return view('customer.pages.order-failure', compact('errorMessage'));
     }
 
     public function submitOrder(Request $request)
@@ -96,6 +99,8 @@ class PaymentController extends Controller
             $shippingFee = $request->shipping_fee;
             $subtotal = $request->subtotal;
 
+            // Tính tổng số lượng tất cả sản phẩm được mua
+            $totalQuantity = array_sum($quantities);
             // Kết nối các trường province, district, ward
             $province = $request->province;
             $district = $request->district;
@@ -114,6 +119,7 @@ class PaymentController extends Controller
             $order->discount = $discountAmount;
             $order->shipping = $shippingFee;
             $order->total_price = $totalPrice;
+            $order->order_quantity = $totalQuantity;
             $order->status = 'pending';
             $order->save();
 
@@ -125,6 +131,14 @@ class PaymentController extends Controller
                 $orderItem->quantity = $quantities[$index];
                 $orderItem->price = $prices[$index];
                 $orderItem->save();
+
+                // Cập nhật lại trường "stock" và trường "total_purchase_quantity" trong bảng products
+                $product = Product::find($productId);
+                if ($product) {
+                    $product->stock -= $quantities[$index];
+                    $product->total_purchase_quantity += $quantities[$index];
+                    $product->save();
+                }
             }
 
             // Tạo thanh toán
@@ -145,11 +159,11 @@ class PaymentController extends Controller
 
             DB::commit();
 
-            return response()->json(['success' => true, 'redirect_url' => route('order.success')]);
+            return response()->json(['success' => true, 'redictCashPayment_url' => route('order.success')]);
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error in submitOrder: ' . $e->getMessage(), ['exception' => $e]);
-            return response()->json(['success' => false, 'redirect_url' => route('order.failure')]);
+            return response()->json(['success' => false, 'redictCashPayment_url' => route('order.failure')]);
         }
     }
 }

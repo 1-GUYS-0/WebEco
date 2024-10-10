@@ -4,12 +4,18 @@
     <h1>Đặt hàng thành công</h1>
     <p>Cảm ơn bạn đã đặt hàng. Đơn hàng của bạn đã được xác nhận.</p>
     <ul>
+        @if ($vnpayResponse === null )
         <li><strong>Giá trị đơn hàng:</strong>{{ number_format($vnpayResponse['vnp_Amount']/100, 0, ',', '.') }} VND</li>
         <li><strong>Ngân hàng thanh toán:</strong>{{$vnpayResponse['vnp_BankCode']}}</li>
         <li><strong>Mã giao dịch:</strong>{{$vnpayResponse['vnp_TransactionNo']}}</li>
         <li><strong>Ngày thanh toán:</strong> {{ formatVNPayDate($vnpayResponse['vnp_PayDate']) }}</li>
+        @else
+        <li><strong>Vui lòng kiểm tra trong giỏ hàng</strong></li>
+        @endif
     </ul>
-    <a href="{{ route('customer.home') }}" class="btn btn-primary">Quay lại trang chủ</a>
+    <button type="submit" class="button">
+        <a class="light-text" href="{{ route('customer.home') }}" class="btn btn-primary">Quay lại trang chủ</a>
+    </button>
 </div>
 <?php
 function formatVNPayDate($dateString)

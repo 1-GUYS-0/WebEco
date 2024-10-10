@@ -154,7 +154,6 @@ class VNPayController extends Controller
             }
         }
         $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret); // Tạo chuỗi hash từ dữ liệu đã nhận và chuỗi bí mật
-        $vnp_Amount = $inputData['vnp_Amount'] / 100; // Số tiền thanh toán VNPAY phản hồi
 
         // Tiến hành kiểm tra dữ liệu và xử lý
         try {
@@ -169,6 +168,8 @@ class VNPayController extends Controller
                         DB::beginTransaction();
 
                         try {
+                            // Tính tổng số lượng tất cả sản phẩm được mua
+                            $totalQuantity = array_sum($orderData['quantities']);
                             // Tạo đơn hàng mới
                             $order = new Order();
                             $order->customer_id = $orderData['customer_id'];
@@ -181,9 +182,10 @@ class VNPayController extends Controller
                             $order->discount = $orderData['discount'];
                             $order->shipping = $orderData['shipping'];
                             $order->total_price = $orderData['total_price'];
+                            $order->order_quantity = $totalQuantity;
                             $order->status = 'pending';
                             $order->save();
-
+                            
                             // Tạo các mục đơn hàng
                             foreach ($orderData['product_ids'] as $index => $productId) {
                                 $orderItem = new OrderItem();

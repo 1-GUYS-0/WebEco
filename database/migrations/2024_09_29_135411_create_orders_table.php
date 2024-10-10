@@ -20,7 +20,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('discount', 10, 2)->default(0); // giảm giá
             $table->integer('shipping'); // phí vận chuyển
             $table->integer('total_price'); // tổng tiền cần thanh toán
-            $table->enum('status', ['pending', 'shipping', 'completed', 'cancelled'])->default('pending');
+            $table->integer('order_quantity'); // tổng số lượng sản phẩm
+            $table->enum('status', ['pending', 'shipping', 'completed', 'rated', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

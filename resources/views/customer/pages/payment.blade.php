@@ -7,16 +7,17 @@
             <div class="infor_cust">
                 <h3>Thông tin liên hệ của khách hàng: {{$customerInfo['name']}}</h3>
                 <div class="text">Email khách hàng: {{$customerInfo['email']}}</div>
-                <div class="text">Địa chỉ giao hàng đã lưu</div>
-                <div class="cust_input">
-                    <select  name="addressofcustomer" aria-label="Chọn 1 dịa chỉ giao hàng" required>
-                        <option value="" disabled selected hidden>Chọn 1 địa chỉ của bạn</option>
-                        <option value="hcm">TH.HCM</option>
-                        <option value="danang">Đà Nẵng</option>
-                        <option value="hanoi">Hà Nội</option>
+                <!-- <div class="text">Địa chỉ giao hàng đã lưu</div>
+                <div class="address-options">
+                    <select title="select new address" id="choseAddress">
+                        @foreach ($customerInfo['addresses'] as $anotherAddress)
+                        <option value="{{ $anotherAddress->province }}, {{ $anotherAddress->district }}, {{ $anotherAddress->ward }}, {{ $anotherAddress->phone }}, {{ $anotherAddress->address }}">
+                            {{ $anotherAddress->province }}, {{ $anotherAddress->district }}, {{ $anotherAddress->ward }}, {{ $anotherAddress->phone }}, {{ $anotherAddress->address }} .
+                        </option>
+                        @endforeach
                     </select>
-                </div>
-                <div class="text">Địa chỉ giao hàng</div>
+                </div> -->
+                <div class="text">Địa chỉ giao hàng của bạn:</div>
                 <div class="cust_contain">
                     <div class="cust_input">
                         <label for="myName" class="input">
@@ -25,30 +26,47 @@
                     </div>
                     <div class="cust_input">
                         <select id="province" name="province" aria-label="Chọn tỉnh thành" required>
-                            <option value="" disabled selected hidden>Chọn 1 tỉnh thành</option>
-                            <option value="hcm">TH.HCM</option>
-                            <option value="danang">Đà Nẵng</option>
-                            <option value="hanoi">Hà Nội</option>
+                            @if ($defaultAddress == null)
+                                <option value="" disabled selected hidden>Chọn 1 tỉnh thành</option>
+                            @else
+                            <option value="{{ $defaultAddress->province }}" selected>{{ $defaultAddress->province }}</option>
+                            @endif
                         </select>
                     </div>
                     <div class="cust_input">
                         <select id="district" name="district" aria-label="Chọn tỉnh Quận/Huyện" required>
-                            <option value="" disabled selected hidden>Chọn 1 Quận/Huyện</option>
+                            @if ($defaultAddress == null)
+                                <option value="" disabled selected hidden>Chọn 1 Quận/Huyện</option>
+                            @else
+                            <option value="{{ $defaultAddress->district }}" selected> {{ $defaultAddress->district }}</option>
+                            @endif
                         </select>
                     </div>
                     <div class="cust_input">
                         <select id="ward" name="ward" aria-label="Chọn tỉnh Phường/Xã" required>
-                            <option value="" disabled selected hidden>Chọn 1 Phường/Xã</option>
+                            @if ($defaultAddress == null)
+                                <option value="" disabled selected hidden>Chọn 1 Phường/Xã</option>
+                            @else
+                            <option value="{{ $defaultAddress->ward }}" selected> {{ $defaultAddress->ward }}</option>
+                            @endif
                         </select>
                     </div>
                     <div class="cust_input">
                         <label for="myNumber" class="input">
+                            @if ($defaultAddress == null)
                             <input type="text" id="myNumber" name="phone" class="input__lable" placeholder="Nhập số điện thoại" required>
+                            @else
+                            <input type="text" id="myNumber" name="phone" class="input__lable" value="{{ $defaultAddress->phone }}" required>
+                            @endif
                         </label>
                     </div>
                     <div class="cust_input">
                         <label for="myAddress" class="input">
+                            @if ($defaultAddress == null)
                             <input type="text" id="myAddress" name="address" class="input__lable" placeholder="Nhập số nhà, tên đường" required>
+                            @else
+                            <input type="text" id="myAddress" name="address" class="input__lable" value="{{ $defaultAddress->address }}" required>
+                            @endif
                         </label>
                     </div>
                 </div>
@@ -74,7 +92,7 @@
             </div><!-- method express and payment -->
             <div class="div"></div>
             <div class="infor_mess">
-                <label for="message">
+                <label for="message" style="min-height: 7rem;">
                     <textarea id="message" name="message" class="mess_lable" placeholder="Bạn có lời nhắn gì thêm cho shop....."></textarea>
                 </label>
             </div>
@@ -94,7 +112,7 @@
                                 <input type="number" class="number-order" name="quantity[]" value="{{ $product['quantity'] }}" min="1">
                             </div>
                             <div>
-                            <span class="price">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</span>
+                                <span class="price">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</span>
                                 <input type="hidden" name="price[]" value="{{ $product['price'] * $product['quantity'] }}">
                             </div>
                         </div>
@@ -110,7 +128,7 @@
                 <div class="total-price_voucher">
                     <h3>Mã Khuyến Mãi</h3>
                     <label for="myVoucher">
-                        <input type="text"  id="voucher-code" name="voucher" placeholder="Nhập mã voucher">
+                        <input type="text" id="voucher-code" name="voucher" placeholder="Nhập mã voucher">
                     </label>
                     <button type="button" id="apply-voucher" class="button">
                         <div class="light-text">Áp dụng</div>
@@ -120,8 +138,8 @@
                 <div class="price-breakdown">
                     <div class="price-breakdown_details">
                         <dl>
-                            <dt >Tạm tính:</dt>
-                            <dd id= "estimated_price" value="{{ $product['price'] * $product['quantity'] }}">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</dd>
+                            <dt>Tạm tính:</dt>
+                            <dd id="estimated_price" value="{{ $product['price'] * $product['quantity'] }}">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</dd>
                             <dt>Giảm giá:</dt>
                             <dd id="discount-amount" value="0">0</dd>
                             <dt>Phí vận chuyển:</dt>

@@ -8,7 +8,7 @@ class Address extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'address', 'province', 'district', 'ward', 'is_default'];
+    protected $fillable = ['customer_id', 'address', 'province', 'district', 'ward', 'is_default', 'phone'];
 
     public function customer() // 1 địa chỉ thuộc về 1 khách hàng
     {

@@ -4,107 +4,66 @@ $.ajaxSetup({
     }
 });
 
+// Chức năng thêm các trường địa chỉ
 document.addEventListener('DOMContentLoaded', function () {
     const provinceSelect = document.getElementById('province');
     const districtSelect = document.getElementById('district');
     const wardSelect = document.getElementById('ward');
 
     if (provinceSelect && districtSelect && wardSelect) {
-        const data = {
-            hcm: {
-                districts: {
-                    'quan1': ['Phường 1', 'Phường 2', 'Phường 3'],
-                    'quan2': ['Phường A', 'Phường B', 'Phường C']
-                }
-            },
-            danang: {
-                districts: {
-                    'hai-chau': ['Phường Hải Châu 1', 'Phường Hải Châu 2'],
-                    'thanh-khe': ['Phường Thanh Khê 1', 'Phường Thanh Khê 2']
-                }
-            },
-            hanoi: {
-                districts: {
-                    'hoan-kiem': ['Phường Hàng Bạc', 'Phường Hàng Bồ'],
-                    'dong-da': ['Phường Cát Linh', 'Phường Hàng Bột']
-                }
-            }
-        };
+        // Hàm để tải dữ liệu JSON
+        function loadAddressData(callback) {
+            $.getJSON('/front-end/js/plugin/address-vn.json', function (data) {
+                callback(data);
+            }).fail(function () {
+                console.error('Không thể tải dữ liệu địa chỉ.');
+            });
+        }
 
-        provinceSelect.addEventListener('change', function () {
-            const province = this.value;
-            if (data[province]) {
-                const districts = data[province].districts;
-                districtSelect.innerHTML = '<option value="" disabled selected hidden>Chọn 1 Quận/Huyện</option>';
-                wardSelect.innerHTML = '<option value="" disabled selected hidden>Chọn 1 Phường/Xã</option>';
+        // Sử dụng dữ liệu sau khi tải
+        loadAddressData(function (data) {
+            // Cập nhật các giá trị trong <option> của thẻ <select> cho tỉnh/thành phố
+            data.forEach(province => {
+                const option = document.createElement('option');
+                option.value = province.Name;
+                option.textContent = province.Name;
+                provinceSelect.appendChild(option);
+            });
 
-                for (const district in districts) {
-                    const option = document.createElement('option');
-                    option.value = district;
-                    option.textContent = district.replace(/-/g, ' ');
-                    districtSelect.appendChild(option);
-                }
-            } else {
-                console.error(`Province ${province} not found in data`);
-            }
-        });
+            provinceSelect.addEventListener('change', function () // Lắng nghe sự kiện khi chọn tỉnh/thành phố
+            {
+                const selectedProvince = data.find(province => province.Name === this.value); // Tìm tỉnh/thành phố được chọn
+                if (selectedProvince) {
+                    const districts = selectedProvince.District;
+                    districtSelect.innerHTML = '<option value="" disabled selected hidden>Chọn 1 Quận/Huyện</option>'; // Reset giá trị của <select> quận/huyện
+                    wardSelect.innerHTML = '<option value="" disabled selected hidden>Chọn 1 Phường/Xã</option>'; // Reset giá trị của <select> phường/xã
 
-        districtSelect.addEventListener('change', function () {
-            const province = provinceSelect.value;
-            const district = this.value;
-            if (data[province] && data[province].districts[district]) {
-                const wards = data[province].districts[district];
-                wardSelect.innerHTML = '<option value="" disabled selected hidden>Chọn 1 Phường/Xã</option>';
-
-                wards.forEach(ward => {
-                    const option = document.createElement('option');
-                    option.value = ward.toLowerCase().replace(/ /g, '-');
-                    option.textContent = ward;
-                    wardSelect.appendChild(option);
-                });
-            } else {
-                console.error(`District ${district} not found in province ${province}`);
-            }
-        });
-    }
-
-    // Thêm sự kiện submit cho form
-    const orderForm = document.getElementById('order-form');
-    if (orderForm) {
-        orderForm.addEventListener('submit', function (event) {
-            event.preventDefault(); // Ngăn chặn hành vi submit mặc định
-
-            // Lấy dữ liệu từ form
-            const formData = new FormData(orderForm);
-            console.log('Form data:', [formData]);
-            const data = {};
-            // Chuyển dữ liệu từ FormData sang object
-            formData.forEach((value, key) => {
-                if (key.endsWith('[]')) {
-                    const cleanKey = key.slice(0, -2); // Xóa 2 ký tự cuối cùng của key bởi vì key kết thúc bằng '[]' trong trường hợp như price[] hoặc quantity[]
-                    if (!data[cleanKey]) {
-                        data[cleanKey] = []; // Khởi tạo mảng nếu chưa tồn tại dành cho key có dạng price[] hoặc quantity[]
-                    }
-                    data[cleanKey].push(value);
+                    districts.forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district.Name;
+                        option.textContent = district.Name;
+                        districtSelect.appendChild(option);
+                    });
                 } else {
-                    data[key] = value; // Gán giá trị cho key trong object data nếu key không phải dạng price[] hoặc quantity[]
+                    console.error(`Province ${this.value} not found in data`);
                 }
             });
-            // Thêm dữ liệu tạm thời vào đối tượng data
-            data.customer_id = '1'; // Thêm ID khách hàng tạm thời
 
-            // Gửi dữ liệu đến server bằng AJAX
-            $.ajax({
-                url: orderForm.action,
-                method: 'POST',
-                data: JSON.stringify(data),
-                success: function (result) {
-                    console.log('Success:', result);
-                    // Xử lý kết quả trả về từ server
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                    // Xử lý lỗi
+            districtSelect.addEventListener('change', function () {
+                const selectedProvince = data.find(province => province.Name === provinceSelect.value);
+                const selectedDistrict = selectedProvince.District.find(district => district.Name === this.value);
+                if (selectedDistrict) {
+                    const wards = selectedDistrict.Ward;
+                    wardSelect.innerHTML = '<option value="" disabled selected hidden>Chọn 1 Phường/Xã</option>';
+
+                    wards.forEach(ward => {
+                        const option = document.createElement('option');
+                        option.value = ward.Name.toLowerCase().replace(/ /g, '-');
+                        option.textContent = ward.Name;
+                        wardSelect.appendChild(option);
+                    });
+                } else {
+                    console.error(`District ${this.value} not found in province ${provinceSelect.value}`);
                 }
             });
         });
@@ -155,7 +114,7 @@ function processCashPayment() {
             if (data.success) {
                 alert('Đặt hàng thành công');
                 // Chuyển hướng đến trang xác nhận đặt hàng thành công
-                window.location.href = data.payment_url;
+                window.location.href = data.redictCashPayment_url;
             } else {
                 alert('Không thể đặt hàng, vui lòng thử lại');
                 // Chuyển hướng đến trang thất bại
@@ -199,11 +158,13 @@ function processVNPayPayment() {
 }
 document.getElementById('immediate-payment-button').addEventListener('click', function () {
     let paymentMethod = document.querySelector('select[name="payment_method"]').value;
+    console.log(paymentMethod);
     // Check if payment method is cash
+    
     if (paymentMethod === 'cash') {
         processCashPayment();
     }
-    if (paymentMethod === 'vnpay') {
+    else if (paymentMethod === 'vnpay') {
         processVNPayPayment();
     }
     else {
@@ -299,3 +260,55 @@ document.addEventListener('DOMContentLoaded', function () {
     // Tính toán giá tổng ban đầu
     calculateTotalPrice();
 });
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const choseAddress = document.getElementById('choseAddress');
+//     const provinceSelect = document.getElementById('province');
+//     const districtSelect = document.getElementById('district');
+//     const wardSelect = document.getElementById('ward');
+//     const phoneInput = document.getElementById('myNumber');
+//     const addressInput = document.getElementById('myAddress');
+
+//     if (provinceSelect && districtSelect && wardSelect && phoneInput && addressInput) {
+//                     // Định nghĩa hàm selectOption
+//         function selectOption(selectElement, value) {
+//             const options = selectElement.options;
+//             for (let i = 0; i < options.length; i++) {
+//                 if (options[i].value === value) {
+//                     selectElement.selectedIndex = i;
+//                     break;
+//                 }
+//             }
+//         }
+//         // Lắng nghe sự kiện thay đổi của thẻ <select>
+//         choseAddress.addEventListener('change', function () {
+//             const selectedValue = this.value;
+//             const values = selectedValue.split(',');
+//             console.log(values);
+//             if (values.length === 5) {
+//                 const [province, district, ward, phone, address] = values;
+//                 // Chọn dữ liệu cho các trường <select>
+//                 selectOption(provinceSelect, province);
+//                 loadAddressData(function(data) {
+//                     console.log('Dữ liệu sau khi chọn tỉnh:', data);
+//                 });
+
+//                 selectOption(districtSelect, district);
+//                 loadAddressData(function(data) {
+//                     console.log('Dữ liệu sau khi chọn quận:', data);
+//                 });
+
+//                 selectOption(wardSelect, ward);
+//                 loadAddressData(function(data) {
+//                     console.log('Dữ liệu sau khi chọn phường:', data);
+//                 });
+//                 // Điền dữ liệu vào các trường tương ứng
+//                 phoneInput.value = phone;
+//                 addressInput.value = address;
+//             } else {
+//                 console.error('Dữ liệu không hợp lệ');
+//             }
+//         });
+//     }
+// }
+// );

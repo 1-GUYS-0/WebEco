@@ -3,6 +3,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\CustomerResetPasswordNotification;
 
 class Customer extends Authenticatable
 {
@@ -32,5 +33,9 @@ class Customer extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class); // 1 customer có thể có nhiều comment
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new CustomerResetPasswordNotification($token));
     }
 }

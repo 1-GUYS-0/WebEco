@@ -122,7 +122,7 @@
         @foreach($product->comments as $comment)
         <div class="review">
             <div>
-                <img class="user-pic" src="{{ asset($comment->customer->avarar_path) }}" alt="{{ $comment->customer->name }}"" />
+                <img class="user-pic" src="{{ asset($comment->customer->avatar_path) }}" alt="{{ $comment->customer->name }}"" />
                     </div>
                     <div class=" comment_content">
                 <div class="review-meta">
