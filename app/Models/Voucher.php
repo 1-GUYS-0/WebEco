@@ -16,8 +16,13 @@ class Voucher extends Model
      */
     protected $fillable = [
         'code',
+        'name',
         'discount_amount',
         'expiry_date',
+        'quantity',
+        'image_path',
+        'start_time',
+        'end_time',
     ];
 
     /**

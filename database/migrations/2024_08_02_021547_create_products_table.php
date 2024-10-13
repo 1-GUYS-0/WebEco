@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id(); // ID
+            $table->string('brand'); // Brand
             $table->string('name'); // Name
+            $table->string('weight'); // Weight
             $table->integer('price'); // Price
             $table->text('description'); // Description
             $table->string('smell'); // Smell
@@ -27,6 +29,7 @@ return new class extends Migration
             $table->decimal('total_rating', 3, 2)->nullable(); // TotalRating
             $table->integer('total_purchase_quantity')->nullable(); // TotalPurchaseQuantity
             $table->string('note'); // Note
+            $table->foreignId('promotion_id')->nullable()->constrained('promotions', 'id')->onDelete('cascade'); // PromotionID
             $table->timestamps(); // CreatedAt and EditedAt (Laravel's default timestamps)
         });
     }

@@ -13,16 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function updateOrderManager(Request $request, $orderId)
-    {
-        $order = Order::find($orderId);
-        if ($order) {
-            $order->status = $request->input('status');
-            $order->save();
-            return response()->json(['success' => true, 'message' => 'Order status updated successfully.']);
-        }
-        return response()->json(['success' => false, 'message' => 'Order not found.'], 404);
-    }
     public function deleteOrderCash(Request $request, $orderId)
     {
         $order = Order::find($orderId);

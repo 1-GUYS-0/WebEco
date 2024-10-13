@@ -25,7 +25,7 @@
                     <th>Tổng số tiền</th>
                     <th>Phương thức thanh toán</th>
                     <th>Số lượng sản phẩm</th>
-                    <th>Chi tiết</th>
+                    <th>Chỉnh sửa</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,7 +37,7 @@
                 @foreach($payments as $payment)
                 @if($payment->order)
                 <tr>
-                    <td>{{ $payment->order->id }}</td>
+                    <td><button class="edit-button" onclick="showDetail('editDetail')">{{ $payment->order->id }}</button></td>
                     <td>{{ $payment->order->customer->name }}</td>
                     <td>{{ $payment->order->created_at->format('d/m/Y') }}</td>
                     <td>{{ $payment->order->status }}</td>
@@ -61,7 +61,7 @@
             <div id="editOrderForm" class="editOrderForm">
                 <div>
                     <label for="orderStatus">Trạng thái đơn:</label>
-                    <select id="orderStatus" name="status" aria-label="{{ $payment->order->status }}">
+                    <select id="orderStatus" name="status" aria-label="">
                         <option value="pending">Đợi đóng gói</option>
                         <option value="shipping">Đang giao</option>
                         <option value="completedr">Giao hàng hoàn tất</option>
@@ -73,6 +73,49 @@
             </div>
         </div>
     </div>
-</div> <!--container_cater-manager -->
+    <div id="editDetail" class="tab">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Chi tiết đơn hàng</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên khách hàng</th>
+                        <th>Ngày đặt đơn</th>
+                        <th>Trạng thái đơn</th>
+                        <th>Tổng số tiền</th>
+                        <th>Phương thức thanh toán</th>
+                        <th>Số lượng sản phẩm</th>
+                        <th>Chỉnh sửa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if ($payments===null)
+                    <tr>
+                        <td colspan="8">Không có dữ liệu</td>
+                    </tr>
+                    @else
+                    @foreach($payments as $payment)
+                    @if($payment->order)
+                    <tr>
+                        <td><button class="edit-button" onclick="showDetail('editDetail')">{{ $payment->order->id }}</button></td>
+                        <td>{{ $payment->order->customer->name }}</td>
+                        <td>{{ $payment->order->created_at->format('d/m/Y') }}</td>
+                        <td>{{ $payment->order->status }}</td>
+                        <td>{{ number_format($payment->order->total_price, 0, ',', '.') }} VND</td>
+                        <td>{{ $payment->payment_method }}</td>
+                        <td>{{ $payment->order->order_quantity }}</td>
+                        <td><button class="edit-button" data-order="{{ json_encode($payment->order) }}" data-payment-method="{{ $payment->payment_method }}">Chỉnh sửa</button></td>
+                    </tr>
+                    @endif
+                    @endforeach
+                    @endif
+                </tbody>
+            </table><!--bảng data-->
+        </div>
+    </div>
+</div>
+
 <script src="{{ asset('backend/js/orders/order.js') }}"></script>
 @endsection

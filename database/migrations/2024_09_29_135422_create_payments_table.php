@@ -11,8 +11,8 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
             $table->string('payment_method');
-            $table->decimal('amount', 10, 2); // đây là số tiền khách hàng thanh toán
-            $table->string('transaction_id')->nullable(); // mã giao dịch thanh toán
+            $table->integer('amount'); // đây là số tiền khách hàng thanh toán
+            $table->enum('status', ['unpaid', 'paid', 'refund'])->default('unpaid');
             $table->timestamp('payment_date')->useCurrent();
             $table->timestamps();
         });

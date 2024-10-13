@@ -12,28 +12,39 @@ function showTab(tabName) {
     document.querySelector(`.${tabName}`).classList.add('active');
 }
 
-function confirmDelete(orderId) {
+function confirmDelete(orderId, orderPayment) {
+    console.log(orderPayment);
     if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')) {
-        fetch(`/orders/${orderId}/delete/cash`, {
+        let url = '';
+        if (orderPayment === "cash") {
+            url = `/orders/${orderId}/delete/cash`;
+        } else if (orderPayment === "vnpay") {
+            url = `/orders/${orderId}/delete/vnpay`;
+        } else {
+            alert('Đơn hàng không thể hủy. Vui lòng sử dụng chatbot để được hỗ trợ.');
+            return;
+        }
+
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Đơn hàng đã được hủy thành công.');
-                location.reload(); // Reload the page to see the updated status
-            } else {
-                alert('Không thể hủy đơn hàng.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Đã xảy ra lỗi khi hủy đơn hàng. Vui lòng thử lại sau.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Đơn hàng đã được hủy thành công.');
+                    location.reload(); // Reload the page to see the updated status
+                } else {
+                    alert('Không thể hủy đơn hàng.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Đã xảy ra lỗi khi hủy đơn hàng. Vui lòng thử lại sau.');
+            });
     }
 }
 
@@ -46,19 +57,19 @@ function confirmReceived(orderId) {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Đã xác nhận nhận hàng thành công.');
-                location.reload(); // Reload the page to see the updated status
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Đã xảy ra lỗi khi xác nhận nhận hàng. Vui lòng thử lại sau.');
-        });
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Đã xác nhận nhận hàng thành công.');
+                    location.reload(); // Reload the page to see the updated status
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Đã xảy ra lỗi khi xác nhận nhận hàng. Vui lòng thử lại sau.');
+            });
     }
 }
 // Các Chức năng editthông tin cá nhân

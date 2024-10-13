@@ -14,10 +14,10 @@ class VoucherController extends Controller
         $totalPrice = $request->input('total_price');
         $shippingFee = $request->input('shipping_fee');
     
-        // Giả sử bạn có một model Voucher để kiểm tra voucher trong cơ sở dữ liệu
+        
         $voucher = Voucher::where('code', $voucherCode)->first();
-    
-        if (!$voucher) {
+        // Kiểm tra xem voucher có tồn tại không và còn hạn sử dụng(expiry_date) không
+        if (!$voucher || $voucher->expiry_date < now()) {
             return response()->json(['success' => false, 'message' => 'Voucher không hợp lệ hoặc đã hết hạn.']);
         }
     

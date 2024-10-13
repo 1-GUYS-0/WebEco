@@ -10,7 +10,7 @@
             
         </div>
         <div class="nav-bar_link close-btn">
-            <a>Chương trình và giảm giá</a>
+            <a href="{{route('promotion.discount')}}">Chương trình và giảm giá</a>
         </div>
         <div class="nav-bar_link close-btn">
             <a>Về chúng tôi</a>
@@ -49,7 +49,7 @@
 </script>
 <script src="{{ asset('front-end/js/cart.js') }}" defer></script>
 
-
+<!-- Chatbot -->
 <script>
     logo_brand= "{{ asset('system/logo.png') }}";
     // Configs

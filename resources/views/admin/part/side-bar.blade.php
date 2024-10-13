@@ -3,30 +3,36 @@
 </div>
 <div class="container_menu">
     <div class="admin-user">
-        <div class="name_braind">TRUS</div>
+        
     </div>
     <div class="div"></div>
     <div class="menu">
         <button class="module-menu">
-            <a class="text_menu"  href="/dashboard" >analyst-dashboard</a>
+            <a class="text_menu"  href="{{route('dashboards.showDashboardMng')}}" >analyst-dashboard</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/categories" >category-managerment</a>
+            <a class="text_menu" href="{{route('categories.showCategoryMng')}}" >category-managerment</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/products">product-managerment</a>
+            <a class="text_menu" href="{{route('products.showProductMng')}}">product-managerment</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/slides">Slide-management</a>
+            <a class="text_menu" href="{{route('banner.showBannerMng')}}">banner-management</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/orders">order-managerment</a>
+            <a class="text_menu" href="{{route('orders.showOrderMng')}}">order-managerment</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/users">user-managerment</a>
+            <a class="text_menu" href="{{route('promotions.showPromotionMng')}}">promotion-managerment</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu" href="/admins">admins-managerment</a>
+            <a class="text_menu" href="{{route('vouchers.showVoucherMng')}}">voucher-managerment</a>
+        </button>
+        <button class="module-menu">
+            <a class="text_menu" href="{{route('customers.showCustomerMng')}}">customer-managerment</a>
+        </button>
+        <button class="module-menu">
+            <a class="text_menu" href="{{route('admins.showAdminMng')}}">admins-managerment</a>
         </button>
     </div>
 </div>

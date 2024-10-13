@@ -146,7 +146,7 @@ class PaymentController extends Controller
             $payment->order_id = $order->id;
             $payment->payment_method = $paymentMethod;
             $payment->amount = $totalPrice;
-            $payment->transaction_id = null; // Giả sử không có mã giao dịch
+            $payment->status = 'unpaid';
             $payment->save();
 
             // Xóa các sản phẩm đã đặt mua khỏi giỏ hàng trong cơ sở dữ liệu

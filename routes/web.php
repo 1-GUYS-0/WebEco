@@ -12,6 +12,7 @@ use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\Customer\PromotionDiscountController as CustomerPromotionDiscountController;
 use App\Http\Controllers\Auth\CustomerForgotPasswordController;
 use App\Http\Controllers\Auth\CustomerResetPasswordController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Customer\LogSignController;
 use App\Http\Controllers\ProductController;
@@ -20,35 +21,52 @@ use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 
+Route::get('/admin/login', [AdminController::class, 'showlogin'])->name('admin.show-login');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
 // Định nghĩa route cho trang chủ admin
-Route::get('/dashboard', [PageController::class, 'dashboard']);
+Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'showDashboardMng'])->middleware('CheckAdminLog')->name('dashboards.showDashboardMng');
 
-// Định nghĩa route cho trang quản lý danh mục sản phẩm
-Route::prefix('categories')->group(function () {
-    Route::get('/', [CategoryController::class, 'show'])->name('categories.view_categories');
-    Route::get('/add-category', [CategoryController::class, 'create'])->name('categories.view_add-category');
-    Route::post('/add-category', [CategoryController::class, 'store'])->name('categories.add-category');
-    Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
-    Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
+    // Định nghĩa route cho trang quản lý danh mục sản phẩm
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'show'])->name('categories.showCategoryMng');
+        Route::get('/add-category', [CategoryController::class, 'create'])->name('categories.view_add-category');
+        Route::post('/add-category', [CategoryController::class, 'store'])->name('categories.add-category');
+        Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
+        Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
+    });
+    // Định nghĩa các nhóm các route trong quản lý đơn đặt hàng
+    Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
+        Route::get('/', [AdminController::class, 'showOrderMng'])->name('showOrderMng');
+        Route::post('/{orderId}/edit', [AdminController::class, 'updateOrderManager'])->name('oderEditMng');
+        Route::get('/{orderId}/detail', [AdminController::class, 'detailOrderMng'])->name('orderDetailMng');
+    });
+    // Định nghĩa route cho trang quản lý sản phẩm
+    Route::get('/products', [ProductController::class, 'show'])->name('products.showProductMng');
+    // route thêm sản phẩm  
+    Route::get('/product/add-product', [ProductController::class, 'create'])->name('products.view_add-product');
+    Route::post('/product/add-product', [ProductController::class, 'store'])->name('products.add-product');
+    // route sửa và xóa sản phẩm
+    Route::get('/product/edit-product/{id}', [ProductController::class, 'edit'])->name('products.view_edit-product');
+    Route::delete('/product/delete-product/{id}', [ProductController::class, 'destroy'])->name('products.delete-product');
+
+    // Định nghĩa route cho trang quản lý slide
+    Route::get('/banners', [AdminController::class, 'banners'])->name('banner.showBannerMng');
+    // Định nghĩa route cho trang promotion
+    Route::get('/promotions', [AdminController::class, 'showPromotionMng'])->name('promotions.showPromotionMng');
+    // Định nghĩa route cho trang quản lý voucher
+    Route::get('/vouchers', [AdminController::class, 'vouchers'])->name('vouchers.showVoucherMng');
+    // Định nghĩa route cho trang quản lý khách hàng
+    Route::get('/customers', [AdminController::class, 'customers'])->name('customers.showCustomerMng');
+    // Định nghĩa route cho trang quản lý admin
+    Route::get('/admins', [AdminController::class, 'admins'])->name('admins.showAdminMng');
+
 });
-
-// Định nghĩa route cho trang quảng lý sản phẩm
-Route::get('/products', [ProductController::class, 'show'])->name('products.view_products');
-// route thêm sản phẩm  
-Route::get('/product/add-product', [ProductController::class, 'create'])->name('products.view_add-product');
-Route::post('/product/add-product', [ProductController::class, 'store'])->name('products.add-product');
-// route sửa và xóa sản phẩm
-Route::get('/product/edit-product/{id}', [ProductController::class, 'edit'])->name('products.view_edit-product');
-Route::delete('/product/delete-product/{id}', [ProductController::class, 'destroy'])->name('products.delete-product');
-
-//Định nghĩa routr cho trang quản lý slide
-Route::get('/slides', [PageController::class, 'slides']);
 
 // Định nghĩa route cho trang quản lý đơn hàng
 Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
-    Route::get('/', [CustomerOrderController::class, 'index'])->name('index');
-    Route::post('/{orderId}/edit', [CustomerOrderController::class, 'updateOrderManager'])->name('edit');
     Route::post('/{orderId}/delete/cash', [CustomerOrderController::class, 'deleteOrderCash'])->name('delete-order-cash');
+    Route::post('/{orderId}/delete/vnpay', [CustomerVNPayController::class, 'paymentRefund'])->name('delete-order-vnpay');
     Route::post('/{orderId}/completed/cash', [CustomerOrderController::class, 'completedOrderCash'])->name('confirm-received');
     Route::get('/{orderId}/review', [CustomerOrderController::class, 'showReviewForm'])->name('show-review-form');
     Route::post('/{orderId}/review', [CustomerOrderController::class, 'submitReview'])->name('submit-review');
@@ -72,6 +90,7 @@ Route::post('/log-out', [LogSignController::class, 'logout'])->name('customer.lo
 
 Route::get('/home', [CustomerHomeController::class, 'index'])->name('customer.home')->middleware('CheckLogin');
 Route::get('/home/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
+Route::post('/home/product/interested', [CustomerHomeController::class, 'getInterestedProducts'])->name('customer.products.interested');
 
 Route::get('home/customer/payment', [CustomerPaymentController::class, 'showPaymentPage'])->middleware('CheckLogin');
 Route::post('home/customer/payment', [CustomerPaymentController::class, 'processPayment'])->name('payment')->middleware('CheckLogin');

@@ -1620,5 +1620,75 @@ button:hover {
   max-width: 15rem;
   max-height: 10rem;
 }
+.dis-and-promo-container{
+  display:flex;
+  justify-content: space-between;
+}
+.dis-and-promo-container .banner-section, .dis-and-promo-container .discount-section{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  min-width: 50%;
+  padding: 0 1rem;
+}
+.dis-and-promo-container .banner-section{
+  border-right: 0.1rem solid #000000;
+}
+.dis-and-promo-container .banner-section .banner{
+  min-width: 100%;
+}
+.dis-and-promo-container .banner-section h2, .dis-and-promo-container .discount-section h2{
+  align-self: flex-start;
+}
+.banner-section img{
+  max-height: 10rem;
+  width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của phần tử chứa */
+  object-fit: cover; /* Hiển thị hình ảnh mà không bị méo */
+}
+.discounts{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap:1rem;
+}
+.discount{
+  display: flex;
+}
+.discount img{
+  max-height: 4rem;
+  width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng của phần tử chứa */
+  object-fit: cover; /* Hiển thị hình ảnh mà không bị méo */
+}
+.discount button{
+  color: #000000;
+  border: 0.3rem solid #000000;
 
+  border-radius: 1.3rem;
+  cursor: pointer;
+}
+.countdown{
+  padding: 1rem;
+  border: 0.1rem solid;
+  border-radius: 1rem;
+  background-color: #000000;
+  font-size: large;
+  color: #ffffff;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
+.interested-product_wrapper{
+  display: flex;
+  flex-direction: column;
+}
+.interested-product_list{
+  display: flex;
+  overflow-x: auto;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+.interested-product_item {
+  flex: 0 0 auto;
+  min-width: 10rem;
+}
 /*# sourceMappingURL=main.css.map */

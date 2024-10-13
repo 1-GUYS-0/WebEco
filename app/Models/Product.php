@@ -14,6 +14,8 @@ class Product extends Model
     // Các trường có thể được gán hàng loạt
     protected $fillable = [
         'name',
+        'brand',
+        'weight',
         'price',
         'description',
         'smell',
@@ -25,6 +27,7 @@ class Product extends Model
         'stock',
         'categories_id',
         'note',
+        'promotion_id',
     ];
 
     // Xác định quan hệ với bảng product_images
@@ -40,5 +43,9 @@ class Product extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class); // Một sản phẩm có thể có nhiều comment
+    }
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class, 'promotion_id');
     }
 }

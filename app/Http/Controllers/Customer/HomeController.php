@@ -37,4 +37,11 @@ class HomeController extends Controller
         }
         return response()->json(['error' => 'Invalid request'], 400); 
     }
+    public function getInterestedProducts(Request $request)
+    {
+        $productIds = $request->input('productIds');
+        // Giả sử bạn có logic để tìm sản phẩm liên quan dựa trên danh sách productIds
+        $relatedProducts = Product::with('images')->whereIn('id', $productIds)->get();
+        return response()->json(['products' => $relatedProducts]);
+    }
 }

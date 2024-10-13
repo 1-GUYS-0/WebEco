@@ -75,9 +75,9 @@
                     <button onclick="confirmReceived('{{ $order->id }}')">Xác nhận đã nhận hàng</button>
                     @if ($order->status == 'pending')
                     @if($order->payment->payment_method == 'cash')
-                    <button onclick="confirmDelete('{{ $order->id }}')">Hủy đơn hàng</button>
+                    <button onclick="confirmDelete('{{ $order->id }},{{$order->payment->payment_method}}')">Hủy đơn hàng</button>
                     @else
-                    <button onclick="confirmReceived('{{ $order->id }}')">Hủy đơn hàng và hoàn tiền</button>
+                    <button onclick="confirmDelete('{{ $order->id }}','{{$order->payment->payment_method}}')">Hủy đơn hàng và hoàn tiền</button>
                     @endif
                     @endif
                 </div>

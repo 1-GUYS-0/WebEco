@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable(); // Thêm cột email_verified_at để xác nhận email
             $table->string('password');
             $table->string('role')->default('customer'); // Thêm cột role để phân biệt giữa admin và customer
             $table->rememberToken(); // Tạo cột remember_token để lưu token cho tính năng remember me

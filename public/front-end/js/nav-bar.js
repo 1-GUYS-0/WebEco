@@ -80,4 +80,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+// Lưu thông tin sản phẩm vào Local Storage
+function saveProductToLocalStorage(productId) {
+    let viewedProducts = JSON.parse(localStorage.getItem('viewedProducts')) || [];
+    
+    // Nếu đã có 10 sản phẩm, xóa sản phẩm cũ nhất
+    if (viewedProducts.length >= 10) {
+        viewedProducts.shift(); // Xóa phần tử đầu tiên (cũ nhất)
+    }
+    
+    // Thêm sản phẩm mới vào cuối danh sách
+    viewedProducts.push(productId);
+    
+    // Lưu lại danh sách vào Local Storage
+    localStorage.setItem('viewedProducts', JSON.stringify(viewedProducts));
+}
+
 

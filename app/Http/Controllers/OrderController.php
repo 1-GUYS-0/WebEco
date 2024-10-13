@@ -13,9 +13,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $payments = Payment::with('order')->get();
-        return view('admin.orders-manager', compact('payments'));
-        //return json_encode($payments);
-        //dump($payments);
+        // $payments = Payment::with('order')->get();
+        // return view('admin.orders-manager', compact('payments'));
+        // //return json_encode($payments);
+        // //dump($payments);
     }
 }

@@ -37,7 +37,7 @@ function handleSaveButtonClick() {
     const orderId = this.getAttribute('data-order-id');
     const status = document.getElementById('orderStatus').value;
 
-    fetch(`/orders/${orderId}/edit`, {
+    fetch(`/admin/orders/${orderId}/edit`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -56,4 +56,23 @@ function handleSaveButtonClick() {
             }
         })
         .catch(error => console.error('Error:', error));
+}
+function showDetail(idTab) {
+    console.log(idTab);
+    const modal = document.getElementById(idTab);
+    const closeModal = modal.querySelector('.close-btn');
+    const saveButton = modal.querySelector('#saveButton');
+    modal.style.display = 'block';
+    // Đóng modal khi nhấn vào nút đóng
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Đóng modal khi nhấn ra ngoài modal
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    });
+
 }
