@@ -118,34 +118,3 @@ $(document).ready(function () {
     });
 });
 
-// Thêm hình ảnh
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('imageInput').addEventListener('change', function (event) {
-        const files = event.target.files; // Lấy danh sách các tệp đã chọn
-        if (files) {
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i]; // Lấy từng tệp trong danh sách
-                const reader = new FileReader(); // Tạo một đối tượng FileReader để chuẩn bị đọc tệp
-                reader.onload = function (e) { // Lắng nghe sự kiện reader.readAsDataURL hoàn thành khi tệp đã được đọc mới thực thi
-                    const listImage = document.getElementById('listImage'); // Lấy phần tử danh sách hình ảnh
-                    const newImageBlock = document.createElement('div'); // Tạo một khối hình ảnh mới
-                    newImageBlock.className = 'image-block';
-                    newImageBlock.innerHTML = `
-                        <img class="cards-image" src="${e.target.result}" />
-                        <div class="close-icon">
-                            <button type="button" class="material-symbols-outlined" onclick="removeImage(this)">close</button>
-                        </div>
-                    `;
-                    listImage.appendChild(newImageBlock); // Thêm khối hình ảnh mới vào danh sách
-                };
-                reader.readAsDataURL(file); // Mã hóa dữ liệu tệp thành chuỗi base64 để web đọc tệp dưới dạng URL dữ liệu
-            }
-        }
-    });
-});
-
-// Xóa hình ảnh
-function removeImage(button) {
-    const imageBlock = button.closest('.image-block');
-    imageBlock.remove();
-}

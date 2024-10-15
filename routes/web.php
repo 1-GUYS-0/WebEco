@@ -32,8 +32,8 @@ Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
         Route::get('/', [CategoryController::class, 'show'])->name('categories.showCategoryMng');
         Route::get('/add-category', [CategoryController::class, 'create'])->name('categories.view_add-category');
         Route::post('/add-category', [CategoryController::class, 'store'])->name('categories.add-category');
-        Route::get('/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
-        Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
+        Route::post('/edit-category/{id}', [CategoryController::class, 'edit'])->name('categories.view_edit-category');
+        Route::post('/delete-category/{id}', [CategoryController::class, 'destroy'])->name('categories.delete-category');
     });
     // Định nghĩa các nhóm các route trong quản lý đơn đặt hàng
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
@@ -45,7 +45,9 @@ Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
     Route::get('/products', [ProductController::class, 'show'])->name('products.showProductMng');
     // route thêm sản phẩm  
     Route::get('/product/add-product', [ProductController::class, 'create'])->name('products.view_add-product');
-    Route::post('/product/add-product', [ProductController::class, 'store'])->name('products.add-product');
+    Route::post('/products/add-product', [ProductController::class, 'store'])->name('products.add-product');
+    // route cập nhật sản phẩm
+    Route::post('/product/update-product/{id}', [ProductController::class, 'update'])->name('products.update-product');
     // route sửa và xóa sản phẩm
     Route::get('/product/edit-product/{id}', [ProductController::class, 'edit'])->name('products.view_edit-product');
     Route::delete('/product/delete-product/{id}', [ProductController::class, 'destroy'])->name('products.delete-product');

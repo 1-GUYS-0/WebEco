@@ -40,11 +40,25 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         if (!$category) {
-            return response()->json(['error' => 'Category not found.'], 404);
+            return response()->json(['error' => 'Không tìm thấy danh mục'], 404);
         }
 
         $category->delete();
 
-        return response()->json(['success' => 'Category deleted successfully.']);
+        return response()->json(['success' => 'Đã xóa danh mục']);
+    }
+    // Chỉnh sửa các thông tin mới của danh mục
+    public function edit(Request $request , $id)
+    {
+    
+        $category = Category::find($id);
+        if (!$category) {
+            return response()->json(['error' => 'Không tìm thấy danh mục'], 404);
+        }
+        // Thay đổi hai thông tin name và parent_category của danh mục có id = $id
+        $category->name = $request->input('name');
+        $category->parent_category = $request->input('parent');
+        $category->save();
+        return response()->json(['success' => 'Đã cập nhật danh mục']);
     }
 }

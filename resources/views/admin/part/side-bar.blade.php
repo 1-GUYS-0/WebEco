@@ -3,7 +3,7 @@
 </div>
 <div class="container_menu">
     <div class="admin-user">
-        
+        Hi, {{ Auth::guard('admin')->user()->name }}
     </div>
     <div class="div"></div>
     <div class="menu">

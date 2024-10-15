@@ -69,7 +69,37 @@ Menu({
     toggleActiveClasses: Menu.toggleActiveClasses()
 });
 
+// hàm tìm kiếm
+function search(idTable) {
+    console.log('search');
+    const searchInput = document.getElementById('inputSearch');
+    const table = document.getElementById(idTable);
+    const rows = table.getElementsByTagName('tr');
+    const filters = searchInput.value.toLowerCase().split(',').map(filter => filter.trim());
+    console.log(filters);
+    for (let i = 1; i < rows.length; i++) { // Bỏ qua hàng tiêu đề
+        const cells = rows[i].getElementsByTagName('td');
+        let match = true;
 
+        for (let k = 0; k < filters.length; k++) {
+            let filterMatch = false;
+            for (let j = 1; j < cells.length; j++) {
+                if (cells[j]) {
+                    const cellValue = cells[j].textContent || cells[j].innerText;
+                    if (cellValue.toLowerCase().indexOf(filters[k]) > -1) {
+                        filterMatch = true;
+                        break;
+                    }
+                }
+            }
+            if (!filterMatch) {
+                match = false;
+                break;
+            }
+        }
+        rows[i].style.display = match ? '' : 'none'; 
+    }
+};
 // //Thực hiện việc lấy thông tin các giá trị input từ form
 // function FormData(selector) {
 //     const inputwrap = document.querySelectorAll(selector.input);

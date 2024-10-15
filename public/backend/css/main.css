@@ -86,7 +86,7 @@ td {
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   flex: 1;
   width: 100%;
   max-width: 80rem;
@@ -964,9 +964,27 @@ td {
   border: 0.2rem solid black;
   border-radius: 1rem;
   cursor: pointer;
-  max-width: 1.4rem;
+  max-width: 4rem;
 }
 .input-error{
   color: #b70606;
   font-size: 0.8rem;
 }
+.modal-content input{
+  padding: 0.5rem;
+  border-radius: 1rem;
+  border: 0.2rem solid black;
+}
+#detailProduct form div{
+  width: 100%;
+}
+#detailProduct form div:nth-child(17){
+  width: inherit;
+}
+#detailProduct form textarea, #detailProduct form input, #detailProduct form select{
+  padding: 0.5rem;
+  border-radius: 1rem;
+  border: 0.2rem solid black;
+  width: 100%;
+}
+

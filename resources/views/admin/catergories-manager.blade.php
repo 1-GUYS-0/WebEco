@@ -7,19 +7,19 @@
     <div class="search-box">
         <div class="search-bar">
             <div>
-                <span class="material-symbols-outlined">search</span>
+                <span class="material-symbols-outlined" onclick="search('categoryTable')">search</span>
             </div>
-            <form class="input" for="searchCatergpry">
-                <input type="text" id="searchCatergpry" class="input_lable" placeholder="Search for catergory">
-            </form>
+            <div class="input" for="inputSearch">
+                <input type="text" id="inputSearch" class="input_lable" placeholder="Search for catergory">
+            </div>
         </div>
         <div class="new-catergory">
             <button type="button" class="button">
-                <a class="light-text" href="{{ route('categories.view_add-category') }}"> Add new catergory</a>
+                <a class="light-text" onclick="showTab('addCategory',{})"> Add new catergory</a>
             </button>
         </div>
     </div> <!-- thanh search-->
-    <table>
+    <table id="categoryTable">
         <thead>
             <tr>
                 <th>ID</th>
@@ -35,14 +35,53 @@
                 <td>{{ $category['name'] }}</td>
                 <td>{{ $category['parent_category'] }}</td>
                 <td>
-                    <a href="{{ route('categories.view_edit-category', ['id' => $category['id']]) }}" class="dark-text">Edit</a>
-                    <button class="dark-text delete-category" data-id="{{ $category['id'] }}">Delete</button>
+                    <button class="edit-button" onclick="showTab('detailCategory', '{{ json_encode($category) }}')">Chỉnh sửa</button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table><!--bảng data-->
     <div class="div black"></div>
+
+    <div id="detailCategory" class="tab">
+        <div class="modal-content">
+            <span class="close-btn">&times;Thoát</span>
+            <h2>Chi tiết danh mục</h2>
+            <div id="category-id" value="{{ $category['id'] }}" placeholder="ID" hidden></div>
+            <div> Tên danh mục: <input id="category-name" value="" placeholder="Tên danh mục"> </div>
+            <div> Tên danh mục cha: <input id="category-parent" value="" placeholder="Tên danh mục cha"> </div>
+            <button type class="button light-text" onclick="saveEditCategory()">Lưu chỉnh sửa</button>
+            <button class="button light-text" onclick="deleteCategory()">Xóa danh mục</button>
+            </tr>
+        </div>
+    </div>
+    <div id="addCategory" class="tab">
+        <div class="modal-content">
+            <span class="close-btn">&times;Thoát</span>
+            <h2>Thêm danh mục</h2>
+            <form id="categoryForm" class="form_add-product">
+                <div class="wrap_input">
+                    <div class="input">
+                        <div class="input_title">Tên danh mục</div>
+                        <input type="text" id="category_name" name="category_name" class="input_lable" placeholder="Nhập tên danh mục sản phẩm">
+                    </div>
+                    <div class="input">
+                        <div class="input_title">Tên danh mục cha thuộc về</div>
+                        <select id="parent_category" name="parent_category" class="input_lable">
+                            <option value="">No Parent</option> <!-- Để trống -->
+                            @foreach($categoriesIBL as $category)
+                            <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="div"></div>
+                <div class="confirm">
+                    <button type="submit" class="button light-text">Xác nhận gữi</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div> <!--container_cater-manager -->
 <script src="{{asset('backend/js/catergories/category-manager-ajax.js')}}" defer></script>
 @endsection

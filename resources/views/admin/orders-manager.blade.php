@@ -7,11 +7,11 @@
     <div class="search-box">
         <div class="search-bar">
             <div>
-                <span class="material-symbols-outlined">search</span>
+                <span class="material-symbols-outlined" ondragenter,onclick="search('categoryTable')">search</span>
             </div>
-            <form class="input" for="searchCatergpry">
+            <div class="input" for="searchCatergpry">
                 <input type="text" id="searchCatergpry" class="input_lable" placeholder="Search for catergory">
-            </form>
+            </div>
         </div>
     </div> <!-- thanh search-->
     <div class=" container-table">

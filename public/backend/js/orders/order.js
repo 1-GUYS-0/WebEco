@@ -74,5 +74,4 @@ function showDetail(idTab) {
             modal.style.display = 'none';
         }
     });
-
 }
