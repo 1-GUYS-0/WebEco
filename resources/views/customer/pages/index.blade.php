@@ -52,7 +52,6 @@
     <div class="interested-product_list">
     </div>
 </div>
-<script src="{{ asset('front-end/js/index.js') }}"></script>
 <script>
     const loadmore_product = '{{ route("customer.products.loadMore") }}';
 </script>

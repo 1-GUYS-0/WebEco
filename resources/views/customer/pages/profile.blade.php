@@ -21,9 +21,9 @@
                 <div class="popup-content">
                     <span class="close" onclick="closePopup('avatarPopup')">&times;</span>
                     <h2>Thay đổi hình ảnh đại diện</h2>
-                    <input type="file" id="avatar" accept="image/*" onchange="previewAvatar(event)">
-                    <div>
-                        <img id="avatarPreview" src="{{ asset($customer->avatar_path) }}" alt="" />
+                    <input type="file" id="avatar" accept="image/*" onchange="previewAvatar(event,'avatarPreview')">
+                    <div id="avatarPreview">
+                        <img class="avatarPreview" src="{{ asset($customer->avatar_path) }}" alt="" />
                     </div>
                     <button onclick="document.getElementById('avatar').click()">Chọn hình ảnh</button>
                     <button onclick="updateProfile('avatar')">Lưu thay đổi</button>
@@ -80,6 +80,7 @@
                     <button onclick="confirmDelete('{{ $order->id }}','{{$order->payment->payment_method}}')">Hủy đơn hàng và hoàn tiền</button>
                     @endif
                     @endif
+                    <button onclick="showDetailOrder('{{ $order->id }}')">Chi tiết đơn hàng</button>
                 </div>
                 @else()
                 @endif
@@ -108,10 +109,21 @@
                     </ul>
                     <h4>Ngày đặt hàng: {{ formatVNDate($order->created_at) }}</h4>
                     @if ($order->status == 'completed')
-                        <button onclick="showReviewForm('{{ $order->id }}')">Đánh giá cho sản phẩm</button>
-                    @else
-                        
-                    @endif
+                    <button onclick="showReviewForm('{{ $order->id }}')">Đánh giá cho sản phẩm</button>
+                    @php
+                    $orderDate = \Carbon\Carbon::parse($order->created_at);
+                    $now = \Carbon\Carbon::now();
+                    $diffInDays = $now->diffInDays($orderDate);
+                    @endphp
+                    @if ($diffInDays <= 3 && $order->payment->payment_method=='cash')
+                        <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng</button>
+                        @else
+                        <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng và hoàn tiền</button>
+                        @endif
+                        @else
+
+                        @endif
+                        <button onclick="showDetailOrder('{{ $order->id }}')">Chi tiết đơn hàng</button>
                 </div>
                 @else()
                 @endif
@@ -174,6 +186,47 @@
                 </div>
             </div>
             <button onclick="submitNewAddress()">Xác nhận cập nhật</button>
+        </div>
+    </div>
+</div>
+<!--popup for return product-->
+<div id="returnProductPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup('returnProductPopup')">&times;</span>
+        <h2>Yêu cầu trả hàng cho đơn hàng:</h2>
+        <div class="returnProduct">
+            <div class="returnProduct_item">
+                <input id="returnProductId" value="" hidden>
+                <h3>Tại sao bạn muốn trả đơn hàng này?</h3>
+                <select id="returnProduct">
+                    <option value="Sản phẩm không đúng mô tả">Sản phẩm không đúng mô tả</option>
+                    <option value="Sản phẩm không đúng kích thước">Sản phẩm không đúng kích thước</option>
+                    <option value="Sản phẩm không đúng màu sắc">Sản phẩm không đúng màu sắc</option>
+                </select>
+            </div>
+            <div class="returnProduct_item">
+                <h3>Hãy mô tả kĩ hơn về lý do trả hàng</h3>
+                <textarea id="returnReason" rows="9"></textarea>
+            </div>
+            <div class="returnProduct_item">
+                <h3> Hãy cung cấp cho chúng tôi hình ảnh về sản phẩm</h3>
+                <input type="file" id="returnImage" multiple accept="image/*" onchange="previewAvatar(event,'returnPreview')" hidden>
+                <div id="returnPreview">
+                </div>
+                <button onclick="document.getElementById('returnImage').click()">Chọn hình ảnh</button>
+            </div>
+            <button onclick=" submitReturnRequest()">Xác nhận trả hàng</button>
+        </div>
+    </div>
+</div>
+<!-- Popup for detail order-->
+<!-- Popup chi tiết đơn hàng -->
+<div id="order-detail-popup" class="order-detail-popup">
+    <div class="order-detail-content">
+        <span class="close-btn" onclick="closeOrderDetailPopup()">&times;</span>
+        <h2>Chi tiết đơn hàng</h2>
+        <div id="order-detail-content">
+            <!-- Nội dung chi tiết đơn hàng sẽ được hiển thị ở đây -->
         </div>
     </div>
 </div>

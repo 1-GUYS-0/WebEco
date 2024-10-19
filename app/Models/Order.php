@@ -20,10 +20,10 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    // public function address() // 1 order có 1 địa chỉ
-    // {
-    //     return $this->belongsTo(Address::class);
-    // }
+    public function refundRequest()
+    {
+        return $this->hasOne(RefundRequest::class);
+    }
 
     public function payment() // 1 order có 1 payment
     {

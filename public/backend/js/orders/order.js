@@ -57,12 +57,11 @@ function handleSaveButtonClick() {
         })
         .catch(error => console.error('Error:', error));
 }
-function showDetail(idTab) {
-    console.log(idTab);
+function showDetail(idTab, orderId) {
     const modal = document.getElementById(idTab);
     const closeModal = modal.querySelector('.close-btn');
     const saveButton = modal.querySelector('#saveButton');
-    modal.style.display = 'block';
+    fetchOrderDetails(orderId);
     // Đóng modal khi nhấn vào nút đóng
     closeModal.addEventListener('click', function () {
         modal.style.display = 'none';
@@ -74,4 +73,66 @@ function showDetail(idTab) {
             modal.style.display = 'none';
         }
     });
+}
+
+function fetchOrderDetails(orderId) {
+    fetch(`/admin/orders/${orderId}/detail`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const order = data.order;
+                const vnpaypayment = data.vnpaypayment;
+                const payment = data.payment;
+
+                // Lấy phần tử detailOrder
+                const detailOrder = document.getElementById('detailOrder');
+
+                // Hiển thị thông tin đơn hàng
+                document.getElementById('orderId').value = order.id;
+                document.getElementById('customerName').value = order.customer.name;
+                document.getElementById('orderDate').value = new Date(order.created_at).toLocaleDateString('vi-VN');
+                document.getElementById('orderStatu').value = order.status;
+                document.getElementById('totalPrice').value = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.total_price);
+                document.getElementById('paymentMethod').value = payment.payment_method;
+                document.getElementById('orderQuantity').value = order.order_quantity;
+                // Xóa các thẻ div bên trong detailProductOrder trước khi thêm hình ảnh
+                const detailProductOrder = document.getElementById('detailProductOrder');
+                while (detailProductOrder.firstChild) {
+                    detailProductOrder.removeChild(detailProductOrder.firstChild);
+                }
+                // Lặp qua các sản phẩm trong order.order_items và tạo các phần tử HTML tương ứng
+                order.order_items.forEach(item => {
+                    const productDiv = document.createElement('div');
+                    productDiv.classList.add('detail-product');
+                    const productImage = document.createElement('img');
+                    productImage.src = `/${item.product.images[0].image_path}` || '{{asset("backend/asset/dashboard/logo.png")}}';
+                    productImage.id = 'imageProductOrder';
+
+                    const productName = document.createElement('h6');
+                    productName.textContent = item.product.name;
+                    productName.id = 'nameProductOrder';
+
+                    const productQuantity = document.createElement('h6');
+                    productQuantity.textContent = `Số lượng: ${item.quantity}`;
+                    productQuantity.id = 'quantityProductOrder';
+
+                    productDiv.appendChild(productImage);
+                    productDiv.appendChild(productName);
+                    productDiv.appendChild(productQuantity);
+
+                    detailProductOrder.appendChild(productDiv);
+                });
+                if (vnpaypayment !== null) {
+                    const tabAnotherPayment = document.getElementById('infor-another-payment')
+                    document.getElementById('vnp_bank_code').value = vnpaypayment.vnp_bank_code;
+                    document.getElementById('vnp_transaction_no').value = vnpaypayment.vnp_transaction_no;
+                    tabAnotherPayment.style.display = 'block'
+                }
+                // Hiển thị modal
+                detailOrder.style.display = 'block';
+            } else {
+                alert('Không tìm thấy đơn hàng.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }

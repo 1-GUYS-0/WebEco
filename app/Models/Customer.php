@@ -38,4 +38,8 @@ class Customer extends Authenticatable
     {
         $this->notify(new CustomerResetPasswordNotification($token));
     }
+    public function notifications() // 1 customer có thể có nhiều thông báo
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

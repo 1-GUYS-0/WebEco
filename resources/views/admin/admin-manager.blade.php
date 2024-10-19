@@ -15,7 +15,7 @@
         </div>
         <div class="new-catergory">
             <button type="button" class="button">
-                <a class="light-text" href="{{ route('products.view_add-product') }}"> Add new catergory</a>
+                <a class="light-text" > Add new Admin</a>
             </button>
         </div>
     </div> <!-- thanh search-->

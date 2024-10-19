@@ -80,5 +80,36 @@ class OrderController extends Controller
             $product->save();
         }
     }
+    public function getOrderDetails($orderId)
+    {
+        // Lấy chi tiết đơn hàng từ cơ sở dữ liệu
+        $order = Order::with('orderItems.product.images','payment','refundRequest')->findOrFail($orderId);
+        return response()->json($order);
+    }
+    public function orderReturnRequest(Request $request)
+    {
+        $order = Order::find($request->order_id);
+        if ($order) {
+            // Xử lý việc upload ảnh và lưu đường dẫn ảnh vào mảng
+            $imagePaths = [];
+            if ($request->hasFile('images_refund')) {
+                foreach ($request->file('images_refund') as $file) {
+                    $path = $file->store('refund_images', 'public');
+                    $imagePaths[] = '/storage/' . $path; // Thêm /storage vào đường dẫn ảnh
+                }
+            }
+    
+            // Tạo yêu cầu hoàn trả
+            $order->refundRequest()->create([
+                'order_id' => $request->order_id,
+                'reason' => $request->reason,
+                'details' => $request->details,
+                'images_refund' => json_encode($imagePaths), // Lưu đường dẫn ảnh dưới dạng JSON
+                'status' => 'pending'
+            ]);
+            return response()->json(['success' => true, 'message' => 'Return request submitted successfully.']);
+        }
+        return response()->json(['success' => false, 'message' => 'Order not found.'], 404);
+    }
 }
 

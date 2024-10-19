@@ -14,9 +14,9 @@ function addToCart(productId) {
         },
         success: function (response) {
             if (response.success) {
-                alert(response.message);
+                alert('Sản phẩm đã được thêm vào giỏ hàng');
             } else {
-                alert('Failed to add product to cart');
+                alert('Có lỗi xảy ra khi thêm sản phẩm vào giỏ hàng');
             }
         },
 
@@ -131,7 +131,7 @@ function proceedToPayment() {
             if (data.success) {
                 window.location.href = '/home/customer/payment';
             } else {
-                alert('Error processing payment');
+                alert('Có lỗi xảy ra khi chuyển đến trang thanh toán');
             }
         },
         error: function (xhr, status, error) {
@@ -152,9 +152,9 @@ function removeProductFromCart(productId) {
             success: function (data) {
                 productItem.remove();
                 if (data.success) {
-                    console.log('Product removed from cart');
+                    alert('Sản phẩm đã được xóa khỏi giỏ hàng');
                 } else {
-                    alert('Error removing product from cart');
+                    alert('Có lỗi xảy ra khi xóa sản phẩm khỏi giỏ hàng');
                 }
             },
             error: function (xhr, status, error) {

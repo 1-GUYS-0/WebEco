@@ -83,13 +83,29 @@ function closePopup(popupId) {
     document.getElementById(popupId).style.display = "none";
 }
 // Chức năng review avatar
-function previewAvatar(event) {
-    var reader = new FileReader();
-    reader.onload = function () {
-        var output = document.getElementById('avatarPreview');
-        output.src = reader.result;
+function previewAvatar(event, containerId) {
+    var files = event.target.files;
+    var container = document.getElementById(containerId);
+    console.log(files);
+    console.log(containerId);
+    // Xóa các hình ảnh hiện tại trong container
+    container.innerHTML = '';
+
+    for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+
+        reader.onload = (function (file) {
+            return function (e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('avatarPreview');
+                container.appendChild(img);
+            };
+        })(file);
+
+        reader.readAsDataURL(file);
     }
-    reader.readAsDataURL(event.target.files[0]);
 }
 
 // Chức năng gửi yêu cầu edit
@@ -250,4 +266,179 @@ function showReviewForm(orderId) {
     if (confirm('Bạn có chắc chắn muốn đánh giá các sản phẩm cho đơn hàng này không?')) {
         window.location.href = `/orders/${orderId}/review`;
     }
+}
+
+function showDetailOrder(orderId) {
+    // Lấy chi tiết đơn hàng từ server (giả sử bạn có API để lấy chi tiết đơn hàng)
+    fetch(`/orders/orderdetail/${orderId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            // Định dạng giá tiền
+            function formatPrice(price) {
+                return new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(price).replace('₫', 'VND');
+            }
+            // Kiểm tra trạng thái đơn hàng
+            let statusText = data.status;
+            if (data.status === 'pending') {
+                statusText = 'đang giao';
+            } else if (data.status === 'shipping') {
+                statusText = 'đang giao';
+            } else if (data.status === 'completed') {
+                statusText = 'đã giao';
+            } else if (data.status === 'rated') {
+                statusText = 'đã đánh giá';
+            } else if (data.status === 'cancelled') {
+                statusText = 'đã hủy';
+            }
+            //Kiểm tra yêu cầu hoàn hàng
+            let returnRequest = data.return_request;
+            if (data.return_request === 'pending') {
+                returnRequest = 'Chờ xác nhận';
+            }
+            else if (data.return_request === 'accepted') {
+                returnRequest = 'Đã chấp nhận';
+            }
+            else if (data.return_request === 'rejected') {
+                returnRequest = 'Đã từ chối';
+            }
+            else {
+                returnRequest = 'Không yêu cầu';
+            }
+            // Kiểm tra phương thức thanh toán
+            let paymentMethod = data.payment.payment_method;
+            if (data.payment.payment_method === 'cash') {
+                paymentMethod = `
+                <p>Bạn thanh toán bằng tiền mặt</p>
+                <p> Vui lòng chuẩn bị đủ số tiền  ${formatPrice(data.total_price)} khi nhận hàng`;
+            } else if (data.payment.payment_method === 'vnpay') {
+                paymentMethod = `
+                <p>Bạn thanh toán bằng VNPay</p>
+                <p> Số tiền ${formatPrice(data.total_price)} đã được thanh toán qua cổng thanh toán VNPAY</p>`;
+            }
+            // Kiểm tra yêu cầu hoàn hàng
+            // let returnRequest = data.return_request;
+
+            // Định dạng ngày tháng
+            const orderDate = new Date(data.created_at);
+            const formattedDate = orderDate.toLocaleDateString('vi-VN', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+            });
+            // Tạo danh sách sản phẩm
+            let productListHTML = '';
+            data.order_items.forEach(item => {
+                productListHTML += `
+                                <div class="order-product-item">
+                                    <img src="/${item.product.images[0].image_path}" alt="${item.product.name}">
+                                    <p>Tên sản phẩm: ${item.product.name}</p>
+                                    <p>Số lượng: ${item.quantity}</p>
+                                    <p>Giá: ${formatPrice(item.price * item.quantity)}</p>
+                                </div>
+                            `;
+            });
+            // Hiển thị chi tiết đơn hàng trong popup
+            var orderDetailContent = document.getElementById('order-detail-content');
+            orderDetailContent.innerHTML = `
+                <div>
+                    <h3>Mã đơn hàng: ${data.id}</h3>
+                    <div>
+                        <p> Tên khách hàng: ${data.name}</p>
+                        <p>Địa chỉ nhận hàng: ${data.address}</p>
+                        <p>Số điện thoại: ${data.phone}</p>
+                    </div>
+                    <div>
+                        <p>Trạng thái đơn hàng: ${statusText}</p>
+                    </div>
+                    <div>
+                        <p>Đơn vị vận chuyển: ${data.shipping_method}</p>
+                        <p>Phí vận chuyển: ${formatPrice(data.shipping)}</p>
+                        <p>Giảm giá: ${formatPrice(data.discount)}</p>
+                    </div>
+                    <div>
+                        <p>Tổng tiền: ${formatPrice(data.total_price)}</p>
+                        <p>Ngày đặt hàng: ${formattedDate}</p>
+                    </div>
+                </div>
+                <div>
+                    <h3>Danh sách sản phẩm</h3>
+                    <div class="order-products-list ">
+                        ${productListHTML}
+                    </div>
+                </div>
+                <div>
+                    <h3>Phương thức thanh toán:</h3>
+                    ${paymentMethod}
+                </div>
+                <div>
+                    <h3>Yêu cầu hoàn trả hàng</h3>
+                    <p>Trạng thái yêu cầu: ${returnRequest}</p>
+                </div>
+            `;
+            // Hiển thị popup
+            var popup = document.getElementById('order-detail-popup');
+            popup.style.display = 'block';
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function closeOrderDetailPopup() {
+    var popup = document.getElementById('order-detail-popup');
+    popup.style.display = 'none';
+}
+
+// Đóng popup khi click ra ngoài
+window.onclick = function (event) {
+    var popup = document.getElementById('order-detail-popup');
+    if (event.target == popup) {
+        popup.style.display = 'none';
+    }
+}
+function showPopupReturn(popupId, orderId) {
+
+    document.getElementById(popupId).style.display = "block";
+    document.getElementById('returnProductId').value = orderId;
+}
+function submitReturnRequest() {
+    // Lấy dữ liệu từ form
+    var orderId = document.getElementById('returnProductId').value;
+    var reason = document.getElementById('returnProduct').value;
+    var details = document.getElementById('returnReason').value;
+    var images = document.getElementById('returnImage').files;
+
+    // Tạo đối tượng FormData để gửi dữ liệu
+    var formData = new FormData();
+    formData.append('order_id', orderId);
+    formData.append('reason', reason);
+    formData.append('details', details);
+
+    // Thêm các tệp hình ảnh vào FormData
+    for (var i = 0; i < images.length; i++) {
+        formData.append('images_refund[]', images[i]);
+    }
+
+    // Gửi yêu cầu trả hàng đến server
+    fetch('/orders/orders/return', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Gửi yêu cầu trả hàng thành công.');
+                // Đóng popup hoặc thực hiện các hành động khác nếu cần
+                closePopup('returnProductPopup');
+            } else {
+                alert('Đã xảy ra lỗi khi xử lý yêu cầu trả hàng.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
 }

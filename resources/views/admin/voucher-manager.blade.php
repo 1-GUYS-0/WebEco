@@ -2,7 +2,7 @@
 @section('content')
 <div class="container_cater-manager">
     <div class="title_feature">
-        <p class="body-bold">Promotion manager</p>
+        <p class="body-bold">Voucher manager</p>
     </div> <!--tittle của chức năng-->
     <div class="search-box">
         <div class="search-bar">

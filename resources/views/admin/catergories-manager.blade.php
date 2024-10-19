@@ -42,7 +42,6 @@
         </tbody>
     </table><!--bảng data-->
     <div class="div black"></div>
-
     <div id="detailCategory" class="tab">
         <div class="modal-content">
             <span class="close-btn">&times;Thoát</span>

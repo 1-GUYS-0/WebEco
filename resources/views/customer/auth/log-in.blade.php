@@ -3,6 +3,8 @@
 <div class="background-log">
     <img src="{{ asset('system/background_log.jpg') }}" alt="banner" class="banner">
 </div>
+<h2 class ="log_container" style="min-height: 33%;"> 
+    Hãy đăng nhập để sử dụng toàn bộ dịch vụ của Green Nature Comestics </h2>
 <div class ="log_container">
     <div class="log_wrapper">
         <div class="log_form">

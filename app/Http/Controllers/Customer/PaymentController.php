@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Notification;
 
 
 class PaymentController extends Controller
@@ -156,7 +157,13 @@ class PaymentController extends Controller
                     ->whereIn('product_id', $productIds)
                     ->delete();
             }
-
+            // Tạo thông báo mới
+            $notification = new Notification();
+            $notification->customer_id = $customer->id;
+            $notification->title = 'Đơn hàng thành công';
+            $notification->message = 'Đơn hàng số' . $order->id .'của khách hàng: ' . $customer->name . ' đã được đặt thành công vào lúc ' . $order->created_at ;
+            $notification->is_read = false;
+            $notification->save();
             DB::commit();
 
             return response()->json(['success' => true, 'redictCashPayment_url' => route('order.success')]);

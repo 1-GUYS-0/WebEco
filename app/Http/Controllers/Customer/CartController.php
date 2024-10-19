@@ -86,7 +86,7 @@ class CartController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Product removed from cart successfully!');
+        return response()->json(['success' => true, 'message' => 'Product removed from cart successfully!']);
     }
 
     public function updateCart(Request $request, $productId)

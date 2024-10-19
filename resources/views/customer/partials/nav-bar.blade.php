@@ -7,7 +7,6 @@
     <div class="nav-bar_menu">
         <div class="nav-bar_link close-btn">
             <a href="{{ route('search.page') }}">Danh mục và Tìm kiếm </a>
-            
         </div>
         <div class="nav-bar_link close-btn">
             <a href="{{route('promotion.discount')}}">Chương trình và giảm giá</a>
@@ -15,17 +14,30 @@
         <div class="nav-bar_link close-btn">
             <a>Về chúng tôi</a>
         </div>
-        <div class="cart-icon" onclick="toggleCart()">
+        <div class="cart-icon" onclick=" toggleSide('cart-sidebar')">
             <span class="material-symbols-outlined close-btn ">local_mall</span>
         </div><!-- Icon giỏ hàng -->
-        <div class="cart-icon" onclick="myProfile()">
-            <span class="material-symbols-outlined close-btn ">face</span>
+        <div class="cart-icon" onclick="toggleSide('notification-sidebar')">
+            <span class="material-symbols-outlined close-btn">notifications</span>
+            <span id="notification-count" class="notification-count">0</span>
+        </div>
+        <div class="cart-icon" id="cart-profile" onclick="toggleProfilePopup()">
+            <span class="material-symbols-outlined close-btn">face</span>
+            <div id="profile-popup" class="profile-popup">
+                <a class="profile-popup-item" href="{{route('customer.profile')}}">Trang cá nhân</a>
+                <form method="POST" action="{{ route('customer.logout') }}">
+                    @csrf <!--Đây là token để bảo vệ form khi submit dữ liệu-->
+                    <button type="submit" class="button">
+                        <div class="light-text">Đăng xuất</div>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
     <div id="cart-sidebar" class="cart-sidebar">
         <div class="cart-header">
             <h3>Giỏ hàng của bạn</h3>
-            <span class="material-symbols-outlined close-btn " onclick="toggleCart()">cancel</span>
+            <span class="material-symbols-outlined close-btn " onclick=" toggleSide('cart-sidebar')">cancel</span>
         </div>
         <div class="cart-content">
             <ol class="product-list" id="cart-items">
@@ -37,8 +49,18 @@
             </button>
         </div>
     </div><!-- Sidebar giỏ hàng -->
-    <span id="menu_icon" class="material-symbols-outlined close-btn ">menu</span>
-    <span id="hide-menu_icon" class="material-symbols-outlined close-btn hide ">cancel</span> <!-- Icon đóng giỏ hàng -->
+    <div id="notification-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Thông báo</h3>
+            <span class="material-symbols-outlined close-btn " onclick="toggleSide('notification-sidebar')">cancel</span>
+        </div>
+        <div class="cart-content">
+            <ol class="product-list" id="notification-items">
+                
+            </ol>
+            <p id="empty-notification-message" style="display: none;">Không có thông báo mới</p>
+        </div>
+    </div><!-- Sidebar thông báo -->
 </nav> <!-- nav-bar_wrapper -->
 <div id="overlay" class="overlay" onclick="toggleCart()"></div>
 <script>
@@ -48,15 +70,35 @@
     const baseUrl = "{{ asset('storage') }}/";
 </script>
 <script src="{{ asset('front-end/js/cart.js') }}" defer></script>
+<!-- pop-up-profile-->
+<script>
+    function toggleProfilePopup() {
+        var popup = document.getElementById('profile-popup');
+        if (popup.style.display === 'none' || popup.style.display === '') {
+            popup.style.display = 'block';
+        } else {
+            popup.style.display = 'none';
+        }
+    }
 
+    // Đóng popup khi click ra ngoài
+    document.addEventListener('click', function(event) {
+
+        var popup = document.getElementById('profile-popup');
+        var cartIcon = document.getElementById('cart-profile');
+        if (!cartIcon.contains(event.target)) {
+            popup.style.display = 'none';
+        }
+    });
+</script>
 <!-- Chatbot -->
 <script>
-    logo_brand= "{{ asset('system/logo.png') }}";
+    logo_brand = "{{ asset('system/logo.png') }}";
     // Configs
-    let liveChatBaseUrl   = document.location.protocol + '//' + 'livechat.fpt.ai/v36/src'
+    let liveChatBaseUrl = document.location.protocol + '//' + 'livechat.fpt.ai/v36/src'
     let LiveChatSocketUrl = 'livechat.fpt.ai:443'
-    let FptAppCode        = 'dd0384d5e3ab6cdc6502b3ee667de151'
-    let FptAppName        = 'Hỗ trợ trực tuyến'
+    let FptAppCode = 'dd0384d5e3ab6cdc6502b3ee667de151'
+    let FptAppName = 'Hỗ trợ trực tuyến'
     // Define custom styles
     let CustomStyles = {
         // header
@@ -86,7 +128,7 @@
         customerButtonText: 'Bắt đầu',
         prefixEnable: false,
         prefixType: 'radio',
-        prefixOptions: ["Anh","Chị"],
+        prefixOptions: ["Anh", "Chị"],
         prefixPlaceholder: 'Danh xưng',
         // custom css
         css: ''
@@ -102,23 +144,22 @@
     let FptLiveChatConfigs = {
         appName: FptAppName,
         appCode: FptAppCode,
-        themes : '',
-        styles : CustomStyles
+        themes: '',
+        styles: CustomStyles
     }
     // Append Script
-    let FptLiveChatScript  = document.createElement('script')
-    FptLiveChatScript.id   = 'fpt_ai_livechat_script'
-    FptLiveChatScript.src  = liveChatBaseUrl + '/static/fptai-livechat.js'
+    let FptLiveChatScript = document.createElement('script')
+    FptLiveChatScript.id = 'fpt_ai_livechat_script'
+    FptLiveChatScript.src = liveChatBaseUrl + '/static/fptai-livechat.js'
     document.body.appendChild(FptLiveChatScript)
     // Append Stylesheet
-    let FptLiveChatStyles  = document.createElement('link')
-    FptLiveChatStyles.id   = 'fpt_ai_livechat_script'
-    FptLiveChatStyles.rel  = 'stylesheet'
+    let FptLiveChatStyles = document.createElement('link')
+    FptLiveChatStyles.id = 'fpt_ai_livechat_script'
+    FptLiveChatStyles.rel = 'stylesheet'
     FptLiveChatStyles.href = liveChatBaseUrl + '/static/fptai-livechat.css'
     document.body.appendChild(FptLiveChatStyles)
     // Init
-    FptLiveChatScript.onload = function () {
+    FptLiveChatScript.onload = function() {
         fpt_ai_render_chatbox(FptLiveChatConfigs, liveChatBaseUrl, LiveChatSocketUrl)
     }
 </script>
-

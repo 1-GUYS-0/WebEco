@@ -170,7 +170,7 @@ class VNPayController extends Controller
                     session(['vnpay_response' => $inputData]);
                     return redirect()->route('order.success');
                 } else {
-                    session(['vnpay_response' => $inputData]);
+                    session(['error_message' => 'Giao dịch đã bị hủy do thanh toán không thành công']);
                     return redirect()->route('order.failure');
                 }
 

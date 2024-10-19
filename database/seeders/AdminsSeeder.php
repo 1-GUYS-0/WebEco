@@ -27,7 +27,7 @@ class AdminsSeeder extends Seeder
                     'name' => 'consultant',
                     'email' => 'nv1@gmail.com',
                     'password' => Hash::make('123456'),
-                    'role' => 'consultant',
+                    'role' => 'sale',
                 ]
             ]
         );

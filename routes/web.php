@@ -10,6 +10,7 @@ use App\Http\Controllers\Customer\VoucherController as CustomerVoucherController
 use App\Http\Controllers\Customer\VNPayController as CustomerVNPayController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\Customer\PromotionDiscountController as CustomerPromotionDiscountController;
+use App\Http\Controllers\Customer\NotificationController as CustomerNotificationController;
 use App\Http\Controllers\Auth\CustomerForgotPasswordController;
 use App\Http\Controllers\Auth\CustomerResetPasswordController;
 use App\Http\Controllers\AdminController;
@@ -23,9 +24,12 @@ use App\Http\Controllers\PageController;
 
 Route::get('/admin/login', [AdminController::class, 'showlogin'])->name('admin.show-login');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login');
+
 // Định nghĩa route cho trang chủ admin
 Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'showDashboardMng'])->middleware('CheckAdminLog')->name('dashboards.showDashboardMng');
+    Route::get('/dashboard', [AdminController::class, 'showDashboardMng'])->name('dashboards.showDashboardMng');
+    Route::post('/dashboard/filter', [AdminController::class, 'filterDashboardData'])->name('dashboards.filterDashboardData');
+    Route::get('/dashboard/datachart', [AdminController::class, 'filterDashboardChartData'])->name('dashboards.filterDashboardChartData');
 
     // Định nghĩa route cho trang quản lý danh mục sản phẩm
     Route::prefix('categories')->group(function () {
@@ -54,6 +58,9 @@ Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
 
     // Định nghĩa route cho trang quản lý slide
     Route::get('/banners', [AdminController::class, 'banners'])->name('banner.showBannerMng');
+    Route::post('/banners/update-banner', [AdminController::class, 'updateBanner'])->name('banner.updateBanner');
+    Route::post('/banners/add-banner', [AdminController::class, 'addBanner'])->name('banner.addBanner');
+
     // Định nghĩa route cho trang promotion
     Route::get('/promotions', [AdminController::class, 'showPromotionMng'])->name('promotions.showPromotionMng');
     // Định nghĩa route cho trang quản lý voucher
@@ -62,7 +69,8 @@ Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
     Route::get('/customers', [AdminController::class, 'customers'])->name('customers.showCustomerMng');
     // Định nghĩa route cho trang quản lý admin
     Route::get('/admins', [AdminController::class, 'admins'])->name('admins.showAdminMng');
-
+    // Định nghĩa route đăng xuất
+    Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 
 // Định nghĩa route cho trang quản lý đơn hàng
@@ -72,6 +80,8 @@ Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
     Route::post('/{orderId}/completed/cash', [CustomerOrderController::class, 'completedOrderCash'])->name('confirm-received');
     Route::get('/{orderId}/review', [CustomerOrderController::class, 'showReviewForm'])->name('show-review-form');
     Route::post('/{orderId}/review', [CustomerOrderController::class, 'submitReview'])->name('submit-review');
+    Route::get('/orderdetail/{orderId}', [CustomerOrderController::class, 'getOrderDetails'])->name('get-order-details');
+    Route::post('/orders/return', [CustomerOrderController::class, 'orderReturnRequest'])->name('orders.return');
 });
 
 // Định nghĩa route cho trang quản lý người dùng
@@ -89,6 +99,9 @@ Route::post('/sign-up', [LogSignController::class, 'signup'])->name('customer.si
 Route::get('/log-out', [LogSignController::class, 'showLogout'])->name('customer.pages.log-out')->middleware('CheckLogin');
 Route::post('/log-out', [LogSignController::class, 'logout'])->name('customer.logout');
 
+    // Định nghĩa route cho trang quản lý thông báo
+Route::get('home/notifications', [CustomerNotificationController::class, 'index'])->name('notifications.index');
+Route::post('home/notifications/{id}/read', [CustomerNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
 Route::get('/home', [CustomerHomeController::class, 'index'])->name('customer.home')->middleware('CheckLogin');
 Route::get('/home/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             OrderSeeder::class,
             VoucherSeeder::class,
             AdminsSeeder::class,
+            NotificationSeeder::class,
         ]);
     }
 }
