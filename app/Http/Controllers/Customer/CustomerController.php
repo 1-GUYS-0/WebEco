@@ -19,7 +19,7 @@ class CustomerController extends Controller
         if (Auth::guard('customer')->check()) {
             $customerID = Auth::guard('customer')->id();
             $customer = Customer::with('addresses')->findOrFail($customerID);
-            $orders = Order::with(['orderItems.product', 'payment'])->where('customer_id', $customerID)->orderBy('created_at', 'desc')->get();
+            $orders = Order::with(['orderItems.product', 'payment','refundRequest'])->where('customer_id', $customerID)->orderBy('created_at', 'desc')->get();
             $defaultAddress = $customer->addresses->firstWhere('is_default', true);
             $anotherAddresses = $customer->addresses->where('is_default', false);
             return view('customer.pages.profile', compact('customer', 'orders', 'defaultAddress', 'anotherAddresses'));

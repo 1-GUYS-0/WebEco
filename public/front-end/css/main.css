@@ -399,7 +399,7 @@
 
 .input-desc,
 .input-error {
-  color: var(--root-token-color-purple-darker, #362c62);
+  color: var(--root-token-color-purple-darker, #cd2e3e);
   font-family: var(--text-bd-md-font-family, "Inter-Regular", sans-serif);
   font-size: var(--text-bd-md-font-size, 1rem);
   line-height: var(--text-bd-md-line-height, 1.5rem);
@@ -896,7 +896,7 @@ form {
   display: flex;
   flex-direction: column;
   align-self: stretch;
-  gap: var(--root-token-size-150);
+  gap: 0.5rem;
   flex: 1;
 }
 
@@ -1104,7 +1104,6 @@ dd {
   .nav-bar_menu.active {
     top: 26%;
   }
-
   .nav-bar_menu {
     width: 25rem;
     height: 20rem;
@@ -1150,13 +1149,34 @@ dd {
     font-size: 0.5rem;
   }
 }
-
+.close-button{
+  display: flex;
+}
+.profile-popup {
+  display: none;
+  position: absolute;
+  top: 167px;
+  right: 34px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 6;
+  padding: 10px;
+  border-radius: 5px;
+}
 /* Medium devices (tablets, 600px to 768px) */
 @media only screen and (min-width: 650px) and (max-width: 992px) {
 
   /* Chọn phần tử <span> có class "material-symbols-outlined" và chứa nội dung là "menu" */
   .nav-bar_wrapper .material-symbols-outlined:nth-child(4),
   .nav-bar_wrapper .material-symbols-outlined:nth-child(5) {
+    display: none;
+  }
+  .profile-popup{
+    top: 57px; 
+    right: 0;
+  }
+  .close-button{
     display: none;
   }
 }
@@ -1167,6 +1187,13 @@ dd {
   /* Chọn phần tử <span> có class "material-symbols-outlined" và chứa nội dung là "menu" */
   .nav-bar_wrapper .material-symbols-outlined:nth-child(4),
   .nav-bar_wrapper .material-symbols-outlined:nth-child(5) {
+    display: none;
+  }
+  .profile-popup{
+    top: 57px; 
+    right: 0;
+  }
+  .close-button{
     display: none;
   }
 }
@@ -1707,18 +1734,7 @@ button:hover {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
-.profile-popup {
-  display: none;
-  position: absolute;
-  top: 57px; 
-  right: 0;
-  background-color: white;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 6;
-  padding: 10px;
-  border-radius: 5px;
-}
+
 
 .profile-popup-item {
   display: block;

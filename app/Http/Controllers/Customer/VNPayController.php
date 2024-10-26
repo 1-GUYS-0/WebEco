@@ -14,6 +14,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
 use App\Models\VNPayPayment;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Http;
 
 
@@ -213,6 +214,8 @@ class VNPayController extends Controller
                 $order->order_quantity = $totalQuantity;
                 $order->status = 'pending';
                 $order->save();
+                $orderId = $order->id;
+                $orderName = $order->name;
 
                 // Tạo các mục đơn hàng
                 foreach ($orderData['product_ids'] as $index => $productId) {
@@ -257,7 +260,14 @@ class VNPayController extends Controller
                         ->whereIn('product_id', $orderData['product_ids'])
                         ->delete();
                 }
-
+                // Tạo thông báo cho người dùng về đơn hàng
+                // Tạo thông báo mới cho người dùng
+                $notification = new Notification();
+                $notification->customer_id = Order::where('id', $orderId)->first()->customer_id;
+                $notification->title = 'Đơn hàng thành công';
+                $notification->message = 'Đơn hàng số' . $order->id .' thánh toán VNPAY'.' của khách hàng: ' . $orderName . ' đã được đặt thành công vào lúc ' . $order->created_at ;
+                $notification->is_read = false;
+                $notification->save();
                 DB::commit();
                 Log::info('Order created from session data: ' . json_encode($orderItem));
             } catch (\Exception $e) {
@@ -292,16 +302,16 @@ class VNPayController extends Controller
             // dump($vnpayPayment->vnp_txn_ref);
             // Trả về dữ liệu của bảng ghi vnpaypayments
             DB::commit();
-            if ($vnpayPayment!==null) {
+            if ($vnpayPayment !== null) {
 
                 $apiUrl = env('VNP_REFUND_URL'); // URL API hoàn tiền của VNPAY
                 $vnp_RequestId = date("YmdHis"); // Mã truy vấn
                 $vnp_Command = "refund"; // Mã api
-                $vnp_TransactionType ="02"; // 02 hoàn trả toàn phần - 03 hoàn trả một phần
+                $vnp_TransactionType = "02"; // 02 hoàn trả toàn phần - 03 hoàn trả một phần
                 $vnp_TxnRef = $vnpayPayment->vnp_txn_ref; // Mã tham chiếu của giao dịch
                 $vnp_Amount = $vnpayPayment->vnp_amount; // Số tiền hoàn trả
                 $vnp_OrderInfo = "Hoan Tien Giao Dich tai web"; // Mô tả thông tin
-                $vnp_TransactionNo =$vnpayPayment->vnp_transaction_no ; // Tuỳ chọn, "0": giả sử merchant không ghi nhận được mã GD do VNPAY phản hồi.
+                $vnp_TransactionNo = $vnpayPayment->vnp_transaction_no; // Tuỳ chọn, "0": giả sử merchant không ghi nhận được mã GD do VNPAY phản hồi.
                 $vnp_TransactionDate = $vnpayPayment->vnp_paydate; // Thời gian ghi nhận giao dịch
                 $vnp_CreateDate = date('YmdHis'); // Thời gian phát sinh request
                 $vnp_CreateBy = "ANh A"; // Người khởi tạo hoàn tiền
@@ -351,18 +361,18 @@ class VNPayController extends Controller
             // dump($response->json());
             // Trả về kết quả
             if ($response->json()['vnp_ResponseCode'] == '00') {
-                Order::where('id',$orderId)->update(['status'=>'cancelled']);
-                $Orderitems = OrderItem::where('order_id',$orderId)->get();
-                foreach($Orderitems as $Orderitem){
-                    $product=Product::where('id',$Orderitem->product_id)->first();
+                Order::where('id', $orderId)->update(['status' => 'cancelled']);
+                $Orderitems = OrderItem::where('order_id', $orderId)->get();
+                foreach ($Orderitems as $Orderitem) {
+                    $product = Product::where('id', $Orderitem->product_id)->first();
                     $product->stock += $Orderitem->quantity;
                     $product->total_purchase_quantity -= $Orderitem->quantity;
                     $product->save();
                 }
-                Payment::where('id',$paymentId)->update(['status'=>'refund']);
+                Payment::where('id', $paymentId)->update(['status' => 'refund']);
                 return response()->json(['success' => true, 'data' => $response->json()]);
             } else {
-                return response()->json(['success' => false, 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau','data' => $response->json()]);
+                return response()->json(['success' => false, 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau', 'data' => $response->json()]);
             }
         } catch (\Exception $e) {
             DB::rollBack();

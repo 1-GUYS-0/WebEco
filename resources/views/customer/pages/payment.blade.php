@@ -105,7 +105,7 @@
                     <li class="product-items" value="{{$product['id']}}">
                         <img src="{{ asset($product['image_path']) }}" alt="Product Image" class="product-image_selected" />
                         <div class="product-details">
-                            <input type="hidden" name="product_id[]" value="{{ $product['id'] }}">
+                            <input class="inputProductId" type="hidden" name="product_id[]" value="{{ $product['id'] }}">
                             <a class="cards_name-prod">{{ $product['name'] }}</a>
                             <div class="quantity-controls">
                                 <a> Số lượng:</a>

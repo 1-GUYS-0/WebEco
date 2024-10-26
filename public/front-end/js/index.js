@@ -57,7 +57,7 @@ function displayRelatedProducts() {
                                 ${generateRatingStars(product.total_rating)}
                             </div>
                             <h3>
-                                <a class="cards_name-prod close-bt" href="/home/customer/product/${product.id}" onclick="saveProductToLocalStorage('${product.id}')" >${product.name}</a>
+                                <a class="cards_name-prod close-bt" href="/home/product/${product.id}" onclick="saveProductToLocalStorage('${product.id}')" >${product.name}</a>
                             </h3>
                             <div class="cards_desc-prod">
                                 ${product.description}

@@ -123,13 +123,13 @@ function proceedToPayment() {
     console.log('Products:', products);
 
     $.ajax({
-        url: '/home/customer/payment',
+        url: '/home/payment',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({ products: products }),
         success: function (data) {
             if (data.success) {
-                window.location.href = '/home/customer/payment';
+                window.location.href = '/home/payment';
             } else {
                 alert('Có lỗi xảy ra khi chuyển đến trang thanh toán');
             }

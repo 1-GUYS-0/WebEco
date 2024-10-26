@@ -23,7 +23,7 @@
             <a class="text_menu {{ request()->is('admin/product*') ? 'active' : '' }}" href="{{route('products.showProductMng')}}">product-managerment</a>
         </button>
         <button class="module-menu">
-            <a class="text_menu {{ request()->is('admin/banner*') ? 'active' : '' }}" href="{{route('banner.showBannerMng')}}">banner-management</a>
+            <a class="text_menu {{ request()->is('admin/banner*') ? 'active' : '' }}" href="{{route('banners.showBannerMng')}}">banner-management</a>
         </button>
         <button class="module-menu">
             <a class="text_menu {{ request()->is('admin/order*') ? 'active' : '' }}" href="{{route('orders.showOrderMng')}}">order-managerment</a>

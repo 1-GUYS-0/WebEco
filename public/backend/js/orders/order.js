@@ -61,7 +61,13 @@ function showDetail(idTab, orderId) {
     const modal = document.getElementById(idTab);
     const closeModal = modal.querySelector('.close-btn');
     const saveButton = modal.querySelector('#saveButton');
-    fetchOrderDetails(orderId);
+    if (idTab === 'detailOrder') {
+        fetchOrderDetails(orderId);
+    }
+    if (idTab === 'refundOrderDetail') {
+        getRefundDetails(orderId);
+    }
+
     // Đóng modal khi nhấn vào nút đóng
     closeModal.addEventListener('click', function () {
         modal.style.display = 'none';
@@ -136,3 +142,144 @@ function fetchOrderDetails(orderId) {
         })
         .catch(error => console.error('Error:', error));
 }
+// Hàm định dạng ngày
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+}
+function getRefundDetails(orderId) {
+    fetch(`/admin/orders/${orderId}/detailrefund`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Refund details:', data.refund);
+                // Điền dữ liệu vào form
+                document.getElementById('refundId').value = data.refund.id;
+                document.getElementById('refundCustomerName').value = data.refund.order.name;
+                document.getElementById('refundOrderId').value = data.refund.order_id;
+                document.getElementById('refundStatus').value = data.refund.status;
+                document.getElementById('refundDate').value = formatDate(data.refund.created_at);
+
+                // Hiển thị hình ảnh mô tả chi tiết yêu cầu
+                const detailProductRefund = document.getElementById('detailProductRefund');
+                detailProductRefund.style.display = 'flex';
+                detailProductRefund.style.flexDirection = 'row';
+                detailProductRefund.style.flexWrap = 'wrap';
+                detailProductRefund.style.gap = '1rem';
+                detailProductRefund.innerHTML = ''; // Xóa nội dung cũ
+                // Chuyển đổi chuỗi JSON thành mảng
+                const images = JSON.parse(data.refund.images_refund);
+
+                images.forEach(image => {
+                    const imageContainer = document.createElement('div');
+                    imageContainer.className = 'detail-product';
+                    imageContainer.style.width = '150px'; 
+                    imageContainer.style.border = '0.2rem solid #000';
+                    imageContainer.style.display = 'flex';
+                    imageContainer.style.justifyContent= 'center';
+                    imageContainer.style.borderRadius = '1rem';
+                    const img = document.createElement('img');
+                    img.src = image;
+                    img.alt = 'Refund Image';
+                    img.style.width = '100px'; 
+                    img.style.height = '100px'; 
+    
+                    // Thêm sự kiện click để phóng to hình ảnh
+                    img.addEventListener('click', () => {
+                        const modal = document.createElement('div');
+                        modal.style.position = 'fixed';
+                        modal.style.top = '0';
+                        modal.style.left = '0';
+                        modal.style.width = '100%';
+                        modal.style.height = '100%';
+                        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                        modal.style.display = 'flex';
+                        modal.style.justifyContent = 'center';
+                        modal.style.alignItems = 'center';
+                        modal.style.zIndex = '1000';
+    
+                        const modalImg = document.createElement('img');
+                        modalImg.src = image;
+                        modalImg.style.maxWidth = '90%';
+                        modalImg.style.maxHeight = '90%';
+    
+                        modal.appendChild(modalImg);
+    
+                        // Đóng modal khi nhấn vào
+                        modal.addEventListener('click', () => {
+                            document.body.removeChild(modal);
+                        });
+    
+                        document.body.appendChild(modal);
+                    });
+    
+                    imageContainer.appendChild(img);
+                    detailProductRefund.appendChild(imageContainer);
+                });
+
+                // Hiển thị modal
+                document.getElementById('refundOrderDetail').style.display = 'block';
+            } else {
+                console.error('Error:', data.message);
+                alert('Refund request not found.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while fetching refund details.');
+        });
+}
+function confirmRefund() {
+    const refundId = document.getElementById('refundId').value;
+    fetch(`/admin/orders/${refundId}/refund/confirm`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Xác nhận hoàn trả thành công');
+                document.getElementById('refundOrderDetail').style.display = 'none';
+                location.reload(); // Reload the page to see the updated status
+            } else {
+                alert('Xác nhận hoàn trả lỗi');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+function rejectRefund() {
+    const refundId = document.getElementById('refundId').value;
+    const reason = document.getElementById('rejectReason').value;
+    fetch('/rejectRefund', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ refundId: refundId, reason: reason })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert(data.message);
+            // Cập nhật giao diện hoặc thực hiện các hành động khác
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+    });
+}
+

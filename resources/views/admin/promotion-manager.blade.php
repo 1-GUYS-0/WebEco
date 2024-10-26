@@ -7,20 +7,20 @@
     <div class="search-box">
         <div class="search-bar">
             <div>
-                <span class="material-symbols-outlined">search</span>
+                <button type="button" class="material-symbols-outlined" onclick="search('promotionTable')">search</button>
             </div>
-            <form class="input" for="searchCatergpry">
-                <input type="text" id="searchCatergpry" class="input_lable" placeholder="Search for catergory">
-            </form>
+            <div class="input" for="inputSearch">
+                <input type="text" id="inputSearch" class="input_lable" placeholder="Tìm kiếm">
+            </div>
         </div>
         <div class="new-catergory">
             <button type="button" class="button">
-                <a class="light-text" href="{{ route('products.view_add-product') }}"> Add new Promotion</a>
+                <a class="light-text" onclick="showTab('addPromotion')"> Add new Promotion</a>
             </button>
         </div>
     </div> <!-- thanh search-->
     <div class=" container-table">
-        <table>
+        <table id="promotionTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -40,7 +40,7 @@
                     <td>{{ $promotion->promotion_start }}</td>
                     <td>{{ $promotion->promotion_end }}</td>
                     <td>
-                        <button class="edit-button" data-promotion="{{ json_encode($promotion) }}">
+                        <button class="edit-button" onclick="showTab('detailPromotion','{{ $promotion->id }}')">
                             Chỉnh sửa
                         </button>
                     </td>
@@ -50,5 +50,44 @@
         </table><!--bảng data-->
     </div>
     <div class="div black"></div>
+    <div id="addPromotion" class="tab">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;Thoát</span>
+                <h2>Add new Promotion</h2>
+            </div>
+            <div class="modal-body">
+                <p>Tên sự kiện: <input id="promotion-name-add"></p>
+                <p>Phần trăm giảm giá: <input id="promotion-percent-add"></p>
+                <p>Ngày bắt đầu: <input id="promotion-start-add" type="datetime-local"></p>
+                <p>Ngày kết thúc: <input id="promotion-end-add" type="datetime-local"></p>
+            </div>
+            <div class="modal-body">
+                <button class="button light-text" onclick="addPromotion()" style="width:100%;">Thêm promotion</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="detailPromotion" class="tab">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;Thoát</span>
+                <h2>Detail Promotion</h2>
+            </div>
+            <div class="modal-body">
+                <p>ID: <span id="promotion-id"></span></p>
+                <p>Tên sự kiện: <input id="promotion-name"></p>
+                <p>Phần trăm giảm giá: <input id="promotion-percent"></p>
+                <p>Ngày bắt đầu: <input id="promotion-start" type="datetime-local"></p>
+                <p>Ngày kết thúc: <input id="promotion-end" type="datetime-local"></p>
+            </div>
+            <div class="modal-body">
+                <button class="button light-text" onclick=" updatePromotion()" style="width:100%;">Lưu chỉnh sửa</button>
+                <button class="button light-text" onclick="deletePromotion()" style="width:100%;">Xóa promotion</button>
+            </div>
+        </div>
+    </div>
+
 </div> <!--container_cater-manager -->
 @endsection
+<script src="{{asset('backend/js/promotion.js')}}"></script>

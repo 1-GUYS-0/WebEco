@@ -11,9 +11,12 @@ class CreateCustomersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('number_phone')->unique();
             $table->string('password');
             $table->string('avatar_path')->nullable();
+            $table->string('status')->default('unverified'); // Thêm cột status
+            $table->string('verification_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

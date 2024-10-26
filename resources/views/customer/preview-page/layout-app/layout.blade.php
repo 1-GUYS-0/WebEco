@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    @include('customer.preview-page.partials.header')
+    @include('customer.partials.header')
 
     <body>
         @include('customer.preview-page.partials.nav-bar')
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        @include('customer.preview-page.partials.footer')
+        @include('customer.partials.footer')
     </body>
 
 </html>

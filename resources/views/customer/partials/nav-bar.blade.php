@@ -5,6 +5,11 @@
         </a>
     </div>
     <div class="nav-bar_menu">
+        <button class="button light-text close-button" style="padding: 0.2rem 0.7rem;align-self: inherit;">
+            <span id ="hide-menu_icon" class="material-symbols-outlined" style="font-size: 1rem;">
+                close <a>Ẩn Menu</a>
+            </span>
+        </button>
         <div class="nav-bar_link close-btn">
             <a href="{{ route('search.page') }}">Danh mục và Tìm kiếm </a>
         </div>
@@ -61,6 +66,7 @@
             <p id="empty-notification-message" style="display: none;">Không có thông báo mới</p>
         </div>
     </div><!-- Sidebar thông báo -->
+    <span id="menu_icon" class="material-symbols-outlined">menu</span><!-- Icon menu -->
 </nav> <!-- nav-bar_wrapper -->
 <div id="overlay" class="overlay" onclick="toggleCart()"></div>
 <script>

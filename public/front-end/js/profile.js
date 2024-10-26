@@ -17,9 +17,9 @@ function confirmDelete(orderId, orderPayment) {
     if (confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?')) {
         let url = '';
         if (orderPayment === "cash") {
-            url = `/orders/${orderId}/delete/cash`;
+            url = `/home/orders/${orderId}/delete/cash`;
         } else if (orderPayment === "vnpay") {
-            url = `/orders/${orderId}/delete/vnpay`;
+            url = `/home/orders/${orderId}/delete/vnpay`;
         } else {
             alert('Đơn hàng không thể hủy. Vui lòng sử dụng chatbot để được hỗ trợ.');
             return;
@@ -50,7 +50,7 @@ function confirmDelete(orderId, orderPayment) {
 
 function confirmReceived(orderId) {
     if (confirm('Bạn có chắc chắn muốn xác nhận đã nhận được hàng không?')) {
-        fetch(`/orders/${orderId}/completed/cash`, {
+        fetch(`/home/orders/${orderId}/completed`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -248,7 +248,7 @@ function submitNewAddress() {
     const addnewaddress = `${province}/${district}/${ward}/${phone}/${address}`;
     console.log(addnewaddress);
     $.ajax({
-        url: '/home/customer/profile/update',
+        url: '/home/profile/update',
         type: 'POST',
         data: {
             addnewaddress: addnewaddress,
@@ -264,16 +264,16 @@ function submitNewAddress() {
 }
 function showReviewForm(orderId) {
     if (confirm('Bạn có chắc chắn muốn đánh giá các sản phẩm cho đơn hàng này không?')) {
-        window.location.href = `/orders/${orderId}/review`;
+        window.location.href = `/home/orders/${orderId}/review`;
     }
 }
 
 function showDetailOrder(orderId) {
     // Lấy chi tiết đơn hàng từ server (giả sử bạn có API để lấy chi tiết đơn hàng)
-    fetch(`/orders/orderdetail/${orderId}`)
+    fetch(`/home/orders/orderdetail/${orderId}`)
         .then(response => response.json())
         .then(data => {
-
+            console.log(data);
             // Định dạng giá tiền
             function formatPrice(price) {
                 return new Intl.NumberFormat('vi-VN', {
@@ -294,15 +294,16 @@ function showDetailOrder(orderId) {
             } else if (data.status === 'cancelled') {
                 statusText = 'đã hủy';
             }
+            
             //Kiểm tra yêu cầu hoàn hàng
-            let returnRequest = data.return_request;
-            if (data.return_request === 'pending') {
+            let returnRequest = '';
+            if (data.refund_request.status === 'pending') {
                 returnRequest = 'Chờ xác nhận';
             }
-            else if (data.return_request === 'accepted') {
+            else if (data.refund_request.status === 'accepted') {
                 returnRequest = 'Đã chấp nhận';
             }
-            else if (data.return_request === 'rejected') {
+            else if (data.refund_request.status === 'rejected') {
                 returnRequest = 'Đã từ chối';
             }
             else {
@@ -423,7 +424,7 @@ function submitReturnRequest() {
     }
 
     // Gửi yêu cầu trả hàng đến server
-    fetch('/orders/orders/return', {
+    fetch('/home/orders/return', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

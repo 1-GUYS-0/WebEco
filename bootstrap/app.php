@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'CheckLogin' => \App\Http\Middleware\CheckLogin::class,
             'CheckAdminLog' => \App\Http\Middleware\CheckAdmin::class,
+            'CheckAdminRole' => \App\Http\Middleware\CheckAdminRole::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

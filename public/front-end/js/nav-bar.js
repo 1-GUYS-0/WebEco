@@ -41,7 +41,7 @@ function toggleSide(idSidebar) {
     }
 }
 function myProfile() {
-    window.location.href = '/home/customer/profile';
+    window.location.href = '/home/profile';
 }
 // Thêm sự kiện click cho nút prev và next
 document.addEventListener('DOMContentLoaded', function () {

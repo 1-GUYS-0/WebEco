@@ -9,8 +9,9 @@ class Customer extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = [ 'name', 'email', 'number_phone', 'password', 'status', 'verification_token',];
     protected $hidden = ['password', 'remember_token'];
+    protected $casts = ['email_verified_at' => 'datetime'];
 
     public function addresses() // 1 customer có thể có nhiều địa chỉ
     {

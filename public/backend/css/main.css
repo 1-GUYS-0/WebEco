@@ -690,7 +690,12 @@ td {
   flex: 1;
   gap: 0.625rem;
 }
-
+.list-image img{
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1rem;
+  border: 0.2rem solid black;
+}
 .image-block {
   display: flex;
   flex-direction: row;
@@ -801,18 +806,18 @@ td {
   border: 1rem;
 }
 
-.container-table {
+.container-table  {
   width: 100%;
   /* Chiều cao tối đa của container */
   overflow-x: auto;
   /* Cuộn ngang */
+  max-height: 30rem;
+}
+.container-table::-webkit-scrollbar {
+  width: 1rem;
+  height: 0.5rem;
 }
 
-.container-table::-webkit-scrollbar {
-  width: 100px;
-  height: 10px;
-  background-color: #F5F5F5;
-}
 
 .container-table::-webkit-scrollbar-track {
   background-color: #F5F5F5;
@@ -820,7 +825,7 @@ td {
 }
 
 .container-table::-webkit-scrollbar-thumb {
-  background-color: #545454;
+  background-color: #000000;
   border-radius: 10px;
 }
 
@@ -872,7 +877,22 @@ td {
   border-radius: 1rem;
   gap: 1rem;
 }
-
+.modal-header{
+  display: flex;
+  flex-direction: column;
+  gap:1rem;
+}
+.modal-body{
+  display: flex;
+  flex-direction: column;
+  gap:1rem;
+}
+.modal-body input, .modal-body select{
+  border: 0.2rem solid black;
+  padding: 0.5rem;
+  border-radius: 1rem;
+  min-width: 76%;
+}
 .edit-button , .detail-button{
   background-color: #000000;
   color: white;

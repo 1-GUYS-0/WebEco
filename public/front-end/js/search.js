@@ -13,7 +13,7 @@ function filterProducts() {
         price_order: priceOrder
     });
 
-    fetch(`/home/customer/search?${params.toString()}`)
+    fetch(`/home/search/search?${params.toString()}`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -28,7 +28,7 @@ function filterProducts() {
                                 <img src="/${product.images[0].image_path}" alt="${product.name}">
                             </div>
                             <div class="cards_contain">
-                                <a class="cards_name-prod" href="/home/customer/product/${product.id}">${product.name}</a>
+                                <a class="cards_name-prod" href="/home/product/${product.id}">${product.name}</a>
                                 <div class="cards_desc-prod">${product.description}</div>
                                 <div class="cards_price-prod">${product.price} VND</div>
                             </div>

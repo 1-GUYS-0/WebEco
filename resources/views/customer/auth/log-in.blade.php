@@ -4,7 +4,9 @@
     <img src="{{ asset('system/background_log.jpg') }}" alt="banner" class="banner">
 </div>
 <h2 class ="log_container" style="min-height: 33%;"> 
-    Hãy đăng nhập để sử dụng toàn bộ dịch vụ của Green Nature Comestics </h2>
+    Hãy đăng nhập để sử dụng toàn bộ dịch vụ của Green Nature Comestics 
+</h2>
+<!-- Hiển thị thông báo success hoặc error -->
 <div class ="log_container">
     <div class="log_wrapper">
         <div class="log_form">
@@ -12,16 +14,14 @@
                 @csrf
                 <div class="form_input">
                     <label for="myEmail" class="input-lable">Email</label>
-                    <label class="input-desc">Nhập email của tài khoản</label>
-                    <input type="email" id="myEmail" name="email" placeholder="Enter your email" size="5" required>
+                    <input type="email" id="myEmail" name="email" placeholder="Nhập email của tài khoản" size="5" required>
                     @error('email')
                     <label class="input-error">{{ $message }}</label>
                     @enderror
                 </div>
                 <div class="form_input">
                     <label for="myPassw" class="input-lable">Password</label>
-                    <label class="input-desc">Nhập mật khẩu tài khoản</label>
-                    <input type="password" id="myPassw" name="password" placeholder="Enter your password" size="5" required>
+                    <input type="password" id="myPassw" name="password" placeholder="Nhập mật khẩu tài khoản" size="5" required>
                     @error('password')
                     <label class="input-error">{{ $message }}</label>
                     @enderror

@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function removeProductFromSelect(productId) {
-    const productItem = document.querySelector(`.product-items .product-details[value="${productId}"]`).closest('.product-items');
+    const productItem = document.querySelector(`.product-details .inputProductId[value="${productId}"]`).closest('.product-items');
     if (productItem) {
         productItem.remove();
     } else {
@@ -95,7 +95,7 @@ function processCashPayment() {
     formData.append('subtotal', subtotal);
 
     // Send data to server
-    fetch('/home/customer/payment/submitorder', {
+    fetch('/home/payment/submitorder', {
         method: 'POST',
         processData: false,
         contentType: false,
@@ -139,7 +139,7 @@ function processVNPayPayment() {
     formData.append('shipping_fee', shippingFee);
     formData.append('subtotal', subtotal);
 
-    fetch('/home/customer/VNPAYpayment', {
+    fetch('/homepayment/VNPAYpayment', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const voucherCode = voucherCodeInput.value;
         const totalPrice = parseInt(estimatedPriceElement.textContent.replace(/\./g, ''), 10);
         const shippingFee = parseInt(shippingFeeElement.getAttribute('value'), 10);
-        fetch('/home/customer/payment/apply-voucher', {
+        fetch('/home/payment/apply-voucher', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

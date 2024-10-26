@@ -111,19 +111,22 @@
                     @if ($order->status == 'completed')
                     <button onclick="showReviewForm('{{ $order->id }}')">Đánh giá cho sản phẩm</button>
                     @php
-                    $orderDate = \Carbon\Carbon::parse($order->created_at);
-                    $now = \Carbon\Carbon::now();
-                    $diffInDays = $now->diffInDays($orderDate);
+                        $orderDate = \Carbon\Carbon::parse($order->created_at);
+                        $now = \Carbon\Carbon::now();
+                        $diffInDays = $now->diffInDays($orderDate);
                     @endphp
-                    @if ($diffInDays <= 3 && $order->payment->payment_method=='cash')
-                        <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng</button>
+                    @if ($order->refundRequest == null)
+                        @if ($diffInDays <= 3 && $order->payment->payment_method=='cash')
+                            <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng</button>
                         @else
-                        <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng và hoàn tiền</button>
+                            <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng và hoàn tiền</button>
                         @endif
-                        @else
-
-                        @endif
-                        <button onclick="showDetailOrder('{{ $order->id }}')">Chi tiết đơn hàng</button>
+                    @else
+                        <button>Đang xử lý trả hàng....</button>
+                    @endif
+                    @else
+                    @endif
+                    <button onclick="showDetailOrder('{{ $order->id }}')">Chi tiết đơn hàng</button>
                 </div>
                 @else()
                 @endif
@@ -220,7 +223,6 @@
     </div>
 </div>
 <!-- Popup for detail order-->
-<!-- Popup chi tiết đơn hàng -->
 <div id="order-detail-popup" class="order-detail-popup">
     <div class="order-detail-content">
         <span class="close-btn" onclick="closeOrderDetailPopup()">&times;</span>

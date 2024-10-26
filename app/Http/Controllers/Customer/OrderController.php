@@ -22,10 +22,10 @@ class OrderController extends Controller
         }
         return response()->json(['success' => false, 'message' => 'Order not found or payment method is not cash.'], 404);
     }
-    public function completedOrderCash(Request $request, $orderId)
+    public function completedOrder(Request $request, $orderId)
     {
         $order = Order::find($orderId);
-        if ($order && $order->payment->payment_method == 'cash') {
+        if ($order) {
             $order->status = 'completed';
             $order->save();
             return response()->json(['success' => true, 'message' => 'Order completed successfully.']);
