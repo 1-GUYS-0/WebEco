@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Notification;
+use App\Models\Voucher;
 
 
 class PaymentController extends Controller
@@ -25,15 +26,22 @@ class PaymentController extends Controller
         $detailedProducts = [];
 
         foreach ($products as $product) {
-            $productInfo = Product::find($product['id']);
+            $productInfo = Product::with('promotion')->find($product['id']);
 
             if ($productInfo) {
+                // Kiểm tra xem sản phẩm có chương trình khuyến mãi và ngày hiện tại nằm trong khoảng thời gian khuyến mãi
+                if ($productInfo->promotion && $productInfo->promotion->promotion_start && $productInfo->promotion->promotion_end && now()->between($productInfo->promotion->promotion_start, $productInfo->promotion->promotion_end)) {
+                    $discountedPrice = $productInfo->price - ($productInfo->price * $productInfo->promotion->percent_promotion / 100);
+                } else {
+                    $discountedPrice = $productInfo->price;
+                }
+
                 $detailedProducts[] = [
                     'id' => $productInfo->id,
                     'name' => $productInfo->name,
                     'quantity' => $product['quantity'],
-                    'price' => $product['price'],
-                    'image_path' =>  $product['image'],
+                    'price' => $discountedPrice,
+                    'image_path' => $product['image'],
                 ];
             }
         }
@@ -42,7 +50,7 @@ class PaymentController extends Controller
         session(['products' => $detailedProducts]);
 
         return response()->json(['success' => true]);
-        // return response()->json([$detailedProducts]);
+        //return response()->json([$discountedPrice]);
     }
     public function showPaymentPage()
     {
@@ -161,11 +169,16 @@ class PaymentController extends Controller
             $notification = new Notification();
             $notification->customer_id = $customer->id;
             $notification->title = 'Đơn hàng thành công';
-            $notification->message = 'Đơn hàng số' . $order->id .'của khách hàng: ' . $customer->name . ' đã được đặt thành công vào lúc ' . $order->created_at ;
+            $notification->message = 'Đơn hàng số' . $order->id . 'của khách hàng: ' . $customer->name . ' đã được đặt thành công vào lúc ' . $order->created_at;
             $notification->is_read = false;
             $notification->save();
             DB::commit();
-
+            // cập nhật lại voucher
+            if ($request->voucher_code) {
+                $voucher = Voucher::where('code', $request->voucher_code)->first();
+                $voucher->quantity -= 1;
+                $voucher->save();
+            }
             return response()->json(['success' => true, 'redictCashPayment_url' => route('order.success')]);
         } catch (\Exception $e) {
             DB::rollBack();

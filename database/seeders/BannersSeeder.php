@@ -14,7 +14,7 @@ class BannersSeeder extends Seeder
                 'images_path' => 'storage/banner_images/slide1.jpg',
                 'start_date' => '2024-06-01',
                 'end_date' => '2024-12-30',
-                'link_to' => 'https://example.com/summer-sale',
+                'link_to' => 'http://127.0.0.1:8000/home/promotion/first-promotion',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

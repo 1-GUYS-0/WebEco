@@ -6,16 +6,21 @@
     </div> <!--tittle của chức năng-->
     <div class="search-box">
         <div class="search-bar">
-            <div>
-                <span class="material-symbols-outlined" ondragenter,onclick="search('categoryTable')">search</span>
-            </div>
-            <div class="input" for="searchCatergpry">
-                <input type="text" id="searchCatergpry" class="input_lable" placeholder="Search for catergory">
+            <button>
+                <span class="material-symbols-outlined" onclick="search('orderTable')">search</span>
+            </button>
+            <div class="input" for="inputSearch">
+                <input type="text" id="inputSearch" class="input_lable" placeholder="Search for catergory">
             </div>
         </div>
+        <!-- <div class="new-catergory">
+            <button type="button" class="button">
+                <a class="light-text" onclick="showTab('addCategory',{})"> Add new catergory</a>
+            </button>
+        </div> -->
     </div> <!-- thanh search-->
     <div class=" container-table">
-        <table>
+        <table id="orderTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -100,7 +105,7 @@
                     </select>
                 </div>
                 <button id="saveButton" data-order-id="" class="button light-text">Lưu</button>
-                <button type="button" class="button light-text">Xóa đơn hàng</button>
+                <button type="button" class="button light-text" onclick="deleteOrder()">Xóa đơn hàng</button>
             </div>
         </div>
     </div>
@@ -153,7 +158,7 @@
                 <div id="rejectRefundForm" style="gap: 1rem;display: flex;flex-direction: column;">
                     <h4> Lý do từ chối yêu cầu </h4>
                     <input  id="rejectReason"  placeholder="Nhập lý do không xác nhận yêu cầu cho khách hàng">
-                    <button class= "button light-text" type="button" onclick="rejectRefund()">Không xác nhận</button>
+                    <button class= "button light-text" type="button" onclick="rejectRefund()">Từ chối yêu cầu</button>
                 </div>
             </form>
         </div>

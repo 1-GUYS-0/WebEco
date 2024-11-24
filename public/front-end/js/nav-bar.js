@@ -28,7 +28,7 @@ function toggleSide(idSidebar) {
     const overlay = document.getElementById('overlay');
     console.log(cartSidebar.style.width);
     if (cartSidebar.style.width === '0px' || cartSidebar.style.width === '') {
-        cartSidebar.style.width = '500px'; // Độ rộng của sidebar khi mở
+        cartSidebar.style.width = '400px'; // Độ rộng của sidebar khi mở
         overlay.style.display = 'block'; // Hiển thị overlay
         cartSidebar.style.borderWidth = '0.2rem';   // Hiển thị viền của sidebar
         if (idSidebar === 'cart-sidebar'){

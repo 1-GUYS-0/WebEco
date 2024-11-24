@@ -297,18 +297,20 @@ function showDetailOrder(orderId) {
             
             //Kiểm tra yêu cầu hoàn hàng
             let returnRequest = '';
-            if (data.refund_request.status === 'pending') {
-                returnRequest = 'Chờ xác nhận';
-            }
-            else if (data.refund_request.status === 'accepted') {
-                returnRequest = 'Đã chấp nhận';
-            }
-            else if (data.refund_request.status === 'rejected') {
-                returnRequest = 'Đã từ chối';
-            }
-            else {
-                returnRequest = 'Không yêu cầu';
-            }
+            if (data.refund_request){
+                if (data.refund_request.status === 'pending') {
+                    returnRequest = 'Chờ xác nhận';
+                }
+                else if (data.refund_request.status === 'accepted') {
+                    returnRequest = 'Đã chấp nhận';
+                }
+                else if (data.refund_request.status === 'rejected') {
+                    returnRequest = 'Đã từ chối';
+                }
+                else {
+                    returnRequest = 'Không yêu cầu';
+                }
+            };
             // Kiểm tra phương thức thanh toán
             let paymentMethod = data.payment.payment_method;
             if (data.payment.payment_method === 'cash') {
@@ -336,7 +338,7 @@ function showDetailOrder(orderId) {
             data.order_items.forEach(item => {
                 productListHTML += `
                                 <div class="order-product-item">
-                                    <img src="/${item.product.images[0].image_path}" alt="${item.product.name}">
+                                    <img src="${item.product.images[0].image_path}" alt="${item.product.name}">
                                     <p>Tên sản phẩm: ${item.product.name}</p>
                                     <p>Số lượng: ${item.quantity}</p>
                                     <p>Giá: ${formatPrice(item.price * item.quantity)}</p>

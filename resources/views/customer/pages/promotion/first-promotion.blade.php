@@ -1,22 +1,27 @@
 @extends('customer.layout-app.layout')
+
 @section('content')
-<div id="slide-banner" class="slide-container">
-    <div class="slides">
-        @foreach ($Banners as $banner)
-        <div class="slide">
-            <a href="{{ $banner->link_to }}">
-                <img src="{{ asset($banner->images_path) }}" alt="{{ $banner->title }}">
-            </a>
-        </div>
-        @endforeach
+
+<div class="promotion-details">
+
+    <!-- Line 1: Advertising banner image -->
+    <div class="banner-image">
+        <img src="{{ asset($banner->images_path) }}" alt="{{ $banner->title }}">
     </div>
-    <button class="prev" onclick="changeSlide(-1,'slide-banner')">&#10094;</button>
-    <button class="next" onclick="changeSlide(1,'slide-banner')">&#10095;</button>
-</div>
-<div class="cust-recomm_wrapper">
-    <h3 class="title-section">Các sản phẩm có đánh giá cao</h3>
-    <div id="product-list" class="cust-recomm_contain">
-        @foreach ($Products as $product)
+
+    <!-- Line 2: Program name -->
+    <h2 class="promotion-name">{{ $promotion->name }}-
+        🔥 Chào hè rực rỡ với chương trình khuyến mãi Summer Sale! 🔥
+    </h2>
+
+    <!-- Line 3: Program description -->
+    <p class="promotion-description">
+        Đón mùa hè sôi động cùng ưu đãi giảm giá cực lớn – giảm ngay 20% cho tất cả các sản phẩm trong cửa hàng! Đây là cơ hội hoàn hảo để bạn thoả sức mua sắm những sản phẩm yêu thích với giá hời. Hãy nhanh tay, bởi chương trình chỉ diễn ra trong thời gian ngắn và số lượng sản phẩm có hạn. Đừng bỏ lỡ – Summer Sale giúp bạn vừa tiết kiệm vừa trải nghiệm mua sắm tuyệt vời nhất!
+    </p>
+
+    <!-- Product cards -->
+    <div class="promotion-products">
+        @foreach ($promotionProducts as $product)
         <div class="trending-prods_cards ">
             <div class="card-image">
                 @if ($product->images->isNotEmpty())
@@ -31,11 +36,13 @@
             <div class="cards_contain ">
                 <div class="product-detail_rating">
                     @for ($i = 0; $i < $product->total_rating; $i++)
-                        <img src="{{asset('system/star.png')}}" alt="star">
+                        <img src="{{ asset('system/star.png') }}" alt="star">
                         @endfor
                 </div>
                 <h3>
-                    <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}" onclick="saveProductToLocalStorage('{{ $product->id }}')">{{ $product->name }}</a>
+                    <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}" onclick="saveProductToLocalStorage('{{ $product->id }}')">
+                        {{ $product->name }}
+                    </a>
                 </h3>
                 <div class="cards_item">
                     {{ $product->brand }}
@@ -51,25 +58,14 @@
                         <span style="text-decoration: line-through;color: red;">{{ number_format($product->price, 0, ',', '.') }}</span>
                     </h3>
                     @else
-                    <h3>Giá: {{ number_format($product->price, 0, ',', '.') }}</h3>
+                    <h3>Giá: {{ number_format($product->price, 0, ',', '.') }} VND</h3>
                     @endif
                 </div>
             </div>
         </div>
         @endforeach
     </div>
-    @if ($Products->hasMorePages()) <!--kiểm tra xem còn trang nào không-->
-    <button id="load-more" data-page="2" class="button light-text">Thêm Sản Phẩm</button>
-    @endif
+
 </div>
-<div class="interested-product_wrapper">
-    <h3 class="title-section">Các sản phẩm bạn quan tâm</h3>
-    <div class="interested-product_list">
-    </div>
-</div>
-<script>
-    const loadmore_product = '{{ route("customer.product.loadMore") }}';
-</script>
-<script src="{{ asset('front-end/js/product.js') }}"></script>
-<script src="{{ asset('front-end/js/home.js') }}"></script>
+
 @endsection

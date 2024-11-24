@@ -17,7 +17,7 @@ class VoucherController extends Controller
         
         $voucher = Voucher::where('code', $voucherCode)->first();
         // Kiểm tra xem voucher có tồn tại không và còn hạn sử dụng(expiry_date) không
-        if (!$voucher || $voucher->expiry_date < now()) {
+        if (!$voucher || $voucher->quantity==0 || $voucher->expiry_date < now()) {
             return response()->json(['success' => false, 'message' => 'Voucher không hợp lệ hoặc đã hết hạn.']);
         }
     

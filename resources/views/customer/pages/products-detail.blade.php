@@ -11,13 +11,13 @@
     <div id="slide-product" class="product-image-slider">
         <div class="slides">
             @foreach ($product->images as $image)
-            <div class="card-image_slide">
+            <div class="slide">
                 <img class="product-detail_image" src="{{ asset($image->image_path) }}" />
             </div>
             @endforeach
         </div>
-        <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-        <button class="next" onclick="changeSlide(1)">&#10095;</button>
+        <button class="prev" onclick="changeSlide(-1,'slide-product')">&#10094;</button>
+        <button class="next" onclick="changeSlide(1,'slide-product')">&#10095;</button>
     </div>
     <div class="product-detail_infor ">
         <div class="detail_infor">
@@ -33,12 +33,28 @@
                     @endfor
             </div>
             <div class="product-detail_price">
-                <h4>Giá: </h4>
-                {{ number_format($product->price, 0, ',', '.') }} VND
+                @if ($product->promotion && now()->between($product->promotion->promotion_start, $product->promotion->promotion_end))
+                @php
+                $discountedPrice = $product->price - ($product->price * $product->promotion->percent_promotion / 100);
+                @endphp
+                <h3>
+                    Giá:
+                    <span>{{ number_format($discountedPrice, 0, ',', '.') }}</span>
+                    <span style="text-decoration: line-through;color: red;">{{ number_format($product->price, 0, ',', '.') }}</span>
+                </h3>
+                @else
+                <h3>Giá: {{ number_format($product->price, 0, ',', '.') }} VND</h3>
+                @endif
             </div>
-            <div><h4>Loại da:</h4> {{ $product->skin}}</div>
-            <div><h4>Mùi hương:</h4> {{ $product->smell }}</div>
-            <div><h4>Thành phần chính:</h4> {{ $product->main_ingredient }}</div>
+            <div>
+                <h4>Loại da:</h4> {{ $product->skin}}
+            </div>
+            <div>
+                <h4>Mùi hương:</h4> {{ $product->smell }}
+            </div>
+            <div>
+                <h4>Thành phần chính:</h4> {{ $product->main_ingredient }}
+            </div>
             <div class="product-detail_price">
                 <h4>Kết cấu: </h4>
                 {{ $product->texture }}
@@ -55,7 +71,7 @@
     <div class="product-detail_infor">
         <div class="product-detail_info-item">
             <h4>Thành phần:</h4>
-            <p>{{ $product->main_ingredient }}</p>
+            <p>{{ $product->ingredient}}</p>
         </div>
         <div class="product-detail_info-item">
             <h4>Cách sử dụng:</h4>
@@ -71,7 +87,7 @@
     <h3 class="title-section">Các sản phẩm tương tự</h3>
     <div class="rela-prod_list">
         @foreach($relatedProducts as $relatedProduct)
-        <div class="rela-prod_item ">
+        <div class="trending-prods_cards ">
             <div class="card-image">
                 <img class="product-detail_image" src="{{ asset($relatedProduct->images->first()->image_path) }}" alt="{{ $relatedProduct->name }}" />
             </div>
@@ -79,10 +95,23 @@
                 <h3>
                     <a class="cards_name-prod close-bt" href="{{ route('product.show', $relatedProduct->id) }}">{{ $relatedProduct->name }}</a>
                 </h3>
-                <div class="cards_desc-prod">
-                    {{ $relatedProduct->description }}
+                <div class="cards_item">
+                    {{ $relatedProduct->brand }}
                 </div>
-                <div class="cards_price-prod">{{ $relatedProduct->price }}</div>
+                <div class="cards_item">
+                    @if ($relatedProduct->promotion && now()->between($relatedProduct->promotion->promotion_start, $relatedProduct->promotion->promotion_end))
+                    @php
+                    $discountedPrice = $relatedProduct->price - ($relatedProduct->price * $relatedProduct->promotion->percent_promotion / 100);
+                    @endphp
+                    <h3>
+                        Giá:
+                        <span>{{ number_format($relatedProduct->price, 0, ',', '.') }} VND</span>
+                        <span style="text-decoration: line-through;color: red;">{{ number_format($discountedPrice, 0, ',', '.') }} VND</span>
+                    </h3>
+                    @else
+                    <h3>Giá: {{ number_format($relatedProduct->price, 0, ',', '.') }} VND</h3>
+                    @endif
+                </div>
             </div>
         </div>
         @endforeach
@@ -132,15 +161,6 @@
     </div>
 </div><!-- Biểu đồ đánh giá -->
 <div class="reviews">
-    <!-- <div class="top">
-        <h4>Reviews</h4>
-        <input type="text" id="myComment" placeholder="Enter your comment" class="input-set">
-        <div class="flex-end">
-            <button type="button" onclick="alert('Xin chào!')" class="button">
-                <div class="light-text">Thêm bình luận</div>
-            </button>
-        </div>
-    </div> -->
     <div class="review-list ">
         <h3 class="title-section">Reviews của sản phẩm {{ $product->name }} </h3>
         @if ($product->comments->isNotEmpty())
@@ -181,21 +201,20 @@
         @endif
     </div>
     <div class="button_view-more">
-        <button type="button" onclick="alert('Xin chào!')" class="button">
-            <div class="light-text">View more</div>
+        <button type="button light-text" onclick="window.location.href=`/home/product/{{$product->id}}/review`" class="button light-text">
+            Xem thêm
         </button>
     </div>
 </div><!--reviews-->
+<div id="ratings-data"
+    data-rating='{
+        "ratings": {!! json_encode($ratings) !!},
+        "averageRating": {!! json_encode($averageRating) !!},
+        "totalRatings": {!! json_encode($totalRatings) !!}
+    }' 
+    style="display:none;">
+</div>
 <!--script-->
-<script id="ratings-data" type="application/json">
-    {!! json_encode($ratings) !!}
-</script>
-<script id="average-rating-data" type="application/json">
-    {!! json_encode($averageRating) !!}
-</script>
-<script id="total-ratings-data" type="application/json">
-    {!! json_encode($totalRatings) !!}
-</script>
 <script src="{{ asset('front-end/js/product-detail.js') }}"></script>
 <script src="{{ asset('front-end/js/ratingreviews.js') }}"></script>
 @endsection

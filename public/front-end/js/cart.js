@@ -53,7 +53,7 @@ function fetchCartItems() {
                     const product = item.product;
                     const imagePath = (product && product.images && product.images.length > 0) ? product.images[0].image_path : 'default-image.jpg';
                     productItem.innerHTML = `
-                        <img src="/${item.product.images[0].image_path}" alt="${item.product.name}" class="product-image_selected" />
+                        <img src="${item.product.images[0].image_path}" alt="${item.product.name}" class="product-image_selected" />
                         <div class="product-details" value= "${item.product_id}">
                             <a class="cards_name-prod">${item.product.name}</a>
                             <div class="quantity-controls">

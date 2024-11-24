@@ -8,8 +8,8 @@
         <div class="log_form">
             <form id="signupForm">
                 <div class="form_input">
-                    <label for="name" class="input-lable">Namefhgdhgdhd</label>
-                    <input type="text" id="name" name="name" placeholder="Nhập tên của bạn" size="5" required>
+                    <label for="name" class="input-lable">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Nhập tên của bạn" size="5" required autocomplete="new-password">
                     @error('name')
                     <label class="input-error">{{ $message }}</label>
                     @enderror
@@ -52,57 +52,98 @@
         </div>
     </div>
 </div>
+<div id="loading-overlay" style="
+    display: none;
+    position: fixed;
+    top: -206px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+">
+    <div style="
+
+    display:none;
+    width: 12rem;
+    height: 2rem;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+    border: 0.2rem solid;
+    border-radius: 1rem;
+    
+    ">
+        Loading...
+    </div>
+</div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const signupForm = document.getElementById('signupForm');
-    signupForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Ngăn form tự động khởi động lại
+    // JavaScript để hiển thị và ẩn thông báo
+    function showLoadingOverlay() {
+        document.getElementById('loading-overlay').style.display = 'flex';
+    }
 
-        // Lấy các giá trị từ form thông qua ID
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const phone = document.getElementById('phone').value;
-        const password = document.getElementById('password').value;
-        const password_confirmation = document.getElementById('password_confirmation').value;
+    function hideLoadingOverlay() {
+        document.getElementById('loading-overlay').style.display = 'none';
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Ngăn form tự động khởi động lại
 
-        // Tạo đối tượng dữ liệu để gửi
-        const data = {
-            name: name,
-            email: email,
-            number_phone: phone,
-            password: password,
-            password_confirmation: password_confirmation
-        };
+            // Lấy các giá trị từ form thông qua ID
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const password_confirmation = document.getElementById('password_confirmation').value;
 
-        // Gửi dữ liệu bằng AJAX
-        fetch("{{ route('customer.signup') }}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                alert(data.message);
-                window.location.href = "{{ route('customer.pages.log-in') }}";
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+            // Tạo đối tượng dữ liệu để gửi
+            const data = {
+                name: name,
+                email: email,
+                number_phone: phone,
+                password: password,
+                password_confirmation: password_confirmation
+            };
+            showLoadingOverlay(); // Hiển thị loading
+            // Gửi dữ liệu bằng AJAX
+            fetch("{{ route('customer.signup') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        hideLoadingOverlay() // Ẩn loading
+                        alert(data.message);
+                        window.location.href = "{{ route('customer.pages.log-in') }}";
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+                    hideLoadingOverlay() // Ẩn loading
+                });
         });
     });
-});
 </script>
 @endsection
-

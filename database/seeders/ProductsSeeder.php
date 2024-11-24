@@ -39,136 +39,39 @@ class ProductsSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
-        $products = [
-            [
-                'name' => 'Sản phẩm chăm sóc da',
-                'brand' => 'Brand 1',
-                'weight' => '100ml',
-                'price' => 100000,
-                'description' => 'Mô tả sản phẩm chăm sóc da',
-                'smell' => 'Hương thơm dịu nhẹ',
-                'texture' => 'Dạng kem',
-                'htu' => 'Hướng dẫn sử dụng sản phẩm chăm sóc da',
-                'ingredient' => 'Thành phần sản phẩm chăm sóc da',
-                'main_ingredient' => 'Thành phần chính sản phẩm chăm sóc da',
-                'skin' => 'Mọi loại da',
-                'stock' => 50,
-                'categories_id' => 1, // Chăm sóc da
-                'total_rating' => 4.5,
-                'total_purchase_quantity' => 100,
-                'note' => 'Ghi chú sản phẩm chăm sóc da',
-                'promotion_id' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Sản phẩm chăm sóc tóc',
-                'brand' => 'Brand 2',
-                'weight' => '200ml',
-                'price' => 150000,
-                'description' => 'Mô tả sản phẩm chăm sóc tóc',
-                'smell' => 'Hương thơm tươi mát',
-                'texture' => 'Dạng dầu gội',
-                'htu' => 'Hướng dẫn sử dụng sản phẩm chăm sóc tóc',
-                'ingredient' => 'Thành phần sản phẩm chăm sóc tóc',
-                'main_ingredient' => 'Thành phần chính sản phẩm chăm sóc tóc',
-                'skin' => 'Mọi loại tóc',
-                'stock' => 30,
-                'categories_id' => 2, // Chăm sóc tóc
-                'total_rating' => 4.7,
-                'total_purchase_quantity' => 200,
-                'note' => 'Ghi chú sản phẩm chăm sóc tóc',
-                'promotion_id' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Sản phẩm tắm và dưỡng thể',
-                'brand' => 'Brand 1',
-                'weight' => '300ml',
-                'price' => 200000,
-                'description' => 'Mô tả sản phẩm tắm và dưỡng thể',
-                'smell' => 'Hương thơm quyến rũ',
-                'texture' => 'Dạng sữa tắm',
-                'htu' => 'Hướng dẫn sử dụng sản phẩm tắm và dưỡng thể',
-                'ingredient' => 'Thành phần sản phẩm tắm và dưỡng thể',
-                'main_ingredient' => 'Thành phần chính sản phẩm tắm và dưỡng thể',
-                'skin' => 'Mọi loại da',
-                'stock' => 40,
-                'categories_id' => 3, // Tắm và Dưỡng thể
-                'total_rating' => 4.8,
-                'total_purchase_quantity' => 150,
-                'note' => 'Ghi chú sản phẩm tắm và dưỡng thể',
-                'promotion_id' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Sản phẩm chăm sóc da new',
-                'brand' => 'Brand 2',
-                'weight' => '50ml',
-                'price' => 100000,
-                'description' => 'Mô tả sản phẩm chăm sóc da',
-                'smell' => 'Hương thơm dịu nhẹ',
-                'texture' => 'Dạng kem',
-                'htu' => 'Hướng dẫn sử dụng sản phẩm chăm sóc da',
-                'ingredient' => 'Thành phần sản phẩm chăm sóc da',
-                'main_ingredient' => 'Thành phần chính sản phẩm chăm sóc da',
-                'skin' => 'Mọi loại da',
-                'stock' => 10,
-                'categories_id' => 1, // Chăm sóc da
-                'total_rating' => 4.5,
-                'total_purchase_quantity' => 100,
-                'note' => 'Ghi chú sản phẩm chăm sóc da',
-                'promotion_id' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Sản phẩm chăm sóc tóc new',
-                'brand' => 'Brand 1',
-                'weight' => '150ml',
-                'price' => 150000,
-                'description' => 'Mô tả sản phẩm chăm sóc tóc',
-                'smell' => 'Hương thơm tươi mát',
-                'texture' => 'Dạng dầu gội',
-                'htu' => 'Hướng dẫn sử dụng sản phẩm chăm sóc tóc',
-                'ingredient' => 'Thành phần sản phẩm chăm sóc tóc',
-                'main_ingredient' => 'Thành phần chính sản phẩm chăm sóc tóc',
-                'skin' => 'Mọi loại tóc',
-                'stock' => 4,
-                'categories_id' => 2, // Chăm sóc tóc
-                'total_rating' => 4.7,
-                'total_purchase_quantity' => 200,
-                'note' => 'Ghi chú sản phẩm chăm sóc tóc',
-                'promotion_id' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Sản phẩm tắm và dưỡng thể new',
-                'brand' => 'Brand 2',
-                'weight' => '250ml',
-                'price' => 200000,
-                'description' => 'Mô tả sản phẩm tắm và dưỡng thể',
-                'smell' => 'Hương thơm quyến rũ',
-                'texture' => 'Dạng sữa tắm',
-                'htu' => 'Hướng dẫn sử dụng sản phẩm tắm và dưỡng thể',
-                'ingredient' => 'Thành phần sản phẩm tắm và dưỡng thể',
-                'main_ingredient' => 'Thành phần chính sản phẩm tắm và dưỡng thể',
-                'skin' => 'Mọi loại da',
-                'stock' => 20,
-                'categories_id' => 3, // Tắm và Dưỡng thể
-                'total_rating' => 4.8,
-                'total_purchase_quantity' => 150,
-                'note' => 'Ghi chú sản phẩm tắm và dưỡng thể',
-                'promotion_id' => null,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ];
+        $productCsvFile = fopen(base_path("database/data/product_cocoon.csv"), "r");
+        $firstProductLine = true;
 
-        DB::table('products')->insert($products);
+        while (($productData = fgetcsv($productCsvFile, 2000, ",")) !== FALSE) {
+            if (!$firstProductLine) {
+                DB::table('products')->insert([
+                    'name' => $productData[0],
+                    'price' => (int) filter_var($productData[1], FILTER_SANITIZE_NUMBER_INT),
+                    'description' => $productData[2],
+                    'note' => $productData[3],
+                    'smell' => $productData[4],
+                    'texture' => $productData[5],
+                    'htu' => $productData[6],
+                    'ingredient' => $productData[7],
+                    'main_ingredient' => $productData[8],
+                    'skin' => $productData[9],
+                    'categories_id' => $productData[10],
+                    'type' => $productData[11],
+                    'brand' => $productData[12],
+                    'weight' => $productData[13],
+                    'stock' => $productData[14],
+                    'total_purchase_quantity' => $productData[15],
+                    'total_rating' => null,
+                    'promotion_id' => null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+            $firstProductLine = false;
+        }
+
+        fclose($productCsvFile);
+
 
     }
 }

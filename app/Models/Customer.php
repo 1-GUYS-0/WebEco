@@ -9,7 +9,7 @@ class Customer extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = [ 'name', 'email', 'number_phone', 'password', 'status', 'verification_token',];
+    protected $fillable = [ 'name', 'email', 'number_phone', 'password', 'status', 'verification_token','avatar_path'];
     protected $hidden = ['password', 'remember_token'];
     protected $casts = ['email_verified_at' => 'datetime'];
 

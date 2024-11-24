@@ -65,7 +65,7 @@
                         <p>Phương Thức Thanh toán: {{ $order->payment->payment_method }}</p>
                         <p>Chi phí đơn hàng: {{ number_format($order->total_price, 0, ',', '.') }} VND</p>
                     </div>
-                    <h2>Danh sách sản phẩm</h2>
+                    <h2 style="text-align:left">Danh sách sản phẩm</h2>
                     <ul>
                         @foreach ($order->orderItems as $order_item)
                         <li>{{ $order_item->product->name }} - Số Lượng: {{ $order_item->quantity }} - Tổng giá: {{ $order_item->price }}</li>
@@ -75,7 +75,7 @@
                     <button onclick="confirmReceived('{{ $order->id }}')">Xác nhận đã nhận hàng</button>
                     @if ($order->status == 'pending')
                     @if($order->payment->payment_method == 'cash')
-                    <button onclick="confirmDelete('{{ $order->id }},{{$order->payment->payment_method}}')">Hủy đơn hàng</button>
+                    <button onclick="confirmDelete('{{ $order->id }}','{{$order->payment->payment_method}}')">Hủy đơn hàng</button>
                     @else
                     <button onclick="confirmDelete('{{ $order->id }}','{{$order->payment->payment_method}}')">Hủy đơn hàng và hoàn tiền</button>
                     @endif
@@ -101,7 +101,7 @@
                         <p>Phương Thức Thanh toán: {{ $order->payment->payment_method }}</p>
                         <p>Chi phí đơn hàng: {{ number_format($order->total_price, 0, ',', '.') }} VND</p>
                     </div>
-                    <h2>Danh sách sản phẩm</h2>
+                    <h2 style="text-align:left">Danh sách sản phẩm</h2>
                     <ul>
                         @foreach ($order->orderItems as $order_item)
                         <li>{{ $order_item->product->name }} - Số Lượng: {{ $order_item->quantity }} - Tổng giá: {{ $order_item->price }}</li>
@@ -122,7 +122,13 @@
                             <button onclick="showPopupReturn('returnProductPopup','{{$order->id }}')"> Yêu cầu trả hàng và hoàn tiền</button>
                         @endif
                     @else
-                        <button>Đang xử lý trả hàng....</button>
+                        @if ($order->refundRequest->status == 'pending')
+                            <button style="border:0.2rem solid yellow">Đang xử lý trả hàng....</button>
+                        @elseif ($order->refundRequest->status == 'accepted')
+                            <button style="border:0.2rem solid red">Đã chấp nhận trả hàng</button>
+                        @elseif ($order->refundRequest->status == 'rejected')
+                            <button style="border:0.2rem solid red">Đã từ chối trả hàng</button>
+                        @endif
                     @endif
                     @else
                     @endif

@@ -26,8 +26,8 @@
                     <ul class="nav-list">
                         <li><a href="{{ route('search.page') }}">Danh mục và Tìm kiếm </a></li>
                         <li><a href="{{route('promotion.discount')}}">Chương trình và giảm giá</a></li>
-                        <li><a>Về chúng tôi</a></li>
-                        <li><a>Hướng dẫn cách sử dụng</a></li>
+                        <li><a href="{{route('about-us')}}">Về chúng tôi</a></li>
+                        <li><a href="{{route('guide')}}">Hướng dẫn cách sử dụng</a></li>
                     </ul>
                     <ul class="nav-list">
                         <p>© <span id="currentYear"></span> Green Nature Cosmetics. All rights reserved.</p>

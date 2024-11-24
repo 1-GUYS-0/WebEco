@@ -111,7 +111,7 @@ function fetchOrderDetails(orderId) {
                     const productDiv = document.createElement('div');
                     productDiv.classList.add('detail-product');
                     const productImage = document.createElement('img');
-                    productImage.src = `/${item.product.images[0].image_path}` || '{{asset("backend/asset/dashboard/logo.png")}}';
+                    productImage.src = `${item.product.images[0].image_path}` || '{{asset("backend/asset/dashboard/logo.png")}}';
                     productImage.id = 'imageProductOrder';
 
                     const productName = document.createElement('h6');
@@ -180,17 +180,17 @@ function getRefundDetails(orderId) {
                 images.forEach(image => {
                     const imageContainer = document.createElement('div');
                     imageContainer.className = 'detail-product';
-                    imageContainer.style.width = '150px'; 
+                    imageContainer.style.width = '150px';
                     imageContainer.style.border = '0.2rem solid #000';
                     imageContainer.style.display = 'flex';
-                    imageContainer.style.justifyContent= 'center';
+                    imageContainer.style.justifyContent = 'center';
                     imageContainer.style.borderRadius = '1rem';
                     const img = document.createElement('img');
                     img.src = image;
                     img.alt = 'Refund Image';
-                    img.style.width = '100px'; 
-                    img.style.height = '100px'; 
-    
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+
                     // Thêm sự kiện click để phóng to hình ảnh
                     img.addEventListener('click', () => {
                         const modal = document.createElement('div');
@@ -204,22 +204,22 @@ function getRefundDetails(orderId) {
                         modal.style.justifyContent = 'center';
                         modal.style.alignItems = 'center';
                         modal.style.zIndex = '1000';
-    
+
                         const modalImg = document.createElement('img');
                         modalImg.src = image;
                         modalImg.style.maxWidth = '90%';
                         modalImg.style.maxHeight = '90%';
-    
+
                         modal.appendChild(modalImg);
-    
+
                         // Đóng modal khi nhấn vào
                         modal.addEventListener('click', () => {
                             document.body.removeChild(modal);
                         });
-    
+
                         document.body.appendChild(modal);
                     });
-    
+
                     imageContainer.appendChild(img);
                     detailProductRefund.appendChild(imageContainer);
                 });
@@ -260,7 +260,8 @@ function confirmRefund() {
 function rejectRefund() {
     const refundId = document.getElementById('refundId').value;
     const reason = document.getElementById('rejectReason').value;
-    fetch('/rejectRefund', {
+    console.log('Rejecting refund request:', refundId, reason);
+    fetch(`/admin/orders/refund/reject`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -268,18 +269,46 @@ function rejectRefund() {
         },
         body: JSON.stringify({ refundId: refundId, reason: reason })
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);
-            // Cập nhật giao diện hoặc thực hiện các hành động khác
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+        });
 }
+// Xóa đơn hàng
+function deleteOrder() {
+    var deleteButton = document.getElementById('saveButton');
+    var orderId = deleteButton.getAttribute('data-order-id');
+    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    if (confirm('Bạn có chắc chắn muốn xóa đơn hàng này không?')) {
+        fetch(`/admin/orders/${orderId}/delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Xóa đơn hàng thành công.');
+                    // Optionally, you can remove the order from the DOM or refresh the page
+                    location.reload();
+                } else {
+                    alert('Xóa đơn hàng thất bại: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+}
+
 

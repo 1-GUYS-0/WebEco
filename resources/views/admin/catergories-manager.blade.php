@@ -6,9 +6,9 @@
     </div> <!--tittle của chức năng-->
     <div class="search-box">
         <div class="search-bar">
-            <div>
+            <button>
                 <span class="material-symbols-outlined" onclick="search('categoryTable')">search</span>
-            </div>
+            </button>
             <div class="input" for="inputSearch">
                 <input type="text" id="inputSearch" class="input_lable" placeholder="Search for catergory">
             </div>
@@ -48,7 +48,7 @@
             <h2>Chi tiết danh mục</h2>
             <div id="category-id" value="{{ $category['id'] }}" placeholder="ID" hidden></div>
             <div> Tên danh mục: <input id="category-name" value="" placeholder="Tên danh mục"> </div>
-            <div> Tên danh mục cha: <input id="category-parent" value="" placeholder="Tên danh mục cha"> </div>
+            <div> ID danh mục cha: <input id="category-parent" value="" placeholder="ID danh mục cha"> </div>
             <button type class="button light-text" onclick="saveEditCategory()">Lưu chỉnh sửa</button>
             <button class="button light-text" onclick="deleteCategory()">Xóa danh mục</button>
             </tr>

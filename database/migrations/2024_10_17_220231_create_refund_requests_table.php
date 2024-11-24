@@ -13,7 +13,7 @@ class CreateRefundRequestsTable extends Migration
             $table->string('reason')->nullable();
             $table->text('details')->nullable();
             $table->json('images_refund');
-            $table->string('status')->default('pending'); // pending, accepted, rejected
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

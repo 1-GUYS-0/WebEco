@@ -390,6 +390,53 @@ class AdminController extends Controller
 
         return response()->json(['success' => false, 'message' => 'Refund request not found.'], 404);
     }
+    public function deleteOrder(Request $request, $orderId)
+    {
+        DB::beginTransaction();
+        try {
+            $order = Order::find($orderId);
+            if ($order) {
+                // Delete related order items
+                OrderItem::where('order_id', $orderId)->delete();
+                // Delete the order
+                $order->delete();
+                DB::commit();
+                return response()->json(['success' => true, 'message' => 'Xóa đơn hàng thành công.']);
+            }
+            return response()->json(['success' => false, 'message' => 'Không tìm thấy đơn hàng.'], 404);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.'], 500);
+        }
+    }
+    public function refundReject(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $refund = RefundRequest::with('order')->find($request->refundId);
+            if ($refund) {
+                // Update refund status to rejected
+                $refund->status = 'rejected';
+                $refund->save();
+
+                // Create a notification for the customer
+                $notification = new Notification();
+                $notification->customer_id = $refund->order->customer_id;
+                $notification->title = 'Yêu cầu hoàn trả đã bị từ chối';
+                $notification->message = 'Yêu cầu hoàn trả cho đơn hàng #' . $refund->order_id . ' đã bị từ chối. Lý do: ' . $request->input('reason');
+                $notification->is_read = false;
+                $notification->save();
+
+                DB::commit();
+                return response()->json(['success' => true, 'message' => 'Yêu cầu hoàn trả đã bị từ chối.']);
+            }
+            return response()->json(['success' => false, 'message' => 'Không tìm thấy yêu cầu hoàn trả.'], 404);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+            return response()->json(['success' => false, 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau.'], 500);
+        }
+    }
     //Promotion
     public function showPromotionMng()
     {
@@ -637,18 +684,18 @@ class AdminController extends Controller
         $admins = Admin::all();
         return view('admin.admin-manager', compact('admins'));
     }
-    
+
     public function getAdminDetails($id)
     {
         $admin = Admin::find($id);
-    
+
         if ($admin) {
             return response()->json(['status' => 'success', 'admin' => $admin]);
         }
-    
+
         return response()->json(['status' => 'error', 'message' => 'Admin not found']);
     }
-    
+
     public function addAdmin(Request $request)
     {
         DB::beginTransaction();
@@ -659,14 +706,14 @@ class AdminController extends Controller
                 'password' => 'required|min:6',
                 'role' => 'required|in:admin,sale',
             ]);
-    
+
             $admin = new Admin();
             $admin->name = $request->input('name');
             $admin->password = Hash::make($request->input('password'));
             $admin->email = $request->input('email');
             $admin->role = $request->input('role');
             $admin->save();
-    
+
             DB::commit();
             return response()->json(['success' => 'Admin added successfully.', 'message' => 'Thêm admin thành công.']);
         } catch (\Exception $e) {
@@ -674,7 +721,7 @@ class AdminController extends Controller
             return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
         }
     }
-    
+
     public function updateAdmin(Request $request)
     {
         DB::beginTransaction();
@@ -685,25 +732,25 @@ class AdminController extends Controller
                 'email' => 'required|email|unique:admins,email,' . $request->input('id'),
                 'role' => 'required|in:admin,sale',
             ]);
-    
+
             $admin = Admin::find($request->input('id'));
             if ($admin) {
                 $admin->name = $request->input('name');
                 $admin->email = $request->input('email');
                 $admin->role = $request->input('role');
                 $admin->save();
-    
+
                 DB::commit();
                 return response()->json(['success' => 'Admin updated successfully.', 'message' => 'Cập nhật admin thành công.']);
             }
-    
+
             return response()->json(['error' => 'Admin not found.', 'message' => 'Không tìm thấy admin'], 404);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
         }
     }
-    
+
     public function deleteAdmin(Request $request)
     {
         DB::beginTransaction();
@@ -711,14 +758,14 @@ class AdminController extends Controller
             $request->validate([
                 'id' => 'required|integer',
             ]);
-    
+
             $admin = Admin::find($request->input('id'));
             if ($admin) {
                 $admin->delete();
                 DB::commit();
                 return response()->json(['success' => 'Admin deleted successfully.', 'message' => 'Xóa admin thành công.']);
             }
-    
+
             return response()->json(['error' => 'Admin not found.', 'message' => 'Không tìm thấy admin'], 404);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -731,18 +778,17 @@ class AdminController extends Controller
         $banners = Banner::all();
         return view('admin.banner-manager', compact('banners'));
     }
-    
     public function getBannerDetails($id)
     {
         $banner = Banner::find($id);
-    
+
         if ($banner) {
             return response()->json(['status' => 'success', 'banner' => $banner]);
         }
-    
+
         return response()->json(['status' => 'error', 'message' => 'Banner not found']);
     }
-    
+
     public function addBanner(Request $request)
     {
         DB::beginTransaction();
@@ -754,19 +800,19 @@ class AdminController extends Controller
                 'link_to' => 'required|url',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-    
+
             $banner = new Banner();
             $banner->title = $request->input('title');
             $banner->start_date = $request->input('start_date');
             $banner->end_date = $request->input('end_date');
             $banner->link_to = $request->input('link_to');
-    
+
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $imagePath = $image->store('banner_images', 'public');
                 $banner->images_path = '/storage/' . $imagePath;
             }
-    
+
             $banner->save();
             DB::commit();
             return response()->json(['success' => 'Banner added successfully.', 'message' => 'Thêm banner thành công.']);
@@ -775,7 +821,7 @@ class AdminController extends Controller
             return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
         }
     }
-    
+
     public function updateBanner(Request $request)
     {
         DB::beginTransaction();
@@ -788,14 +834,14 @@ class AdminController extends Controller
                 'link_to' => 'required|url',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-    
+
             $banner = Banner::find($request->input('id'));
             if ($banner) {
                 $banner->title = $request->input('title');
                 $banner->start_date = $request->input('start_date');
                 $banner->end_date = $request->input('end_date');
                 $banner->link_to = $request->input('link_to');
-    
+
                 if ($request->hasFile('image')) {
                     if ($banner->images_path) {
                         $oldImagePath = str_replace('/storage/', '', $banner->images_path);
@@ -806,19 +852,19 @@ class AdminController extends Controller
                     $imagePath = $image->store('banner_images', 'public');
                     $banner->images_path = '/storage/' . $imagePath;
                 }
-    
+
                 $banner->save();
                 DB::commit();
                 return response()->json(['success' => 'Banner updated successfully.', 'message' => 'Cập nhật banner thành công.']);
             }
-    
+
             return response()->json(['error' => 'Banner not found.', 'message' => 'Không tìm thấy banner'], 404);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
         }
     }
-    
+
     public function deleteBanner(Request $request)
     {
         DB::beginTransaction();
@@ -826,7 +872,7 @@ class AdminController extends Controller
             $request->validate([
                 'id' => 'required|integer',
             ]);
-    
+
             $banner = Banner::find($request->input('id'));
             if ($banner) {
                 if ($banner->images_path) {
@@ -837,8 +883,191 @@ class AdminController extends Controller
                 DB::commit();
                 return response()->json(['success' => 'Banner deleted successfully.', 'message' => 'Xóa banner thành công.']);
             }
-    
+
             return response()->json(['error' => 'Banner not found.', 'message' => 'Không tìm thấy banner'], 404);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
+        }
+    }
+    //Product
+    public function products()
+    {
+        $products = Product::with(['images', 'category', 'promotion'])->get();
+        $categories = Category::all();
+        $promotions = Promotion::all();
+        return view('admin.products-manager', compact('products', 'categories', 'promotions'));
+    }
+
+    public function getProductDetails($id)
+    {
+        $product = Product::with(['images', 'category', 'promotion'])->find($id);
+        $categories = Category::all();
+        $promotions = Promotion::all();
+
+        if ($product) {
+            return response()->json([
+                'status' => 'success',
+                'product' => $product,
+                'categories' => $categories,
+                'promotions' => $promotions
+            ]);
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'Product not found']);
+    }
+
+    public function addProduct(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'nameProduct' => 'required',
+                'brandProduct' => 'required',
+                'weightProduct' => 'required|numeric',
+                'smellProduct' => 'required',
+                'textureProduct' => 'required',
+                'ingreMainProduct' => 'required',
+                'skinProduct' => 'required',
+                'cateProduct' => 'required|exists:categories,id',
+                'promotionProduct' => 'nullable|exists:promotions,id',
+                'detailProduct' => 'required',
+                'noteProduct' => 'required',
+                'allIngredientProduct' => 'required',
+                'HTUProduct' => 'required',
+                'quantityProduct' => 'required|integer',
+                'priceProduct' => 'required|numeric',
+                'images' => 'required',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            $product = new Product();
+            $product->name = $request->input('nameProduct');
+            $product->brand = $request->input('brandProduct');
+            $product->weight = $request->input('weightProduct');
+            $product->smell = $request->input('smellProduct');
+            $product->texture = $request->input('textureProduct');
+            $product->main_ingredient = $request->input('ingreMainProduct');
+            $product->skin = $request->input('skinProduct');
+            $product->categories_id = $request->input('cateProduct');
+            $product->promotion_id = $request->input('promotionProduct');
+            $product->description = $request->input('detailProduct');
+            $product->note = $request->input('noteProduct');
+            $product->ingredient = $request->input('allIngredientProduct');
+            $product->htu = $request->input('HTUProduct');
+            $product->stock = $request->input('quantityProduct');
+            $product->price = $request->input('priceProduct');
+            $product->save();
+
+            if ($request->hasFile('images')) {
+                foreach ($request->file('images') as $image) {
+                    $imagePath = $image->store('product_images', 'public');
+                    $product->images()->create(['image_path' => '/storage/' . $imagePath]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['success' => 'Product added successfully.', 'message' => 'Thêm sản phẩm thành công.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function updateProduct(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'id' => 'required|integer',
+                'nameProduct' => 'required',
+                'brandProduct' => 'required',
+                'weightProduct' => 'required',
+                'smellProduct' => 'required',
+                'textureProduct' => 'required',
+                'ingreMainProduct' => 'required',
+                'skinProduct' => 'required',
+                'cateProduct' => 'required|exists:categories,id',
+                'promotionProduct' => 'nullable|exists:promotions,id',
+                'detailProduct' => 'required',
+                'noteProduct' => 'required',
+                'allIngredientProduct' => 'required',
+                'HTUProduct' => 'required',
+                'quantityProduct' => 'required|integer',
+                'priceProduct' => 'required|numeric',
+                'images' => 'nullable',
+                'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            $product = Product::find($request->input('id'));
+            if ($product) {
+                $product->name = $request->input('nameProduct');
+                $product->brand = $request->input('brandProduct');
+                $product->weight = $request->input('weightProduct');
+                $product->smell = $request->input('smellProduct');
+                $product->texture = $request->input('textureProduct');
+                $product->main_ingredient = $request->input('ingreMainProduct');
+                $product->skin = $request->input('skinProduct');
+                $product->categories_id = $request->input('cateProduct');
+                $product->promotion_id = $request->input('promotionProduct');
+                $product->description = $request->input('detailProduct');
+                $product->note = $request->input('noteProduct');
+                $product->ingredient = $request->input('allIngredientProduct');
+                $product->htu = $request->input('HTUProduct');
+                $product->stock = $request->input('quantityProduct');
+                $product->price = $request->input('priceProduct');
+                $product->save();
+
+                if ($request->hasFile('images')) {
+                    // Delete old images
+                    foreach ($product->images as $image) {
+                        $oldImagePath = str_replace('/storage/', '', $image->image_path);
+                        Storage::disk('public')->delete($oldImagePath);
+                        $image->delete();
+                    }
+
+                    // Store new images
+                    foreach ($request->file('images') as $image) {
+                        $imagePath = $image->store('product_images', 'public');
+                        $product->images()->create(['image_path' => '/storage/' . $imagePath]);
+                    }
+                }
+
+                DB::commit();
+                return response()->json(['success' => 'Product updated successfully.', 'message' => 'Cập nhật sản phẩm thành công.']);
+            }
+
+            return response()->json(['error' => 'Product not found.', 'message' => 'Không tìm thấy sản phẩm'], 404);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $request->validate([
+                'id' => 'required|integer',
+            ]);
+
+            $product = Product::find($request->input('id'));
+            if ($product) {
+                // Delete images
+                foreach ($product->images as $image) {
+                    $imagePath = str_replace('/storage/', '', $image->image_path);
+                    Storage::disk('public')->delete($imagePath);
+                    $image->delete();
+                }
+
+                // Delete product
+                $product->delete();
+                DB::commit();
+                return response()->json(['success' => 'Product deleted successfully.', 'message' => 'Xóa sản phẩm thành công.']);
+            }
+
+            return response()->json(['error' => 'Product not found.', 'message' => 'Không tìm thấy sản phẩm'], 404);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Invalid data.', 'message' => $e->getMessage()], 400);

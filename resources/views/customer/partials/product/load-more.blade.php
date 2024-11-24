@@ -1,5 +1,5 @@
-@foreach ($products as $product)
-<div class="trending-prods_cards">
+@foreach ($Products as $product)
+<div class="trending-prods_cards ">
     <div class="card-image">
         @if ($product->images->isNotEmpty())
         @php
@@ -10,17 +10,32 @@
         <img src="N/A" alt="{{ $product->name }}">
         @endif
     </div>
-    <div class="cards_contain">
+    <div class="cards_contain ">
         <div class="product-detail_rating">
             @for ($i = 0; $i < $product->total_rating; $i++)
-                <img src="{{ asset('system/star.png') }}" alt="star">
+                <img src="{{asset('system/star.png')}}" alt="star">
                 @endfor
         </div>
-        <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}" onclick="saveProductToLocalStorage('{{ $product->id }}')">{{ $product->name }}</a>
-        <div class="cards_desc-prod">
-            {{ $product->description }}
+        <h3>
+            <a class="cards_name-prod" href="{{ route('product.show', $product->id) }}" onclick="saveProductToLocalStorage('{{ $product->id }}')">{{ $product->name }}</a>
+        </h3>
+        <div class="cards_item">
+            {{ $product->brand }}
         </div>
-        <div class="cards_price-prod">{{ $product->price }} VND</div>
+        <div class="product-detail_price">
+            @if ($product->promotion && now()->between($product->promotion->promotion_start, $product->promotion->promotion_end))
+            @php
+            $discountedPrice = $product->price - ($product->price * $product->promotion->percent_promotion / 100);
+            @endphp
+            <h3>
+                Giá:
+                <span>{{ number_format($discountedPrice, 0, ',', '.') }}</span>
+                <span style="text-decoration: line-through;color: red;">{{ number_format($product->price, 0, ',', '.') }}</span>
+            </h3>
+            @else
+            <h3>Giá: {{ number_format($product->price, 0, ',', '.') }}</h3>
+            @endif
+        </div>
     </div>
 </div>
 @endforeach

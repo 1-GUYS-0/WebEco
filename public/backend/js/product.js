@@ -1,245 +1,244 @@
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-function showTab(idTab, productJson, categoriesJson, promotionsJson) {
-    console.log(promotionsJson);
-    console.log(idTab);
+function showTab(idTab) {
     const closeModalButtons = document.querySelectorAll('.close-btn');
     const modal = document.getElementById(idTab);
-    if (idTab === 'detailProduct' && Object.keys(productJson).length > 0 && Object.keys(categoriesJson).length > 0) {
-        showDetailProduct(productJson, categoriesJson, promotionsJson);
-        // Hiển thị modal
-        modal.style.display = 'block';
-    }
-    if (idTab === 'addProduct') {
-        // Hiển thị modal
-        modal.style.display = 'block';
-    }
-    // Đóng modal khi nhấn vào nút đóng
+    modal.style.display = 'block';
+
     closeModalButtons.forEach(button => {
         button.addEventListener('click', function () {
             modal.style.display = 'none';
         });
     });
 
-    // Đóng modal khi nhấn ra ngoài modal
     window.addEventListener('click', function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
         }
     });
 }
-// hàm thêm hình ảnh
-function handleFileSelect(event, listImageId) {
-    const files = event.target.files; // Lấy danh sách các tệp đã chọn
-    if (files) {
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i]; // Lấy từng tệp trong danh sách
-            const reader = new FileReader(); // Tạo một đối tượng FileReader để chuẩn bị đọc tệp
-            reader.onload = function (e) { // Lắng nghe sự kiện reader.readAsDataURL hoàn thành khi tệp đã được đọc mới thực thi
-                const listImage = document.getElementById(listImageId); // Lấy phần tử danh sách hình ảnh theo ID
-                const newImageBlock = document.createElement('div'); // Tạo một khối hình ảnh mới
-                newImageBlock.className = 'image-block';
-                newImageBlock.innerHTML = `
-                    <img class="cards-image" src="${e.target.result}" />
-                    <div class="close-icon">
-                        <button type="button" class="material-symbols-outlined" onclick="removeImage(this)">close</button>
-                    </div>
-                `;
-                listImage.appendChild(newImageBlock); // Thêm khối hình ảnh mới vào danh sách
-            };
-            reader.readAsDataURL(file); // Mã hóa dữ liệu tệp thành chuỗi base64 để web đọc tệp dưới dạng URL dữ liệu
-        }
+
+function showDetailProduct(productId) {
+    fetch(`/admin/products/${productId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const product = data.product;
+                const categories = data.categories;
+                const promotions = data.promotions;
+
+                // Hiển thị thông tin sản phẩm
+                document.getElementById('idProduct-input').value = product.id;
+                document.getElementById('nameProduct-input').value = product.name;
+                document.getElementById('brandProduct-input').value = product.brand;
+                document.getElementById('weightProduct-input').value = product.weight;
+                document.getElementById('smellProduct-input').value = product.smell;
+                document.getElementById('textureProduct-input').value = product.texture;
+                document.getElementById('ingreMainProduct-input').value = product.main_ingredient;
+                document.getElementById('skinProduct-input').value = product.skin;
+                document.getElementById('detailProduct-input').value = product.description;
+                document.getElementById('noteProduct-input').value = product.note;
+                document.getElementById('allIngredientProduct-input').value = product.ingredient;
+                document.getElementById('HTUProduct-input').value = product.htu;
+                document.getElementById('quantityProduct-input').value = product.stock;
+                document.getElementById('priceProduct-input').value = product.price;
+
+                // Cập nhật danh mục sản phẩm
+                const cateProductSelect = document.getElementById('cateProduct-input');
+                cateProductSelect.innerHTML = categories.map(category => 
+                    `<option value="${category.id}" ${category.id === product.category_id ? 'selected' : ''}>${category.name}</option>`
+                ).join('');
+
+                // Cập nhật sự kiện khuyến mãi
+                const promotionProductSelect = document.getElementById('promotionProduct-input');
+                promotionProductSelect.innerHTML = `<option value="">Không khuyến mãi</option>`;
+                promotionProductSelect.innerHTML += promotions.map(promotion => 
+                    `<option value="${promotion.id}" ${promotion.id === product.promotion_id ? 'selected' : ''}>${promotion.name}--sale:${promotion.percent_promotion}</option>`
+                ).join('');
+
+                
+                const listImage = document.getElementById('listImage-input');
+                listImage.innerHTML = '';
+                data.product.images.forEach(image => {
+                    const img = document.createElement('img');
+                    img.src = `${image.image_path}`;
+                    listImage.appendChild(img);
+                });
+
+                showTab('detailProductTab');
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+        });
+}
+
+function handleFileSelect(event, elementId) {
+    const files = event.target.files;
+    const listImage = document.getElementById(elementId);
+    listImage.innerHTML = '';
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            listImage.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
     }
 }
-// Xóa hình ảnh
-function removeImage(button) {
-    const imageBlock = button.closest('.image-block');
-    imageBlock.remove();
+
+function updateProduct() {
+    const productId = document.getElementById('idProduct-input').value;
+    const name = document.getElementById('nameProduct-input').value;
+    const brand = document.getElementById('brandProduct-input').value;
+    const weight = document.getElementById('weightProduct-input').value;
+    const smell = document.getElementById('smellProduct-input').value;
+    const texture = document.getElementById('textureProduct-input').value;
+    const mainIngredient = document.getElementById('ingreMainProduct-input').value;
+    const skin = document.getElementById('skinProduct-input').value;
+    const detail = document.getElementById('detailProduct-input').value;
+    const note = document.getElementById('noteProduct-input').value;
+    const allIngredient = document.getElementById('allIngredientProduct-input').value;
+    const htu = document.getElementById('HTUProduct-input').value;
+    const quantity = document.getElementById('quantityProduct-input').value;
+    const price = document.getElementById('priceProduct-input').value;
+    const categoryId = document.getElementById('cateProduct-input').value;
+    const promotionId = document.getElementById('promotionProduct-input').value;
+    const images = document.getElementById('imageInput-input').files;
+
+    const formData = new FormData();
+    formData.append('id', productId);
+    formData.append('nameProduct', name);
+    formData.append('brandProduct', brand);
+    formData.append('weightProduct', weight);
+    formData.append('smellProduct', smell);
+    formData.append('textureProduct', texture);
+    formData.append('ingreMainProduct', mainIngredient);
+    formData.append('skinProduct', skin);
+    formData.append('detailProduct', detail);
+    formData.append('noteProduct', note);
+    formData.append('allIngredientProduct', allIngredient);
+    formData.append('HTUProduct', htu);
+    formData.append('quantityProduct', quantity);
+    formData.append('priceProduct', price);
+    formData.append('cateProduct', categoryId);
+    formData.append('promotionProduct', promotionId);
+
+    for (let i = 0; i < images.length; i++) {
+        formData.append('images[]', images[i]);
+    }
+
+    fetch('/admin/products/update', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
+    });
 }
 
-$(document).ready(function () {
-    $('#productForm').submit(function (event) {
-        event.preventDefault(); // Ngăn chặn form reload trang
+function deleteProduct() {
+    const productId = document.getElementById('idProduct-input').value;
 
-        // Lấy data từ các id
-        const nameProduct = $('#nameProduct').val();
-        const priceProduct = $('#priceProduct').val();
-        const smellProduct = $('#smellProduct').val();
-        const textureProduct = $('#textureProduct').val();
-        const ingreMainProduct = $('#ingreMainProduct').val();
-        const skinProduct = $('#skinProduct').val();
-        const cateProduct = $('#cateProduct').val();
-        const desProduct = $('#desProduct').val();
-        const noteProduct = $('#noteProduct').val();
-        const allIngredientProduct = $('#allIngredientProduct').val();
-        const htuProduct = $('#HTUProduct').val();
-        const quantityProduct = $('#quantityProduct').val();
-        const promotionProduct = $('#promotionProduct').val();
-        const brandProduct = $('#brandProduct').val();
-        const weightProduct = $('#weightProduct').val();
-        // Tạo đối tượng FormData để gửi dữ liệu sản phẩm và hình ảnh
-        const formData = new FormData();
-        formData.append('name_product', nameProduct);
-        formData.append('price_product', priceProduct);
-        formData.append('smell_product', smellProduct);
-        formData.append('texture_product', textureProduct);
-        formData.append('ingre_main_product', ingreMainProduct);
-        formData.append('skin_product', skinProduct);
-        formData.append('cate_product', cateProduct);
-        formData.append('des_product', desProduct);
-        formData.append('note_product', noteProduct);
-        formData.append('all_ingredient_product', allIngredientProduct);
-        formData.append('htu_product', htuProduct);
-        formData.append('quantity_product', quantityProduct);
-        formData.append('promotion_id',promotionProduct);
-        formData.append('brand_product',brandProduct);
-        formData.append('weight_product',weightProduct);
-
-        // Thêm hình ảnh vào FormData
-        const files = $('#imageInput-input')[0].files;
-        for (let i = 0; i < files.length; i++) {
-            formData.append('images[]', files[i]);
+    fetch('/admin/products/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ id: productId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert(data.message);
         }
-        formData.append('image_type', "product");
-        console.log(formData);
-        // AJAX request để lưu thông tin sản phẩm và hình ảnh
-        $.ajax({
-            url: `/admin/products/add-product`, // URL gửi dữ liệu được lấy từ biến trong file blade tương ứng
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function (response) {
-                if (response.success) {
-                    alert(response.success);
-                    $('#productForm')[0].reset(); // Reset form sau khi gửi thành công
-                    $('#listImage').empty(); // Xóa danh sách hình ảnh đã hiển thị
-                }
-            },
-            error: function (xhr, status, error) {
-                alert('Có lỗi xảy ra trong quá trình gửi dữ liệu sản phẩm.');
-                console.log(xhr.responseText);
-            }
-        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
     });
-});
-
-function showDetailProduct(productJson, categoriesJson, promotionsJson) {
-    const product = JSON.parse(productJson);
-    console.log(product);
-    const categories = JSON.parse(categoriesJson);
-    console.log(categories);
-    console.log(promotionsJson);
-    const promotions = JSON.parse(promotionsJson);
-
-    // Hiển thị thông tin sản phẩm
-    document.getElementById('idProduct-input').value = product.id;
-    document.getElementById('nameProduct-input').value = product.name;
-    document.getElementById('brandProduct-input').value = product.brand;
-    document.getElementById('weightProduct-input').value = product.weight;
-    document.getElementById('smellProduct-input').value = product.smell;
-    document.getElementById('textureProduct-input').value = product.texture;
-    document.getElementById('ingreMainProduct-input').value = product.main_ingredient;
-    document.getElementById('skinProduct-input').value = product.skin;
-    document.getElementById('detailProduct-input').value = product.description;
-    document.getElementById('noteProduct-input').value = product.note;
-    document.getElementById('allIngredientProduct-input').value = product.ingredient;
-    document.getElementById('HTUProduct-input').value = product.htu;
-    document.getElementById('quantityProduct-input').value = product.stock;
-    document.getElementById('priceProduct-input').value = product.price;
-
-    // Cập nhật danh mục sản phẩm
-    const cateProductSelect = document.getElementById('cateProduct-input');
-    cateProductSelect.innerHTML = categories.map(category => 
-        `<option value="${category.id}" ${category.id === product.category_id ? 'selected' : ''}>${category.name}</option>`
-    ).join('');
-
-    // Cập nhật sự kiện khuyến mãi
-    const promotionProductSelect = document.getElementById('promotionProduct-input');
-    promotionProductSelect.innerHTML = promotions.map(promotion => 
-        `<option value="${promotion.id}" ${promotion.id === product.promotion_id ? 'selected' : ''}>${promotion.name}--sale:${promotion.percent_promotion}</option>`
-    ).join('');
-
-    // Cập nhật hình ảnh sản phẩm
-    const listImage = document.getElementById('listImage-input');
-    listImage.innerHTML = product.images.map(image => 
-        `<div class="image-block" style="width:6.25rem;">
-            <img class="cards-image" src="/${image.image_path}" />
-            <div class="close-icon">
-                <button type="button" class="material-symbols-outlined" onclick="removeImage(this)">close</button>
-            </div>
-        </div>`).join('');
 }
 
-$(document).ready(function () {
-    $('#updateproductForm').submit(function (event) {
-        event.preventDefault(); // Ngăn chặn form reload trang
+function addProduct() {
+    const name = document.getElementById('nameProduct').value;
+    const brand = document.getElementById('brandProduct').value;
+    const weight = document.getElementById('weightProduct').value;
+    const smell = document.getElementById('smellProduct').value;
+    const texture = document.getElementById('textureProduct').value;
+    const mainIngredient = document.getElementById('ingreMainProduct').value;
+    const skin = document.getElementById('skinProduct').value;
+    const detail = document.getElementById('detailProduct').value;
+    const note = document.getElementById('noteProduct').value;
+    const allIngredient = document.getElementById('allIngredientProduct').value;
+    const htu = document.getElementById('HTUProduct').value;
+    const quantity = document.getElementById('quantityProduct').value;
+    const price = document.getElementById('priceProduct').value;
+    const categoryId = document.getElementById('cateProduct').value;
+    const promotionId = document.getElementById('promotionProduct').value;
+    const images = document.getElementById('imageInput').files;
 
-        // Lấy data từ các id trong detailProduct
-        const id = $('#idProduct-input').val();
-        const nameProduct = $('#nameProduct-input').val();
-        const priceProduct = $('#priceProduct-input').val();
-        const smellProduct = $('#smellProduct-input').val();
-        const textureProduct = $('#textureProduct-input').val();
-        const ingreMainProduct = $('#ingreMainProduct-input').val();
-        const skinProduct = $('#skinProduct-input').val();
-        const cateProduct = $('#cateProduct-input').val();
-        const desProduct = $('#detailProduct-input').val();
-        const noteProduct = $('#noteProduct-input').val();
-        const allIngredientProduct = $('#allIngredientProduct-input').val();
-        const htuProduct = $('#HTUProduct-input').val();
-        const quantityProduct = $('#quantityProduct-input').val();
-        const promotionProduct = $('#promotionProduct-input').val();
-        const brandProduct = $('#brandProduct-input').val();
-        const weightProduct = $('#weightProduct-input').val();
+    const formData = new FormData();
+    formData.append('nameProduct', name);
+    formData.append('brandProduct', brand);
+    formData.append('weightProduct', weight);
+    formData.append('smellProduct', smell);
+    formData.append('textureProduct', texture);
+    formData.append('ingreMainProduct', mainIngredient);
+    formData.append('skinProduct', skin);
+    formData.append('detailProduct', detail);
+    formData.append('noteProduct', note);
+    formData.append('allIngredientProduct', allIngredient);
+    formData.append('HTUProduct', htu);
+    formData.append('quantityProduct', quantity);
+    formData.append('priceProduct', price);
+    formData.append('cateProduct', categoryId);
+    formData.append('promotionProduct', promotionId);
 
-        // Tạo đối tượng FormData để gửi dữ liệu sản phẩm và hình ảnh
-        const formData = new FormData();
-        formData.append('name_product', nameProduct);
-        formData.append('price_product', priceProduct);
-        formData.append('smell_product', smellProduct);
-        formData.append('texture_product', textureProduct);
-        formData.append('ingre_main_product', ingreMainProduct);
-        formData.append('skin_product', skinProduct);
-        formData.append('cate_product', cateProduct);
-        formData.append('des_product', desProduct);
-        formData.append('note_product', noteProduct);
-        formData.append('all_ingredient_product', allIngredientProduct);
-        formData.append('htu_product', htuProduct);
-        formData.append('quantity_product', quantityProduct);
-        formData.append('promotion_id', promotionProduct);
-        formData.append('brand_product', brandProduct);
-        formData.append('weight_product', weightProduct);
+    for (let i = 0; i < images.length; i++) {
+        formData.append('images[]', images[i]);
+    }
 
-        // Thêm hình ảnh vào FormData
-        const files = $('#imageInput-input')[0].files;
-        for (let i = 0; i < files.length; i++) {
-            formData.append('images[]', files[i]);
+    fetch('/admin/products/add', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            location.reload();
+        } else {
+            alert(data.message);
         }
-        formData.append('image_type', "product");
-        console.log(formData);
-        
-        // AJAX request để lưu thông tin sản phẩm và hình ảnh
-        $.ajax({
-            url: `/admin/product/update-product/${id}`, // URL gửi dữ liệu được lấy từ biến trong file blade tương ứng
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            data: formData,
-            success: function (response) {
-                if (response.success) {
-                    alert(response.success);
-                    $('#detailProductForm')[0].reset(); // Reset form sau khi gửi thành công
-                    $('#listImage').empty(); // Xóa danh sách hình ảnh đã hiển thị
-                }
-            },
-            error: function (xhr, status, error) {
-                alert('Có lỗi xảy ra trong quá trình gửi dữ liệu sản phẩm.');
-                console.log(xhr.responseText);
-            }
-        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Đã xảy ra lỗi. Vui lòng thử lại sau.');
     });
-});
+}

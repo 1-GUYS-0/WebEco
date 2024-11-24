@@ -11,11 +11,13 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $table = 'products';
     // Các trường có thể được gán hàng loạt
     protected $fillable = [
         'name',
         'brand',
         'weight',
+        'type',
         'price',
         'description',
         'smell',

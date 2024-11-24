@@ -1,0 +1,21 @@
+customer_id,name,address,phone,shipping_method,message,subtotal,discount,shipping,total_price,order_quantity,status,created_at,updated_at
+1,Nguyễn Văn A,"TP.HCM, Quận 1, Phường Bến Nghé, 123 Đường A",912345678,GHN,Không có ghi chú,500000,20000,25000,505000,3,completed,1/15/2024 21:16,1/15/2024 21:16
+2,Trần Thị B,"Hà Nội, Quận Cầu Giấy, Phường Dịch Vọng, 456 Đường B",987654321,ahamove,Giao hàng giờ hành chính,200000,0,30000,230000,1,pending,2/10/2024 21:16,2/10/2024 21:16
+1,Lê Văn C,"Đà Nẵng, Quận Hải Châu, Phường Thanh Bình, 78 Đường C",932123456,GHN,Mong giao trước 10h sáng,150000,5000,25000,170000,2,completed,3/12/2024 21:16,3/12/2024 21:16
+2,Phạm Thị D,"TP.HCM, Quận 7, Phường Tân Phong, 910 Đường D",971236543,ahamove,Đóng gói cẩn thận,800000,10000,30000,820000,5,completed,4/18/2024 21:16,4/18/2024 21:16
+1,Hoàng Văn E,"Hải Phòng, Quận Lê Chân, Phường Đông Hải, 89 Đường E",918765432,GHN,Giao hàng ngoài giờ hành chính,300000,15000,25000,310000,1,cancelled,5/21/2024 21:16,5/21/2024 21:16
+2,Vũ Thị F,"Cần Thơ, Quận Ninh Kiều, Phường An Lạc, 101 Đường F",921345678,ahamove,Không có ghi chú,450000,0,30000,480000,3,completed,6/7/2024 21:16,6/7/2024 21:16
+2,Nguyễn Văn G,"Hà Nội, Quận Thanh Xuân, Phường Khương Đình, 222 Đường G",977654321,GHN,Giao hàng giờ hành chính,250000,5000,25000,270000,1,pending,7/15/2024 21:16,7/15/2024 21:16
+1,Lê Thị H,"TP.HCM, Quận 3, Phường Võ Thị Sáu, 333 Đường H",934567890,ahamove,Không có ghi chú,1200000,20000,30000,1250000,4,completed,8/19/2024 21:16,8/19/2024 21:16
+1,Phạm Văn I,"Đà Nẵng, Quận Sơn Trà, Phường Thọ Quang, 444 Đường I",911112222,GHN,Giao hàng ngoài giờ hành chính,100000,0,25000,125000,1,completed,9/5/2024 21:16,9/5/2024 21:16
+2,Hoàng Thị J,"Bình Dương, Thị Xã Dĩ An, Phường Dĩ An, 555 Đường J",942223333,ahamove,Giao hàng sau 6h tối,700000,5000,30000,725000,2,completed,10/9/2024 21:16,10/9/2024 21:16
+2,Nguyễn Văn K,"TP.HCM, Quận 4, Phường 12, 666 Đường K",934445555,GHN,Không có ghi chú,550000,25000,25000,550000,3,completed,1/10/2024 21:16,1/10/2024 21:16
+1,Trần Thị L,"Đà Lạt, Phường 9, 123 Đường L",915678901,ahamove,Đóng gói kỹ lưỡng,640000,0,30000,670000,3,completed,2/28/2024 21:16,2/28/2024 21:16
+1,Phạm Văn M,"Đà Nẵng, Quận Hải Châu, Phường Thạch Thang, 777 Đường M",938765432,GHN,Giao trước 9h sáng,200000,10000,25000,215000,1,cancelled,3/18/2024 21:16,3/18/2024 21:16
+1,Lê Thị N,"Hà Nội, Quận Hoàng Mai, Phường Định Công, 888 Đường N",912347654,ahamove,Không có ghi chú,1500000,25000,30000,1555000,6,completed,4/20/2024 21:16,4/20/2024 21:16
+1,Nguyễn Văn O,"TP.HCM, Quận 6, Phường Bình Phú, 999 Đường O",925436781,GHN,Giao hàng nhanh,100000,5000,25000,120000,2,pending,5/15/2024 21:16,5/15/2024 21:16
+2,Trần Thị P,"Hải Phòng, Quận Ngô Quyền, Phường Đằng Lâm, 101 Đường P",967112233,ahamove,Giao vào buổi tối,950000,20000,30000,960000,4,completed,6/11/2024 21:16,6/11/2024 21:16
+2,Hoàng Văn Q,"Hà Nội, Quận Hoàn Kiếm, Phường Tràng Tiền, 222 Đường Q",933334444,GHN,Đóng gói cẩn thận,320000,5000,25000,340000,2,completed,7/10/2024 21:16,7/10/2024 21:16
+2,Phạm Thị R,"TP.HCM, Quận Bình Thạnh, Phường 26, 333 Đường R",988887777,ahamove,Giao trước 11h trưa,450000,15000,30000,475000,2,completed,8/22/2024 21:16,8/22/2024 21:16
+2,Lê Văn S,"Đà Nẵng, Quận Cẩm Lệ, Phường Khuê Trung, 444 Đường S",912223334,GHN,Không có ghi chú,260000,5000,25000,280000,1,completed,9/28/2024 21:16,9/28/2024 21:16
+2,Nguyễn Thị T,"Cần Thơ, Quận Bình Thủy, Phường Trà An, 555 Đường T",932224444,ahamove,Giao hàng vào buổi chiều,1800000,20000,30000,1850000,7,completed,10/20/2024 21:16,10/20/2024 21:16

@@ -17,7 +17,7 @@
             <a href="{{route('promotion.discount')}}">Chương trình và giảm giá</a>
         </div>
         <div class="nav-bar_link close-btn">
-            <a>Về chúng tôi</a>
+            <a href="{{route('about-us')}}">Về chúng tôi</a>
         </div>
         <div class="cart-icon" onclick=" toggleSide('cart-sidebar')">
             <span class="material-symbols-outlined close-btn ">local_mall</span>

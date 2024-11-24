@@ -13,72 +13,24 @@ class ProductImagesSeeder extends Seeder
      */
     public function run(): void
     {
-        // Insert sample data
-        $productImages = [
-            [
-                'image_path' => 'storage/product_images/sp1-1.jpg',
-                'image_type' => 'thumbnail',
-                'product_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp1-2.jpg',
-                'image_type' => 'gallery',
-                'product_id' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp2-1.jpg',
-                'image_type' => 'thumbnail',
-                'product_id' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp2-2.jpg',
-                'image_type' => 'gallery',
-                'product_id' => 2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp3-1.jpg',
-                'image_type' => 'thumbnail',
-                'product_id' => 3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp3-2.jpg',
-                'image_type' => 'gallery',
-                'product_id' => 3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp1-2.jpg',
-                'image_type' => 'thumbnail',
-                'product_id' => 4,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp2-2.jpg',
-                'image_type' => 'gallery',
-                'product_id' => 5,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'image_path' => 'storage/product_images/sp3-2.jpg',
-                'image_type' => 'gallery',
-                'product_id' => 6,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ];
+        $csvFile = fopen(base_path("database/data/product-images.csv"), "r");
+        $firstline = true;
+        $productImages = [];
+
+        while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
+            if (!$firstline) {
+                $productImages[] = [
+                    'image_path' => $data[0],
+                    'image_type' => $data[1],
+                    'product_id' => $data[2],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
 
         DB::table('product_images')->insert($productImages);
     }

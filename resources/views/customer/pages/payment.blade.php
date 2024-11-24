@@ -7,16 +7,6 @@
             <div class="infor_cust">
                 <h3>Thông tin liên hệ của khách hàng: {{$customerInfo['name']}}</h3>
                 <div class="text">Email khách hàng: {{$customerInfo['email']}}</div>
-                <!-- <div class="text">Địa chỉ giao hàng đã lưu</div>
-                <div class="address-options">
-                    <select title="select new address" id="choseAddress">
-                        @foreach ($customerInfo['addresses'] as $anotherAddress)
-                        <option value="{{ $anotherAddress->province }}, {{ $anotherAddress->district }}, {{ $anotherAddress->ward }}, {{ $anotherAddress->phone }}, {{ $anotherAddress->address }}">
-                            {{ $anotherAddress->province }}, {{ $anotherAddress->district }}, {{ $anotherAddress->ward }}, {{ $anotherAddress->phone }}, {{ $anotherAddress->address }} .
-                        </option>
-                        @endforeach
-                    </select>
-                </div> -->
                 <div class="text">Địa chỉ giao hàng của bạn:</div>
                 <div class="cust_contain">
                     <div class="cust_input">
@@ -126,9 +116,9 @@
             <div class="div"></div>
             <section class="total-price">
                 <div class="total-price_voucher">
-                    <h3>Mã Khuyến Mãi</h3>
+                    <h3>Mã Giảm giá</h3>
                     <label for="myVoucher">
-                        <input type="text" id="voucher-code" name="voucher" placeholder="Nhập mã voucher">
+                        <input type="text" id="voucher-code" name="voucher" placeholder="Nhập mã voucher giảm giá">
                     </label>
                     <button type="button" id="apply-voucher" class="button">
                         <div class="light-text">Áp dụng</div>
@@ -141,7 +131,7 @@
                             <dt>Tạm tính:</dt>
                             <dd id="estimated_price" value="{{ $product['price'] * $product['quantity'] }}">{{ number_format($product['price'] * $product['quantity'], 0, ',', '.') }} VND</dd>
                             <dt>Giảm giá:</dt>
-                            <dd id="discount-amount" value="0">0</dd>
+                            <dd id="discount-amount" value="0" voucher="">0</dd>
                             <dt>Phí vận chuyển:</dt>
                             <dd id="shipping-fee" value="0">0</dd>
                         </dl>

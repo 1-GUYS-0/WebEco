@@ -87,13 +87,16 @@ function processCashPayment() {
     const discountAmount = document.getElementById('discount-amount').getAttribute('value');
     const shippingFee = document.getElementById('shipping-fee').getAttribute('value');
     const subtotal = document.getElementById('estimated_price').getAttribute('value');
+    const voucher_code = document.getElementById('voucher-code').value;
 
     // Thêm dữ liệu vào formData
     formData.append('total_price', totalPrice);
     formData.append('discount_amount', discountAmount);
     formData.append('shipping_fee', shippingFee);
     formData.append('subtotal', subtotal);
-
+    if (discountAmount !=null) {
+        formData.append('voucher_code', voucher_code);
+    }
     // Send data to server
     fetch('/home/payment/submitorder', {
         method: 'POST',
@@ -139,7 +142,7 @@ function processVNPayPayment() {
     formData.append('shipping_fee', shippingFee);
     formData.append('subtotal', subtotal);
 
-    fetch('/homepayment/VNPAYpayment', {
+    fetch('/home/payment/VNPAYpayment', {
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')

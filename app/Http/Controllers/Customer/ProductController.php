@@ -12,9 +12,16 @@ class ProductController extends Controller
     public function show($id)
     {
         // Tìm sản phẩm theo id và lấy thêm các ảnh và bình luận của sản phẩm đó
-        $product = Product::with(['images', 'comments.customer', 'category'])->findOrFail($id);
+        $product = Product::with([
+            'images',
+            'comments' => function($query) {
+                $query->with('customer')->orderBy('rating', 'desc')->take(2);
+            },
+            'category',
+            'promotion'
+        ])->findOrFail($id);
         // Lấy ra 4 sản phẩm cùng loại với sản phẩm đang xem
-        $relatedProducts = Product::where('categories_id', $product->categories_id)
+        $relatedProducts = Product::with('promotion')->where('categories_id', $product->categories_id)
             ->where('id', '!=', $id) // Loại trừ sản phẩm đang xem
             ->take(6) // Giới hạn số lượng sản phẩm liên quan hiển thị
             ->get(); // Lấy ra danh sách sản phẩm liên quan
@@ -24,7 +31,11 @@ class ProductController extends Controller
         $averageRating = $product->comments->avg('rating'); // Tính điểm đánh giá trung bình
 
         return view('customer.pages.products-detail', compact('product', 'relatedProducts', 'ratings', 'totalRatings', 'averageRating'));
-        // return response()->json($ratings);
+        // return response()->json([
+        //     'ratings' => $ratings,
+        //     'totalRatings' => $totalRatings,
+        //     'averageRating' => $averageRating
+        // ]);
     }
     public function showSearchPage()
     {
@@ -60,7 +71,7 @@ class ProductController extends Controller
             }
         }
 
-        $products = $query->with('images')->get();
+        $products = $query->with('images','promotion')->get();
 
         return response()->json(['products' => $products]);
         //dump($products);

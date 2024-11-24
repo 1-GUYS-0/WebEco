@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\VNPayController as CustomerVNPayController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\Customer\PromotionDiscountController as CustomerPromotionDiscountController;
 use App\Http\Controllers\Customer\NotificationController as CustomerNotificationController;
+use App\Http\Controllers\Customer\CustomerReviewController as CustomerReviewController;
 use App\Http\Controllers\Auth\CustomerForgotPasswordController;
 use App\Http\Controllers\Auth\CustomerResetPasswordController;
 use App\Http\Controllers\AdminController;
@@ -45,17 +46,16 @@ Route::prefix('admin')->middleware(['CheckAdminLog'])->group(function () {
         Route::get('/{orderId}/detail', [AdminController::class, 'detailOrderMng'])->name('orderDetailMng');
         Route::post('/{orderId}/detailrefund', [AdminController::class, 'detailRefund'])->name('detailRefund');
         Route::post('/{orderId}/refund/confirm', [AdminController::class, 'refundConfirm'])->name('refundConfirm');
-        Route::post('/{orderId}/refund/reject', [AdminController::class, 'refundReject'])->name('refundReject');
+        Route::post('/refund/reject', [AdminController::class, 'refundReject'])->name('refundReject');
+        Route::post('/{orderId}/delete', [AdminController::class, 'deleteOrder'])->name('deleteOrder');
     });
     // Định nghĩa nhóm route cho trang quản lý sản phẩm
     Route::prefix('products')->group(function () {
-        // Định nghĩa route cho trang quản lý sản phẩm
-        Route::get('/', [ProductController::class, 'show'])->name('products.showProductMng');
-        // route thêm sản phẩm
-        Route::get('/add-product', [ProductController::class, 'create'])->name('products.view_add-product');
-        Route::post('/add-product', [ProductController::class, 'store'])->name('products.add-product');
-        // route cập nhật sản phẩm
-        Route::post('/update-product/{id}', [ProductController::class, 'update'])->name('products.update-product');
+        Route::get('/', [AdminController::class, 'products'])->name('products.showProductMng');
+        Route::get('/{id}', [AdminController::class, 'getProductDetails'])->name('products.details');
+        Route::post('/add', [AdminController::class, 'addProduct'])->name('products.add');
+        Route::post('/update', [AdminController::class, 'updateProduct'])->name('products.update');
+        Route::post('/delete', [AdminController::class, 'deleteProduct'])->name('products.delete');
     });
 
 
@@ -116,9 +116,18 @@ Route::prefix('home')->middleware(['CheckLogin'])->group(function () {
     Route::post('/notifications/{id}/read', [CustomerNotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     // Sản phẩm
     Route::prefix('product')->group(function () {
-        Route::get('/{id}', [CustomerProductController::class, 'show'])->name('product.show');
-        Route::get('/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
-        Route::post('/interested', [CustomerHomeController::class, 'getInterestedProducts'])->name('customer.products.interested');
+        Route::get('/{productId}', [CustomerProductController::class, 'show'])->name('product.show');
+        // Route::get('/load-more-product', [CustomerHomeController::class, 'loadMore'])->name('customer.product.loadMore');
+        Route::post('/interested', [CustomerHomeController::class, 'getInterestedProducts'])->name('customer.product.interested');
+        // Nhóm route review product
+        Route::prefix('{productId}/review')->group(function () {
+            Route::get('/', [CustomerReviewController::class, 'index'])->name('product.review.index');
+            Route::post('/', [CustomerReviewController::class, 'store'])->name('product.review.store');
+            Route::get('/{reviewId}', [CustomerReviewController::class, 'show'])->name('product.review.show');
+            Route::put('/{reviewId}', [CustomerReviewController::class, 'update'])->name('product.review.update');
+            Route::delete('/{reviewId}', [CustomerReviewController::class, 'destroy'])->name('product.review.destroy');
+            Route::post('/filter', [CustomerReviewController::class, 'filter'])->name('product.review.filter');
+        });
     });
     // Order
     Route::group(['prefix' => 'orders', 'as' => 'orders.'], function () {
@@ -162,7 +171,14 @@ Route::prefix('home')->middleware(['CheckLogin'])->group(function () {
         Route::get('/', [CustomerCustomerController::class, 'profile'])->name('customer.profile');
         Route::post('/update', [CustomerCustomerController::class, 'updateProfile'])->name('customer.profile.update');
     });
+    // Thông tin chương trình khuyến mãi
+    Route::prefix('promotion')->group(function () {
+        Route::get('/first-promotion', [CustomerPromotionDiscountController::class, 'firstPromotionDetail'])->name('promotion.first');
+    });
+
+
 });
+Route::get('/product/load-more-product', [CustomerHomeController::class, 'loadMorePd'])->name('customer.product.loadMore');
 // Đăng nhập
 Route::get('/log-in', [LogSignController::class, 'showLoginForm'])->name('customer.pages.log-in');
 Route::post('/log-in', [LogSignController::class, 'login'])->name('customer.login');
@@ -175,40 +191,6 @@ Route::get('password/reset/confirmation', [CustomerForgotPasswordController::cla
 Route::post('password/email', [CustomerForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [CustomerResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [CustomerResetPasswordController::class, 'reset'])->name('password.update');
-// Route::get('/log-out', [LogSignController::class, 'showLogout'])->name('customer.pages.log-out')->middleware('CheckLogin');
-// Route::post('/log-out', [LogSignController::class, 'logout'])->name('customer.logout');
-
-
-
-// Route::get('/home', [CustomerHomeController::class, 'index'])->name('customer.home')->middleware('CheckLogin');
-// Route::get('/home/product/load-more', [CustomerHomeController::class, 'loadMore'])->name('customer.products.loadMore');
-// Route::post('/home/product/interested', [CustomerHomeController::class, 'getInterestedProducts'])->name('customer.products.interested');
-
-// Route::get('home/payment', [CustomerPaymentController::class, 'showPaymentPage'])->middleware('CheckLogin');
-// Route::post('home/payment', [CustomerPaymentController::class, 'processPayment'])->name('payment')->middleware('CheckLogin');
-// Route::get('home/product/{id}', [CustomerProductController::class, 'show'])->name('product.show');
-// Route::post('home/payment/apply-voucher', [CustomerVoucherController::class, 'applyVoucher'])->name('voucher.apply');
-// Route::post('home/payment/submitorder', [CustomerPaymentController::class, 'submitOrder'])->name('submit.order');
-// Route::post('homepayment/VNPAYpayment', [CustomerVNPayController::class, 'createPayment'])->name('vnpay.payment');
-// Route::get('homepayment/VNPAYpayment/return', [CustomerVNPayController::class, 'paymentReturn'])->name('vnpay.payment.return');
-
-// Route::get('home/search-page', [CustomerProductController::class, 'showSearchPage'])->name('search.page');
-// Route::get('home/search', [CustomerProductController::class, 'search'])->name('product.search');
-// Route::get('home/promotion-discount', [CustomerPromotionDiscountController::class, 'index'])->name('promotion.discount');
-
-
-// Route::get('/order-success', [CustomerPaymentController::class, 'orderSuccess'])->name('order.success');
-// Route::get('/order-failure', [CustomerPaymentController::class, 'orderFailure'])->name('order.failure');
-
-// Route::get('home/cart', [CustomerCartController::class, 'show'])->name('cart.show');
-// Route::post('home/cart/add', [CustomerCartController::class, 'addToCart'])->name('cart.add');
-// Route::post('home/cart/update/{id}', [CustomerCartController::class, 'updateCart'])->name('cart.update');
-// Route::post('home/cart/remove/{id}', [CustomerCartController::class, 'removeFromCart'])->name('cart.remove');
-
-// Route::get('home/profile', [CustomerCustomerController::class, 'profile'])->name('customer.profile')->middleware('CheckLogin');
-// // Route::get('home/profile/editIfor/{id}', [CustomerCustomerController::class, 'edit'])->name('customer.profile.edit');
-// Route::post('home/profile/update', [CustomerCustomerController::class, 'updateProfile'])->name('customer.profile.update');
-
-// // Prevỉew page
-// Route::get('/preview/index', [CustomerPreviewPageController::class, 'index'])->name('preview.index');
-// Route::get('preview/product/{id}', [CustomerPreviewPageController::class, 'show'])->name('preview.product.show');
+// Hướng dẫn và về chúng tôi
+Route::get('/guide', [CustomerHomeController::class, 'guide'])->name('guide');
+Route::get('/about-us', [CustomerHomeController::class, 'aboutUs'])->name('about-us');

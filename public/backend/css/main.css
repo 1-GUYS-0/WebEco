@@ -1007,11 +1007,11 @@ form textarea, form input, form select{
   border: 0.2rem solid black;
   width: 100%;
 }
-#addProduct input, #addProduct .input{
+#addProductTab input, #addProductTab .input{
   display: inherit  !important;
   flex: inherit;
 }
-#addProduct form div{
+#addProductTab form div{
   width: inherit;
 }
 #detailProductOrder{

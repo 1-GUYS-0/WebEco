@@ -10,6 +10,7 @@ use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Log;
 
 
@@ -29,22 +30,22 @@ class LogSignController extends Controller
         if (Auth::guard('customer')->attempt($credentials)) // Kiểm tra thông tin đăng nhập
         {
             $customer = Auth::guard('customer')->user(); // Lấy thông tin customer đã đăng nhập từ guard 'customer'
-        
+
             if ($customer->status !== 'verified') {
                 Auth::guard('customer')->logout(); // Đăng xuất nếu trạng thái không phải là verified
                 return back()->withErrors([
                     'email' => 'Tài khoản của bạn chưa được xác nhận. Vui lòng kiểm tra email để xác nhận tài khoản.',
                 ]);
             }
-        
+
             $request->session()->regenerate(); // Tạo session mới
-        
+
             $newSessionId = $request->session()->getId(); // Lấy session ID mới
             DB::table('sessions')->where('id', $newSessionId)->update(['customer_id' => $customer->id]); // Cập nhật bảng sessions với customer_id
-        
+
             return redirect()->intended(route('customer.home')); // Nếu thông tin đăng nhập chính xác, chuyển hướng về trang dashboard
         }
-        
+
         return back()->withErrors([
             'password' => 'Thông tin đăng nhập không đúng.',
         ]);
@@ -84,10 +85,19 @@ class LogSignController extends Controller
                 'password' => Hash::make($data['password']),
                 'status' => 'unverified',
                 'verification_token' => sha1(time()),
+                'avatar_path'=>'/storage/avatar_customer/default-avatar.webp',
             ]);
-            
+
             Mail::to($customer->email)->send(new VerifyEmail($customer));
+            // Ghi thông báo vào cơ sở dữ liệu
+            Notification::create([
+                'customer_id' => $customer->id,
+                'title' => 'Đăng ký thành công',
+                'message' => 'Chào mừng khách hàng mới! tặng bạn mã giảm giá 25% trên tổng sản phẩm thanh toán, SP-50-30.',
+                'is_read' => false,
+            ]);
             DB::commit();
+
             return response()->json(['status' => 'success', 'message' => 'Đăng ký thành công! Vui lòng kiểm tra email để xác thực tài khoản.']);
         } catch (\Exception $e) {
             Log::error('Error creating customer: ' . $e->getMessage());

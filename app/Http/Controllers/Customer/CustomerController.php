@@ -63,7 +63,7 @@ class CustomerController extends Controller
     
             if ($request->hasFile('avatar')) {
                 $avatarPath = $request->file('avatar')->store('avatar_customer', 'public');
-                $customer->avatar_path = Storage::url($avatarPath);
+                $customer->avatar_path = '/' . ltrim(Storage::url($avatarPath), '/');
             }
     
             if ($request->has('addnewaddress')) {
