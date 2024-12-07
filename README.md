@@ -1,4 +1,5 @@
-![Logo của dự án](public/system/logo.png "Logo dự án")
+![Logo của dự án] "")
+<img src="(public/system/logo.png" alt="Logo dự án" title="Logo dự án" width="500">
 # Dự án: Thiết kế và Phát triển Website Bán Hàng Mỹ Phẩm
 
 ### Người thực hiện:  
