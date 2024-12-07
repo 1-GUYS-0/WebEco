@@ -49,10 +49,10 @@ Website không chỉ là một nền tảng bán hàng mà còn là một công 
    - Chọn chức năng **Nhập** để tải dữ liệu từ file `databasewebeco.sql` (thư mục: `database/data`).  
 
 4. **Tải mã nguồn dự án:**
-   - **Cách 1:** Tải trực tiếp từ GitHub: [mywebeco repository](https://github.com/20166016student/mywebeco.git).  
+   - **Cách 1:** Tải trực tiếp từ GitHub: [mywebeco repository](https://github.com/1-GUYS-0/WebEco.git).  
    - **Cách 2:** Sử dụng lệnh Git (nếu đã cài Git trên máy):  
      ```bash
-     git clone https://github.com/20166016student/mywebeco.git
+     git clone https://github.com/1-GUYS-0/WebEco.git
      ```
 
 5. **Chạy dự án:**
