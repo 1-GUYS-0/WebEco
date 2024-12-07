@@ -1,6 +1,5 @@
-<div style="text-align: center;">
-   <img src="public/system/logo.png" alt="Logo dự án" title="Logo dự án" width="500" >
-</div>
+
+<img src="public/system/logo.png" alt="Logo dự án" title="Logo dự án" width="500" >
 
 # Dự án: Thiết kế và Phát triển Website Bán Hàng Mỹ Phẩm
 
