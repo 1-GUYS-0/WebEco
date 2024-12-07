@@ -80,10 +80,10 @@ Website không chỉ là một nền tảng bán hàng mà còn là một công 
    - Use the **Import** feature to upload data from the `databasewebeco.sql` file (located in `database/data`).  
 
 4. **Download the source code:**
-   - **Option 1:** Direct download from GitHub: [mywebeco repository](https://github.com/20166016student/mywebeco.git).  
+   - **Option 1:** Direct download from GitHub: [mywebeco repository](https://github.com/1-GUYS-0/WebEco.git).  
    - **Option 2:** Use Git command (if Git is installed on your computer):  
      ```bash
-     git clone https://github.com/20166016student/mywebeco.git
+     git clone https://github.com/1-GUYS-0/WebEco.git
      ```
 
 5. **Run the project:**
