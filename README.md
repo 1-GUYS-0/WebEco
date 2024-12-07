@@ -96,6 +96,6 @@ Website không chỉ là một nền tảng bán hàng mà còn là một công 
 
 ## Demo
 Giao diện dành cho trang khách hàng
-![Logo của dự án](public\system\demo-customer.jpeg "interface of customer")
+![Logo của dự án](public/system/demo-customer.jpeg "interface of customer")
 Giao diện trang dành cho admin
-![Logo của dự án](public\system\demo-admin.jpeg "interface of customer")
+![Logo của dự án](public/system/demo-admin.jpeg "interface of customer")
